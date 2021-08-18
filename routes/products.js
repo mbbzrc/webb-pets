@@ -4,11 +4,32 @@ const { getAllProducts, getProductByID  } = require('../db/products')
 
 productsRouter.get('/', async (req, res , next) => {
     try {
-        const allProducts = await getAllProducts();
+        const products = await getAllProducts();
 
-        res.send(allProducts)
+        res.send(products)
 
     } catch ({name, message})  {
         next ({name, message})
     }
+})
+
+productsRouter.get('/:productId', async (req, res, next) => {
+    const { productId } = req.params;
+    try {
+        const product = await getProductByID(productId);
+
+       
+
+        if(!products){
+            throw Error(
+                'Invalid Product'
+            )
+        }
+
+        res.send(product)
+
+    } catch ({name, message})  {
+        next ({name, message})
+    }
+
 })

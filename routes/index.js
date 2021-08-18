@@ -6,4 +6,6 @@ apiRouter.get("/", (req, res, next) => {
   });
 });
 
+const healthRouter = require('./health');
+apiRouter.use('/health', healthRouter);
 module.exports = apiRouter;

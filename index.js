@@ -23,7 +23,11 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db');
+const { client } = require('./db/client');
+
+server.use((err, req, res, next) => {
+  res.status(500).send(err)
+})
 
 // connect to the server
 const PORT = process.env.PORT || 5000;

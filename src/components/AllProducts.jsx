@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-import { getAllProducts } from "./api";
+import { getAllProducts } from "../api";
 
 const AllProducts = () => {
   const [productList, setProductList] = useState([]);
@@ -18,14 +18,13 @@ const AllProducts = () => {
     <div className="all-products">
       {productList.length > 0 &&
         productList.map(({ id, name, price, imageURL }) => {
-          <div className="product-thumbnail" data-id={id}>
-            <div className="category-thumbnail">{category}</div>
+          return <div className="thumbnail-product" key={id}>
             <h2>{name}</h2>
-            <div className="product-image-thumbnail">
+            <div className="thumbnail-product-image">
               <img src={imageURL} alt="product thumbnail" />
             </div>
-            <div className="product-details-thumbnail">
-              <div className="product-price-thumbnail">{price}</div>
+            <div className="thumbnail-product-details">
+              <div className="thumbnail-product-price">{price}</div>
             </div>
           </div>;
         })}

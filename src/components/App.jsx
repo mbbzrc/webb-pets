@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { } from "../api";
 
-import { Route } from "react-router-dom";
-
-import { getSomething } from "../api";
-
-import { Product } from "./index";
+import { Header, AllProducts, Product } from "./index";
 
 const App = () => {
-  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    getSomething()
-      .then((response) => {
-        setMessage(response.message);
-      })
-      .catch((error) => {
-        setMessage(error.message);
-      });
-  });
 
   return (
     <div className="App">
       <h1>Grace Pets</h1>
-      <h2>{message}</h2>
-      <Route path="/product/:productId">
-        <Product />
-      </Route>
+      <Header />
+      <Router>
+        <Router path="/products">
+          <AllProducts />
+        </Router>
+        <Route path="/product/:productId">
+          <Product />
+        </Route>
+      </Router>
     </div>
   );
 };

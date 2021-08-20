@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { Header, AllProducts, Product } from "./index";
 
-const App = () => {
+export const App = () => {
   return (
     <div className="App">
       <h1>Grace Pets</h1>
@@ -19,5 +19,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { getAllProducts } from "../api";
 
-const AllProducts = () => {
+export const AllProducts = () => {
   const [productList, setProductList] = useState([]);
 
   const fetchData = async () => {
@@ -12,7 +12,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   return (
     <div className="all-products">
@@ -31,5 +31,3 @@ const AllProducts = () => {
     </div>
   );
 };
-
-export default AllProducts;

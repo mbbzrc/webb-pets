@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { getProductById } from "../api";
 
-const Product = () => {
+export const Product = () => {
   const [openProduct, setOpenProduct] = useState({});
 
-  const { id, name, description, price, imageURL, inStock, category } =
-    openProduct;
+  const params = useParams();
 
   const fetchData = async () => {
-    const fetchedProduct = await getProductById(id);
+    const fetchedProduct = await getProductById(params.productId);
     setOpenProduct(fetchedProduct);
   };
 
   useEffect(() => {
     fetchData();
-  });
+  }, [id]);
+
+  const { id, name, description, price, imageURL, inStock, category } =
+    openProduct;
 
   return (
     <div className="product" data-id={id}>
@@ -34,5 +37,3 @@ const Product = () => {
     </div>
   );
 };
-
-export default Product;

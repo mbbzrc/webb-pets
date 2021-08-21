@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { getProductById } from "../api";
+import { getProductById } from "../api/products";
 
 export const Product = () => {
   const [openProduct, setOpenProduct] = useState({});
@@ -13,12 +13,12 @@ export const Product = () => {
     setOpenProduct(fetchedProduct);
   };
 
+  const { id, name, description, price, imageURL, inStock, category } =
+    openProduct;
+
   useEffect(() => {
     fetchData();
   }, [id]);
-
-  const { id, name, description, price, imageURL, inStock, category } =
-    openProduct;
 
   return (
     <div className="product" data-id={id}>

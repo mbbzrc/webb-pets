@@ -18,15 +18,17 @@ export const AllProducts = () => {
     <div className="all-products">
       {productList.length > 0 &&
         productList.map(({ id, name, price, imageURL }) => {
-          return <div className="thumbnail-product" key={id}>
-            <h2>{name}</h2>
-            <div className="thumbnail-product-image">
-              <img src={imageURL} alt="product thumbnail" />
+          return (
+            <div className="thumbnail-product" key={id}>
+              <h2>{name}</h2>
+              <div className="thumbnail-product-image">
+                <img src={imageURL} alt="product thumbnail" />
+              </div>
+              <div className="thumbnail-product-details">
+                <div className="thumbnail-product-price">{price}</div>
+              </div>
             </div>
-            <div className="thumbnail-product-details">
-              <div className="thumbnail-product-price">{price}</div>
-            </div>
-          </div>;
+          );
         })}
     </div>
   );

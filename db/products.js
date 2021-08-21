@@ -29,7 +29,14 @@ async function getAllProducts() {
   }
 }
 
-async function createProduct({ name, description, price, imageURL, inStock, category }) {
+async function createProduct({
+  name,
+  description,
+  price,
+  imageURL,
+  inStock,
+  category,
+}) {
   try {
     const {
       rows: [product],

@@ -1,2 +1,1 @@
-export const BASE_URL = "http://localhost:5000";
-// update once deployed
+export const BASE_URL = process.env.SERVER_URL || "http://localhost:5000";

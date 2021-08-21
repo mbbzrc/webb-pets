@@ -13,12 +13,12 @@ export const Product = () => {
     setOpenProduct(fetchedProduct);
   };
 
+  const { id, name, description, price, imageURL, inStock, category } =
+    openProduct;
+
   useEffect(() => {
     fetchData();
   }, [id]);
-
-  const { id, name, description, price, imageURL, inStock, category } =
-    openProduct;
 
   return (
     <div className="product" data-id={id}>

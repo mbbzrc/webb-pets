@@ -21,7 +21,7 @@ export const Register = ({ setCurrentUser }) => {
       return;
     }
     try {
-      const currentUser = await registerUser({username, password});
+      const currentUser = await registerUser({ username, password });
       setCurrentUser(currentUser);
     } catch (error) {
       throw error;

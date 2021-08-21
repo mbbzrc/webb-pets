@@ -11,16 +11,16 @@ export const App = () => {
       <h1>Grace Pets</h1>
       <Router>
         <Header currentUser={currentUser} />
-        <Route path="/account/register">
+        <Route path="/api/account/register">
           <Register setCurrentUser={setCurrentUser} />
         </Route>
-        <Route path="/account/login">
+        <Route path="/api/account/login">
           <Login setCurrentUser={setCurrentUser} />
         </Route>
-        <Route path="/products">
+        <Route path="/api/products">
           <AllProducts />
         </Route>
-        <Route path="/product/:productId">
+        <Route path="/api/product/:productId">
           <Product />
         </Route>
       </Router>

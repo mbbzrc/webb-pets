@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { getProductById } from "../api";
+import { getProductById } from "../api/products";
 
 export const Product = () => {
   const [openProduct, setOpenProduct] = useState({});

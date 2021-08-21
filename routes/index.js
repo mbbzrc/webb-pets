@@ -8,4 +8,8 @@ apiRouter.get("/", (req, res, next) => {
 
 const healthRouter = require('./health');
 apiRouter.use('/health', healthRouter);
+
+const productsRouter = require('./products');
+apiRouter.use('/products', productsRouter);
+
 module.exports = apiRouter;

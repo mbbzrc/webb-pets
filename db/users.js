@@ -23,4 +23,73 @@ async function createUser({ username, password }) {
     }
 }
 
-async function getUser({username, password }) 
+async function getUser({username, password }) {
+    try {
+        const { rows: [user], } = await client.query(`
+        SELECT * FROM users WHERE username=$1
+        `, [username]);
+
+        const hashedPassword = user.password 
+        const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+
+        if(passwordsMatch) {
+            delete hashedPassword
+            return user 
+        }
+
+    } catch (err) {
+        throw Error(`Error while getting user: ${err}`)
+    }
+}
+
+async function getAllUsers() {
+    try {
+
+        const { rows: [users], } = await client.query(`
+        SELECT * FROM users
+        `);
+        delete users.password
+        return users
+
+    } catch (err) {
+        throw Error(`Error while getting all users: ${err}`)
+    } 
+}
+
+async function getUserById(id) {
+    try {
+
+        const { rows: [user], } = await client.query(`
+        SELECT * FROM users WHERE id = $1
+        `, [id]);
+
+        delete user.password; 
+        return user;
+
+    } catch (err) {
+        throw Error(`Error while getting user by ID: ${err}`)
+    } 
+}
+
+async function getUserByUsername(username) {
+    try {
+
+        const { rows: [user] } = await client.query(`
+        SELECT * FROM users WHERE username = $1
+        `, [username])
+
+    } catch (err) {
+        throw Error(`Error while getting user by username: ${err}`)
+    } 
+}
+
+
+    
+module.exports = {
+    createUser,
+    getUser,
+    getAllUsers,
+    getUserById,
+    getUserByUsername
+}
+

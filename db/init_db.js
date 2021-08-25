@@ -36,7 +36,7 @@ async function buildTables() {
       );
       CREATE TABLE products(
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        name VARCHAR(255) UNIQUE NOT NULL,
         description VARCHAR(255) NOT NULL,
         price NUMERIC(7, 2),
         "imageURL" VARCHAR(255) DEFAULT 'imageUrl',
@@ -258,10 +258,9 @@ async function createInitialProducts() {
       },
     ];
 
-    // const products = await Promise.all(initialProducts.map(createProduct));
+    const products = await Promise.all(initialProducts.map(createProduct));
     console.log("Finished creating products!");
   } catch (error) {
-    throw error;
     throw error;
   }
 }
@@ -312,10 +311,10 @@ async function rebuildDB() {
     await client.connect();
     await dropTables();
     await buildTables();
-    await createInitialUsers();
+    // await createInitialUsers();
     await createInitialProducts();
-    await createInitialOrders();
-    await createInitialOrderProducts();
+    // await createInitialOrders();
+    // await createInitialOrderProducts();
   } catch (error) {
     console.log("error durring rebuildDB");
     throw error;

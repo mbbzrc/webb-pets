@@ -1,0 +1,132 @@
+/* pink {color: #f4b496;}
+cream {color: #f2d380;}
+dark blue {color: #122f78;}
+med blue {color: #146087;}
+light blue {color: #159397;} */
+
+/* * */
+/* **CONTENTS** */
+/* MAIN ELEMENTS */
+/* NAVIGATION */
+/* DETAILS */
+/* * */
+
+/* MAIN ELEMENTS */
+
+* {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  font-family: "Montserrat", sans-serif;
+}
+
+#app > div {
+  padding: 20px;
+}
+
+h1 {
+  display: inline;
+  font-family: "Righteous", cursive;
+  font-size: 3em;
+  color: #ffffff;
+  margin-right: 30px;
+}
+
+h2 {
+  color: #159397;
+}
+
+/* NAVIGATION */
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #122f78;
+  padding: 20px 10px;
+}
+
+nav a {
+  color: #ffffff;
+  font-size: 1.5em;
+  text-decoration: none;
+  margin: 0px 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav .material-icons-outlined {
+  margin-top: 5px;
+}
+
+nav .material-icons-outlined:hover {
+  color: #f4b496;
+}
+
+#search-bar {
+  display: flex;
+}
+
+#search-bar input {
+  flex: 2;
+  height: 40px;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
+#search-bar button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  color: #122f78;
+}
+
+#search-bar button:hover {
+  color: #f4b496;
+  cursor: pointer;
+}
+
+#register {
+  box-shadow: 0px, 10px, 10px, #000000;
+  width: 800px;
+  height: 80%;
+}
+
+input {
+  background-color: #eeeeee;
+}
+
+/* DETAILS */
+
+.error-message {
+  color: rgb(256, 0, 0);
+}
+
+.required {
+  color: rgb(256, 0, 0);
+}
+
+.material-icons-outlined {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}

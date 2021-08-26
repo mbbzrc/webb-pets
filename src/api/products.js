@@ -1,21 +1,30 @@
-import axios from "axios";
+const productsRouter = require("express").Router();
 
-import { BASE_URL } from "./index";
+const { getAllProducts, getProductByID } = require("../db/products");
 
-export async function getProductById(id) {
+productsRouter.get("/", async (req, res, next) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/api/product/${id}`);
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}
+    const products = await getAllProducts();
 
-export async function getAllProducts() {
-  try {
-    const { data } = await axios.get(`${BASE_URL}/api/products`);
-    return data;
-  } catch (error) {
-    throw error;
+    res.send(products);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-}
+});
+
+productsRouter.get("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const product = await getProductByID(productId);
+
+    if (!products) {
+      throw Error("Invalid Product");
+    }
+
+    res.send(product);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+module.exports = productsRouter;

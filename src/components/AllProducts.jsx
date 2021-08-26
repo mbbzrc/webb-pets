@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { getAllProducts } from "../api/products";
+import { Link } from "react-router-dom";
+
+import { getAllProducts } from "../api";
 
 export const AllProducts = () => {
   const [productList, setProductList] = useState([]);
@@ -16,16 +18,19 @@ export const AllProducts = () => {
 
   return (
     <div className="all-products">
+      {/* CATEGORIES FILTER */}
       {productList.length > 0 &&
         productList.map(({ id, name, price, imageURL }) => {
           return (
             <div className="thumbnail-product" key={id}>
-              <h2>{name}</h2>
+              <h2>
+                <Link to={`/product/${id}`}>{name}</Link>
+              </h2>
               <div className="thumbnail-product-image">
                 <img src={imageURL} alt="product thumbnail" />
               </div>
               <div className="thumbnail-product-details">
-                <div className="thumbnail-product-price">{price}</div>
+                <div className="thumbnail-product-price">${price}</div>
               </div>
             </div>
           );

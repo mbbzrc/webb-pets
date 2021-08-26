@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import { useParams } from "react-router-dom";
 
-import { getProductById } from "../api/products";
+import { getProductById } from "../api";
 
 export const Product = () => {
   const [openProduct, setOpenProduct] = useState({});
@@ -22,15 +23,15 @@ export const Product = () => {
 
   return (
     <div className="product" data-id={id}>
-      <div className="category">{category}</div>
+      <div className="category">category / {category}</div>
       <h2>{name}</h2>
       <div className="product-image">
         <img src={imageURL} alt="product" />
       </div>
       <div className="product-details">
-        <div className="product-price">{price}</div>
+        <div className="product-price">${price}</div>
         <div className="inStock">
-          In stock: {inStock ? "YES, IN STOCK!" : "PRODUCT UNAVAILABLE"}
+          In stock: {inStock ? "YES, AVAILABLE!" : "PRODUCT UNAVAILABLE"}
         </div>
         <div className="product-description">{description}</div>
       </div>

@@ -1,8 +1,5 @@
 // code to build and initialize DB goes here
-const {
-  client,
-  // other db methods
-} = require("./index");
+const client = require("./client");
 
 // const { createUser } = require("./db");
 const { createProduct } = require("./products");
@@ -23,7 +20,9 @@ async function dropTables() {
 
 async function buildTables() {
   console.log("Building Tables ...");
-  await client.query(`
+
+  try {
+    await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         "firstName" VARCHAR(255) NOT NULL,
@@ -57,6 +56,10 @@ async function buildTables() {
         quantity INTEGER NOT NULL DEFAULT 0
       );
     `);
+    console.log("finished building tables");
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function createInitialUsers() {

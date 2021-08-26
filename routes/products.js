@@ -17,7 +17,7 @@ productsRouter.get("/:productId", async (req, res, next) => {
   try {
     const product = await getProductByID(productId);
 
-    if (!products) {
+    if (!product) {
       throw Error("Invalid Product");
     }
 

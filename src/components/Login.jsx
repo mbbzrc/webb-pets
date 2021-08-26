@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { loginUser } from "../api/users";
+import { loginUser } from "../api";
 
 export const Login = ({ setCurrentUser }) => {
   const [form, setForm] = useState({

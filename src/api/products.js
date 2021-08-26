@@ -4,7 +4,7 @@ import { BASE_URL } from "./index";
 
 export async function getProductById(id) {
   try {
-    const { data } = await axios.get(`${BASE_URL}/api/product/${id}`);
+    const { data } = await axios.get(`${BASE_URL}/api/products/${id}`);
     return data;
   } catch (error) {
     throw error;

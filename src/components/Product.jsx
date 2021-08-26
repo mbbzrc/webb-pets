@@ -4,14 +4,24 @@ import { useParams } from "react-router-dom";
 
 import { getProductById } from "../api";
 
-export const Product = () => {
+export const Product = ({ cart, setCart }) => {
   const [openProduct, setOpenProduct] = useState({});
+
+  const [inCart, setInCart] = useState(false);
+
+  // const checkProductInCart = () => {
+  //   const inCart = cart.orderProducts.some((product) => {
+  //     return product.productId === openProduct.id;
+  //   });
+  //   inCart ? setInCart(true) : setInCart(false);
+  // };
 
   const params = useParams();
 
   const fetchData = async () => {
     const fetchedProduct = await getProductById(params.productId);
     setOpenProduct(fetchedProduct);
+    // checkProductInCart();
   };
 
   const { id, name, description, price, imageURL, inStock, category } =
@@ -19,7 +29,17 @@ export const Product = () => {
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [id, inCart]);
+
+  const handleAddToCart = async () => {
+    try {
+      // create API function to add product to order and invoke here, passing in openProduct
+      // setInCart(true)
+    } catch (error) {
+      // set error message
+      throw error;
+    }
+  };
 
   return (
     <div className="product" data-id={id}>
@@ -34,6 +54,12 @@ export const Product = () => {
           In stock: {inStock ? "YES, AVAILABLE!" : "PRODUCT UNAVAILABLE"}
         </div>
         <div className="product-description">{description}</div>
+        {!inCart ? (
+          <span className="material-icons-outlined" onClick={handleAddToCart}>
+            add_shopping_cart
+          </span>
+        ) : // update cart quantity / delete from cart
+        null}
       </div>
     </div>
   );

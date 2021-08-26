@@ -21,6 +21,12 @@ export const App = () => {
     email: "anthony@gmail.com",
   });
 
+  const [cart, setCart] = useState(null);
+
+  // useEffect with cart dependency and fetchData function to get user's cart from DB if signed in, or from localStorage?
+
+  // Function to check localStorage for cart and merge it to signed in user's DB cart?
+
   return (
     <div id="app">
       <Router>
@@ -46,7 +52,7 @@ export const App = () => {
           <AllProducts />
         </Route>
         <Route path="/product/:productId">
-          <Product />
+          <Product cart={cart} setCart={setCart} />
         </Route>
         <Route path="/order/:orderId">
           <Order />

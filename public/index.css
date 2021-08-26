@@ -65,8 +65,9 @@ nav .material-icons-outlined {
   margin-top: 5px;
 }
 
-nav .material-icons-outlined:hover {
+.material-icons-outlined:hover {
   color: #f4b496;
+  cursor: pointer;
 }
 
 #search-bar {
@@ -86,11 +87,6 @@ nav .material-icons-outlined:hover {
   align-items: center;
   width: 40px;
   color: #122f78;
-}
-
-#search-bar button:hover {
-  color: #f4b496;
-  cursor: pointer;
 }
 
 #register {

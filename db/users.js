@@ -29,7 +29,7 @@ async function getUser({username, password }) {
         SELECT * FROM users WHERE username=$1
         `, [username]);
 
-        const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+        const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if(passwordsMatch) {
             delete user.password;

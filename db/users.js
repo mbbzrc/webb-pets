@@ -29,11 +29,10 @@ async function getUser({username, password }) {
         SELECT * FROM users WHERE username=$1
         `, [username]);
 
-        const hashedPassword = user.password 
         const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
         if(passwordsMatch) {
-            delete hashedPassword
+            delete user.password;
             return user 
         }
 
@@ -45,7 +44,7 @@ async function getUser({username, password }) {
 async function getAllUsers() {
     try {
 
-        const { rows: [users], } = await client.query(`
+        const { rows: users, } = await client.query(`
         SELECT * FROM users
         `);
         delete users.password

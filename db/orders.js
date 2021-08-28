@@ -7,7 +7,7 @@ async function createOrder({
     }) {
         const {rows: [order]} = await client.query(`
             INSERT INTO orders(status, "userId", "datePlaced")
-            VALUES ($1, $2)
+            VALUES ($1, $2, $3)
             RETURNING *;
         `, [status, userId, datePlaced])
 
@@ -19,7 +19,7 @@ async function getOrderById(id) {
         const{rows: [order]} = await client.query(`
         SELECT *
         FROM orders
-        WHERE orders.id = $1;
+        WHERE id = $1;
         `, [id]);
 
         if(!order) {
@@ -40,7 +40,7 @@ async function getOrdersByUser({id}) {
         const {rows: orders} = await client.query(`
             SELECT *
             FROM orders
-            WHERE orders."userId" = $1;
+            WHERE id = $1;
         `, [id]);
         
         if(!orders) {
@@ -66,7 +66,7 @@ async function getOrdersByProduct({id}) {
             WHERE products.id=$1
         `, [id]);
 
-            if (ordersByProduct.length === 0) {
+            if (!orderIds) {
                 throw {
                     name:"OrderWithProductNotFound",
                     message: "Orders for this product cannot be found."
@@ -106,8 +106,8 @@ async function getCartByUser(user) {
 
         if(!order) {
             return {
-                name: "NoUserOrder",
-                message: "There is no order from that user."
+                name: "NoCartError",
+                message: "There is no existing cart for this user."
             }
         }
 

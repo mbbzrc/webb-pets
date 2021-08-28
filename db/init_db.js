@@ -59,7 +59,7 @@ async function buildTables() {
     `);
     console.log("Finished building tables.")
   } catch (error) {
-    
+    throw error;
   }
   
 }
@@ -78,7 +78,7 @@ async function createInitialUsers() {
         firstName: "Beatrice",
         lastName: "White",
         email: "beatricewhitee@gmail.com",
-        isAdmin: "false",
+        isAdmin: false,
       }),
       await createUser({
         username: "anthonybeesley",
@@ -86,7 +86,7 @@ async function createInitialUsers() {
         firstName: "Anthony",
         lastName: "Beesley",
         email: "anthonybeesley@gmail.com",
-        isAdmin: "false",
+        isAdmin: false,
       }),
       await createUser({
         username: "seanburns",
@@ -94,7 +94,7 @@ async function createInitialUsers() {
         firstName: "Sean",
         lastName: "Burns",
         email: "seanburns@gmail.com",
-        isAdmin: "false",
+        isAdmin: false,
       }),
       await createUser({
         username: "admin",
@@ -102,7 +102,7 @@ async function createInitialUsers() {
         firstName: "Admin",
         lastName: "Admin",
         email: "admin@gmail.com",
-        isAdmin: "true",
+        isAdmin: false,
       });
 
     console.log("Finished creating users!");
@@ -329,7 +329,7 @@ async function testDB() {
     console.log("Result:", products);
 
     console.log("getProductByID with 1");
-    const bullySticks = await getProductByID();
+    const bullySticks = await getProductByID(1);
     console.log("Result:", bullySticks);
 
     console.log("Calling getAllOrders");
@@ -337,7 +337,7 @@ async function testDB() {
     console.log("Result:", orders);
 
     console.log("getOrderById with 1");
-    const beatriceOrder = await getOrderById();
+    const beatriceOrder = await getOrderById(1);
     console.log("Result:", beatriceOrder);
   } catch(error) {
     throw error

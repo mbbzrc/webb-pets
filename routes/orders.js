@@ -7,7 +7,7 @@ const {
     getOrderById,
     getCartByUser
 } = require("../db")
-const { requireUser } = require("./utils")
+const { requireUser, requireAdmin } = require("./utils")
 
 
 ordersRouter.get("/", [requireUser, requireAdmin], async (req, res, next) => {

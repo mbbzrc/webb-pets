@@ -25,8 +25,11 @@ server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
+const dotenv = require("dotenv")
+dotenv.config()
+
 // bring in the DB connection
-const { client } = require("./db/client");
+const  client  = require("./db/client");
 
 server.use((err, req, res, next) => {
   res.status(500).send(err);

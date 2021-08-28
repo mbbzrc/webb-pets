@@ -3,6 +3,11 @@ const client = require("./client");
 const { createOrder, getAllOrders } = require("./orders");
 const { createUser } = require("./users");
 const { createProduct, getAllProducts, getProductByID } = require("./products");
+const dotenv = require("dotenv")
+dotenv.config()
+
+// const { createUser } = require("./db");
+const { createProduct } = require("./products");
 
 async function dropTables() {
   try {
@@ -345,7 +350,7 @@ async function rebuildDB() {
     await client.connect();
     await dropTables();
     await buildTables();
-    // await createInitialUsers();
+    await createInitialUsers();
     await createInitialProducts();
     await createInitialOrders();
   } catch (error) {

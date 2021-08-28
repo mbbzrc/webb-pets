@@ -7,6 +7,8 @@ const {
     getOrderById,
     getCartByUser
 } = require("../db")
+const { requireUser } = require("./utils")
+
 
 ordersRouter.get("/", [requireUser, requireAdmin], async (req, res, next) => {
     try {
@@ -61,6 +63,10 @@ ordersRouter.get("/cart", requireUser, async (req, res, next) => {
         next({ name, message });
     }
 });
+
+ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
+    
+})
 
 
 module.exports = ordersRouter

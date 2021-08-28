@@ -1,13 +1,12 @@
 // code to build and initialize DB goes here
 const client = require("./client");
-const { createOrder, getAllOrders } = require("./orders");
-const { createUser } = require("./users");
+const { createOrder, getAllOrders, getOrderById } = require("./orders");
+const { createUser, getAllUsers } = require("./users");
 const { createProduct, getAllProducts, getProductByID } = require("./products");
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
 
 // const { createUser } = require("./db");
-const { createProduct } = require("./products");
 
 async function dropTables() {
   try {
@@ -275,18 +274,22 @@ async function createInitialOrders() {
     await createOrder({
       userId: 1,
       status: "completed",
+      datePlaced: new Date(),
     }),
       await createOrder({
         userId: 2,
         status: "completed",
+        datePlaced: new Date(),
       }),
       await createOrder({
         userId: 3,
         status: "cancelled",
+        datePlaced: new Date(),
       }),
       await createOrder({
         userId: 4,
         status: "cancelled",
+        datePlaced: new Date(),
       });
 
     console.log("Finished creating orders!");
@@ -323,7 +326,7 @@ async function testDB() {
   try {
     console.log("Calling getAllUsers");
     const users = await getAllUsers();
-    console.log("Result:", users)
+    console.log("Result:", users);
 
     console.log("Calling getAllProducts");
     const products = await getAllProducts();

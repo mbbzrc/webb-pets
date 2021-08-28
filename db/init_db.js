@@ -4,7 +4,6 @@ const { createOrder, getAllOrders } = require("./orders");
 const { createUser } = require("./users");
 const { createProduct, getAllProducts, getProductByID } = require("./products");
 
-
 async function dropTables() {
   try {
     console.log("Dropping Tables ...");
@@ -14,7 +13,7 @@ async function dropTables() {
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
     `);
-    console.log("Finished dropping tables.")
+    console.log("Finished dropping tables.");
   } catch (error) {
     throw error;
   }
@@ -57,11 +56,10 @@ async function buildTables() {
         quantity INTEGER NOT NULL DEFAULT 0
       );
     `);
-    console.log("Finished building tables.")
+    console.log("Finished building tables.");
   } catch (error) {
     throw error;
   }
-  
 }
 
 //map calls the callback func once for each element (good), in order (not necessary),
@@ -71,15 +69,14 @@ async function createInitialUsers() {
   try {
     console.log("Creating Users ...");
     // create useful starting data
-    await createUser(
-      {
-        username: "beatricewhite",
-        password: "111111",
-        firstName: "Beatrice",
-        lastName: "White",
-        email: "beatricewhitee@gmail.com",
-        isAdmin: false,
-      }),
+    await createUser({
+      username: "beatricewhite",
+      password: "111111",
+      firstName: "Beatrice",
+      lastName: "White",
+      email: "beatricewhitee@gmail.com",
+      isAdmin: false,
+    }),
       await createUser({
         username: "anthonybeesley",
         password: "222222",
@@ -114,15 +111,15 @@ async function createInitialUsers() {
 async function createInitialProducts() {
   try {
     console.log("Creating Products ...");
-    createProduct({
-        name: 'Best Bully Sticks 6"',
-        description: "6-inch bully sticks dog treats, 20 count",
-        imageUrl: "",
-        price: 40.99,
-        inStock: true,
-        category: "dog",
-      }),
-      createProduct({
+    await createProduct({
+      name: 'Best Bully Sticks 6"',
+      description: "6-inch bully sticks dog treats, 20 count",
+      imageUrl: "",
+      price: 40.99,
+      inStock: true,
+      category: "dog",
+    }),
+      await createProduct({
         name: "Plush Mice",
         description: "Plush mice cat toy with catnip",
         imageUrl: "",
@@ -130,7 +127,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "cat",
       }),
-      createProduct({
+      await createProduct({
         name: "Cat Scratcher",
         description: "Cat scratcher toy with catnip, tropical palms",
         imageUrl: "",
@@ -138,7 +135,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "cat",
       }),
-      createProduct({
+      await createProduct({
         name: "Pond Pellets",
         description: "Pond pellets fish foot, 10-lb bag",
         imageUrl: "",
@@ -146,7 +143,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "fish",
       }),
-      createProduct({
+      await createProduct({
         name: "Animal Exercise Ball",
         description: "Run-about small animal exercise ball",
         imageUrl: "",
@@ -154,7 +151,7 @@ async function createInitialProducts() {
         inStock: false,
         category: "small animal",
       }),
-      createProduct({
+      await createProduct({
         name: "Basking Lamp",
         description: "Repti basking reptile spot lamp, 100-watt, 2 count",
         imageUrl: "",
@@ -162,7 +159,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "reptile",
       }),
-      createProduct({
+      await createProduct({
         name: "Gourmet-Style Crickets",
         description: "Gourmet-style crickets reptile food, 1.2-oz can",
         imageUrl: "",
@@ -170,7 +167,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "reptile",
       }),
-      createProduct({
+      await createProduct({
         name: "Temptations",
         description: "Mixups backyard cookout cat treats, 16-oz tub",
         imageUrl: "",
@@ -178,7 +175,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "cat",
       }),
-      createProduct({
+      await createProduct({
         name: "Non-Clumping Cat Litter",
         description: "Febreze scented non-clumping clay cat little, 35-lb bag",
         imageUrl: "",
@@ -186,7 +183,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "cat",
       }),
-      createProduct({
+      await createProduct({
         name: "Ultra Rubber Ball",
         description: "Ultra rubber ball tough dog toy, Medium, 2 pack",
         imageUrl: "",
@@ -194,7 +191,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "dog",
       }),
-      createProduct({
+      await createProduct({
         name: "Life Protection Dry Dog Food",
         description:
           "Life protection formula adult chicken & brown rice recipe dry dog food, 30-lb bag",
@@ -203,7 +200,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "dog",
       }),
-      createProduct({
+      await createProduct({
         name: "Aquarium Starter Kit",
         description: "Tropical panaview aquarium starter kit, 5-gal",
         imageUrl: "",
@@ -211,7 +208,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "fish",
       }),
-      createProduct({
+      await createProduct({
         name: "NeoGlow Aquarium Starter Kit",
         description: "LED neoGlow aquarium starter kit, Pink, 5.5-gal",
         imageUrl: "",
@@ -219,7 +216,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "fish",
       }),
-      createProduct({
+      await createProduct({
         name: "Shale Ledge",
         description: "Shale ledge aquarium & terrarium decor, 1-count",
         imageUrl: "",
@@ -227,7 +224,7 @@ async function createInitialProducts() {
         inStock: false,
         category: "reptile",
       }),
-      createProduct({
+      await createProduct({
         name: "Rock Food & Water Dishes",
         description: "Repti rock reptile rock food & water dishes, Small",
         imageUrl: "",
@@ -235,7 +232,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "reptile",
       }),
-      createProduct({
+      await createProduct({
         name: "Small Animal Cage",
         description:
           "Home sweet home plastic small animal cage, Color Varies, 28-in",
@@ -244,7 +241,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "small animal",
       }),
-      createProduct({
+      await createProduct({
         name: "Feeder & Water Fountain",
         description: "Mini rabbit feeder & water fountain, 48-oz",
         imageUrl: "",
@@ -252,7 +249,7 @@ async function createInitialProducts() {
         inStock: true,
         category: "small animal",
       }),
-      createProduct({
+      await createProduct({
         name: "Orthopedic Sofa Dog Bed",
         description: "Plush & suede orthopedic sofa dog bed, Gray, Large",
         imageUrl: "",
@@ -261,7 +258,6 @@ async function createInitialProducts() {
         category: "dog",
       });
 
-    const products = await Promise.all(initialProducts.map(createProduct));
     console.log("Finished creating products!");
   } catch (error) {
     throw error;
@@ -271,21 +267,21 @@ async function createInitialProducts() {
 async function createInitialOrders() {
   try {
     console.log("Creating orders...");
-      createOrder({ 
-        userId: 1, 
-        status: "completed" 
+    await createOrder({
+      userId: 1,
+      status: "completed",
+    }),
+      await createOrder({
+        userId: 2,
+        status: "completed",
       }),
-      createOrder({ 
-        userId: 2, 
-        status: "completed" 
+      await createOrder({
+        userId: 3,
+        status: "cancelled",
       }),
-      createOrder({ 
-        userId: 3, 
-        status: "cancelled" 
-      }),
-      createOrder({ 
-        userId: 4, 
-        status: "cancelled" 
+      await createOrder({
+        userId: 4,
+        status: "cancelled",
       });
 
     console.log("Finished creating orders!");
@@ -320,9 +316,9 @@ async function createInitialOrders() {
 
 async function testDB() {
   try {
-    // console.log("Calling getAllUsers");
-    // const users = await getAllUsers();
-    // console.log("Result:", users)
+    console.log("Calling getAllUsers");
+    const users = await getAllUsers();
+    console.log("Result:", users)
 
     console.log("Calling getAllProducts");
     const products = await getAllProducts();
@@ -339,8 +335,8 @@ async function testDB() {
     console.log("getOrderById with 1");
     const beatriceOrder = await getOrderById(1);
     console.log("Result:", beatriceOrder);
-  } catch(error) {
-    throw error
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -355,7 +351,7 @@ async function rebuildDB() {
   } catch (error) {
     console.log("error durring rebuildDB");
     throw error;
-  } 
+  }
 }
 
 rebuildDB()

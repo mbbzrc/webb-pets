@@ -13,13 +13,7 @@ import {
 } from "./index";
 
 export const App = () => {
-  // const [currentUser, setCurrentUser] = useState(null);
-  const [currentUser, setCurrentUser] = useState({
-    username: "abeesley",
-    firstName: "Anthony",
-    lastName: "Beesley",
-    email: "anthony@gmail.com",
-  });
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [cart, setCart] = useState(null);
 

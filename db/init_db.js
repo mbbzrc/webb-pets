@@ -103,7 +103,7 @@ async function createInitialUsers() {
         firstName: "Admin",
         lastName: "Admin",
         email: "admin@gmail.com",
-        isAdmin: false,
+        isAdmin: true,
       });
 
     console.log("Finished creating users!");

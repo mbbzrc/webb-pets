@@ -7,6 +7,10 @@ export const Register = ({ setCurrentUser }) => {
     username: "",
     password: "",
     passwordCheck: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    isAdmin: false,
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -16,9 +20,10 @@ export const Register = ({ setCurrentUser }) => {
   };
 
   const checkCredentials = () => {
-    const { username, password, passwordCheck } = form;
-    if (!username || !password) {
-      setErrorMessage("Please enter both a username and a password.");
+    const { username, password, passwordCheck, firstName, lastName, email } =
+      form;
+    if (!username || !password || !firstName || !lastName || !email) {
+      setErrorMessage("Please complete all fields.");
       return;
     }
     if (password !== passwordCheck) {
@@ -29,14 +34,25 @@ export const Register = ({ setCurrentUser }) => {
       setErrorMessage("Password must be longer than 8 characters.");
       return;
     }
+    if (!email.includes("@")) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     checkCredentials();
-    const { username, password } = form;
+    const { username, password, firstName, lastName, email, isAdmin } = form;
     try {
-      const currentUser = await registerUser({ username, password });
+      const currentUser = await registerUser({
+        username,
+        password,
+        firstName,
+        lastName,
+        email,
+        isAdmin,
+      });
       setCurrentUser(currentUser);
     } catch (error) {
       throw error;
@@ -74,6 +90,36 @@ export const Register = ({ setCurrentUser }) => {
             type="password"
             name="passwordCheck"
             value={form.passwordCheck}
+            onChange={handleFormChange}
+          />
+        </label>
+        <label>
+          <span className="required">*</span>
+          <span>first name: </span>
+          <input
+            type="text"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleFormChange}
+          />
+        </label>
+        <label>
+          <span className="required">*</span>
+          <span>last name: </span>
+          <input
+            type="text"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleFormChange}
+          />
+        </label>
+        <label>
+          <span className="required">*</span>
+          <span>e-mail: </span>
+          <input
+            type="text"
+            name="email"
+            value={form.email}
             onChange={handleFormChange}
           />
         </label>

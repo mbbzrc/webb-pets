@@ -8,13 +8,25 @@ export const Login = ({ setCurrentUser }) => {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const checkCredentials = (username, password) => {
+    if (!username || !password) {
+      setErrorMessage("Please supply a valid username and password.");
+      return;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentUser = await loginUser(form);
+    const { username, password } = form;
+    checkCredentials(username, password);
+    const { user: currentUser } = await loginUser({ username, password });
+    console.log(currentUser);
     setCurrentUser(currentUser);
   };
 
@@ -42,6 +54,7 @@ export const Login = ({ setCurrentUser }) => {
         </label>
         <input type="submit" value="log in" onClick={handleSubmit} />
       </form>
+      {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
     </div>
   );
 };

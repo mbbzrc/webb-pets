@@ -1,7 +1,14 @@
 const client = require("./client");
 const bcrypt = require("bcrypt");
 
-async function createUser({ username, password, firstName, lastName, email, isAdmin  }) {
+async function createUser({
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isAdmin,
+}) {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
@@ -31,7 +38,8 @@ async function getUser({ username, password }) {
       rows: [user],
     } = await client.query(
       `
-        SELECT * FROM users WHERE username=$1
+        SELECT * FROM users
+        WHERE username=$1;
         `,
       [username]
     );
@@ -41,6 +49,8 @@ async function getUser({ username, password }) {
     if (passwordsMatch) {
       delete user.password;
       return user;
+    } else {
+      throw error;
     }
   } catch (err) {
     throw Error(`Error while getting user: ${err}`);
@@ -83,12 +93,14 @@ async function getUserByUsername(username) {
       rows: [user],
     } = await client.query(
       `
-        SELECT * FROM users WHERE username = $1
+        SELECT * FROM users
+        WHERE username = $1;
         `,
       [username]
     );
+    return user;
   } catch (err) {
-    throw Error(`Error while getting user by username: ${err}`);
+    throw error;
   }
 }
 

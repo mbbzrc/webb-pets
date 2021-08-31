@@ -26,3 +26,5 @@ export const Account = ({ currentUser }) => {
     </div>
   );
 };
+
+// THIS IS A CHANGE

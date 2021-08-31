@@ -4,7 +4,7 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET = 'dontTell'} = process.env;
 
-const {getUserByUsername, createUser, getUser, getOrdersByUser} = require("../db")
+const {getUserByUsername, createUser, getUser, getAllUsers} = require("../db");
 const {requireUser, isAdmin} = require("./utils");
 
 usersRouter.post("/register", async(req, res, next) => {
@@ -26,6 +26,13 @@ usersRouter.post("/register", async(req, res, next) => {
       });
     }
 
+    if(password.length < 8) {
+      next({
+        name:"PasswordTooShort",
+        message:"Password must be more than 8 characters."
+      })
+    }
+
     const user = await createUser({
       username,
       password,
@@ -42,7 +49,7 @@ usersRouter.post("/register", async(req, res, next) => {
       expiresIn: '4w'
     });
 
-    res.sendStatus({
+    res.send({
       message: "Thank you for signing up.",
       token,
     })
@@ -57,7 +64,7 @@ usersRouter.post('/login', async(req, res, next) => {
   if(!username || !password) {
     next({
       name: "MissingCredentialsError",
-      message: "Please supply both a username and password"
+      message: "Please provide both a username and password"
     });
   }
 
@@ -77,7 +84,7 @@ usersRouter.post('/login', async(req, res, next) => {
   } catch (error) {
     throw error
   }
-})
+});
 
 usersRouter.get("/me", requireUser, async(req, res, next) => {
   try {
@@ -86,6 +93,18 @@ usersRouter.get("/me", requireUser, async(req, res, next) => {
   } catch(error) {
     throw error
   }
-})
+});
+
+usersRouter.get("/", isAdmin, async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+
+    res.send(users);
+  } catch ({name, message}) {
+    next({name, message});
+  }
+});
+
+//update user route goes here:
 
 module.exports = usersRouter;

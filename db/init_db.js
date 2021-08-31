@@ -367,17 +367,3 @@ rebuildDB()
   .catch(console.error)
   .finally(() => client.end());
 
-// async function populateInitialData() {
-//   try {
-//     // create useful starting data
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
-// buildTables()
-//   .then(populateInitialData)
-//   .catch(console.error)
-//   .finally(() => client.end());
-
-//comment

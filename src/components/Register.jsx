@@ -54,6 +54,7 @@ export const Register = ({ setCurrentUser }) => {
         isAdmin,
       });
       setCurrentUser(currentUser);
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
     } catch (error) {
       throw error;
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useParams, useLocation } from "react-router-dom";
 
-import { getOrder } from "../api";
+import { getCartByUserId } from "../api";
 
 export const Order = (props) => {
   const [order, setOrder] = useState(null);
@@ -12,7 +12,7 @@ export const Order = (props) => {
   const params = useParams();
 
   const fetchData = async () => {
-    // const data = await getOrder(params.orderId);
+    // const data = await getCartByUserId(params.orderId);
     // setOrder(data);
   };
 

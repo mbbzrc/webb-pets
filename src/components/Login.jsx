@@ -26,8 +26,8 @@ export const Login = ({ setCurrentUser }) => {
     const { username, password } = form;
     checkCredentials(username, password);
     const { user: currentUser } = await loginUser({ username, password });
-    console.log(currentUser);
     setCurrentUser(currentUser);
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
   };
 
   return (

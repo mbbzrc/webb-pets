@@ -131,7 +131,7 @@ async function getCartByUser(user) {
   }
 }
 
-async function updateOrders({ id, status, userId }) {
+async function updateOrder({ id, status, userId }) {
   const updateFields = {};
 
   if (status) {
@@ -169,6 +169,26 @@ async function updateOrders({ id, status, userId }) {
   }
 }
 
+async function completeOrder({ id }) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+            UPDATE orders
+            SET "status"="completed"
+            WHERE id=$1
+            RETURNING *;
+        `,
+      [id]
+    );
+
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createOrder,
   getAllOrders,
@@ -176,4 +196,6 @@ module.exports = {
   getOrdersByUser,
   getOrdersByProduct,
   getCartByUser,
+  updateOrder,
+  completeOrder,
 };

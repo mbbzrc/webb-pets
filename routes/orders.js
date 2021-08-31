@@ -5,7 +5,9 @@ const {
     createOrder,
     getAllOrders,
     getOrderById,
-    getCartByUser
+    getCartByUser,
+    getOrderById,
+    updatedOrder
 } = require("../db")
 const { requireUser, requireAdmin } = require("./utils")
 
@@ -65,6 +67,21 @@ ordersRouter.get("/cart", requireUser, async (req, res, next) => {
 });
 
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
+    try {
+        const {orderId} = req.params;
+        const { userId, status } = req.body; 
+        
+        const updatedOrder = await updatedOrder({
+            id: orderId,
+            status: status,
+            userId: userId, 
+        });
+
+        res.send(updatedOrder)
+
+    } catch (error) {
+        next(error)
+    }
     
 })
 

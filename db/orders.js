@@ -189,6 +189,25 @@ async function completeOrder({ id }) {
   }
 }
 
+async function cancelOrder(id) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+        UPDATE orders
+        SET "status"="cancelled" 
+        WHERE id=$1
+        RETURNING *;`,
+      [id]
+    );
+
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createOrder,
   getAllOrders,
@@ -198,4 +217,5 @@ module.exports = {
   getCartByUser,
   updateOrder,
   completeOrder,
+  cancelOrder,
 };

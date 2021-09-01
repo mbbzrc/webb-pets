@@ -63,7 +63,7 @@ async function getOrdersByProduct({id}) {
             FROM orders
             JOIN order_products ON orders.id=order_products."orderId"
             JOIN products ON products.id=order_products."productId"
-            WHERE products.id=$1
+            WHERE products.id=$1;
         `, [id]);
 
             if (!orderIds) {

@@ -1,14 +1,11 @@
-const express = require("express");
 const ordersRouter = express.Router();
 
 const {
     createOrder,
     getAllOrders,
     getOrderById,
-    getCartByUser,
-    cancelOrder,
-    updateOrder,
-} = require("../db");
+    getCartByUser
+} = require("../db")
 const { requireUser, requireAdmin } = require("./utils")
 
 
@@ -53,7 +50,7 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
 
 ordersRouter.get("/cart", requireUser, async (req, res, next) => {
     try {
-        const cart = await getCartByUser(req.user);
+        const cart = await getCartByUser(req.user.id);
 
         if (cart) {
             res.send(cart);
@@ -67,26 +64,7 @@ ordersRouter.get("/cart", requireUser, async (req, res, next) => {
 });
 
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
-    const {orderId} = req.params;
-    const {status} = req.body;
 
-    try {
-        const order = await updateOrder(orderId, {status});
-        res.send(order);
-    } catch (error) {
-        next(error);
-    }
-});
-
-ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
-    const {orderId} = req.params;
-
-    try {
-        const order = await cancelOrder(orderId);
-        res.send(order);
-    } catch (error) {
-        next(error)
-    }
 })
 
 

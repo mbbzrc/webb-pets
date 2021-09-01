@@ -6,8 +6,6 @@ const { createProduct, getAllProducts, getProductByID } = require("./products");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// const { createUser } = require("./db");
-
 async function dropTables() {
   try {
     console.log("Dropping Tables ...");

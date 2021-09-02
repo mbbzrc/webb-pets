@@ -6,15 +6,37 @@ export function getUserToken() {
   return localStorage.getItem("token");
 }
 
-// pending API route!
-export async function registerUser({ username, password }) {
+export function createAuthHeader() {
+  if (getUserToken()) {
+    return {
+      headers: {
+        Authorization: `Bearer ${getUserToken()}`,
+      },
+    };
+  }
+}
+
+export async function registerUser({
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isAdmin,
+}) {
   try {
-    const { data } = await axios.post(`${BASE_URL}/users/register`, {
+    const { data } = await axios.post(`${BASE_URL}/api/users/register`, {
       username: username,
       password: password,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      isAdmin: isAdmin,
     });
-    localStorage.setItem(JSON.stringify("token", data.token));
-    return data;
+    console.log("DATA => ", data);
+    localStorage.setItem("token", data.token);
+    // IF STATUS 200, TOAST: 'THANK YOU FOR SIGNING UP'
+    return data.user;
   } catch (error) {
     throw error;
   }
@@ -22,11 +44,12 @@ export async function registerUser({ username, password }) {
 
 export async function loginUser({ username, password }) {
   try {
-    const { data } = await axios.post(`${BASE_URL}/users/login`, {
+    const { data } = await axios.post(`${BASE_URL}/api/users/login`, {
       username: username,
       password: password,
     });
-    localStorage.setItem(JSON.stringify("token", data.token));
+    localStorage.setItem("token", data.token);
+    // IF STATUS 200, TOAST: 'WELCOME BACK'
     return data;
   } catch (error) {
     throw error;

@@ -1,38 +1,47 @@
 import React, { useState, useEffect } from "react";
 
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { getOrder } from "../api";
 
-export const Order = (props) => {
-  const [order, setOrder] = useState(null);
+export const Order = ({ cart }) => {
+  const [openOrder, setOpenOrder] = useState(null);
 
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   const params = useParams();
 
   const fetchData = async () => {
-    // const data = await getOrder(params.orderId);
-    // setOrder(data);
+    try {
+      const fetchedOrder = await getOrder(params.orderId);
+      setOpenOrder(fetchedOrder);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    // fetchData();
-  }, [order]);
+    if (pathname === "/cart") {
+      setOpenOrder(cart);
+    } else if (params.orderId) {
+      fetchData();
+    }
+  }, []);
 
   return (
     <>
-      {location.pathname === "/cart" ? <h2>My Cart</h2> : null}
-      {order && (
+      {openOrder ? (
         <div className="order">
-          <h3>Order #{order.id}</h3>
-          {order.status == "completed" ? (
-            <p>Date placed: {order.datePlaced}</p>
-          ) : order.status == "canceled" ? (
+          <h3>Order #{openOrder.id}</h3>
+          {openOrder.status == "created" ? (
+            <p>Items in cart:</p>
+          ) : openOrder.status == "completed" ? (
+            <p>Date placed: {openOrder.datePlaced}</p>
+          ) : openOrder.status == "canceled" ? (
             <p>Status: order canceled</p>
           ) : null}
         </div>
-      )}
+      ) : null}
     </>
   );
 };

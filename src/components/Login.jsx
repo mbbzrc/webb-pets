@@ -1,21 +1,46 @@
 import React, { useState } from "react";
 
-import { loginUser } from "../api";
+import { loginUser, getCartByUserId } from "../api";
 
-export const Login = ({ setCurrentUser }) => {
+export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const checkCredentials = (username, password) => {
+    if (!username || !password) {
+      setErrorMessage("Please supply a valid username and password.");
+      return false;
+    }
+    return true;
+  };
+
+  const mergeCart = async () => {
+    if (!cart) return;
+    const storedCart = await getCartByUserId(currentUser.id);
+    const mergedCart = storedCart.concat(cart);
+    setCart(mergedCart);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentUser = await loginUser(form);
-    setCurrentUser(currentUser);
+    const { username, password } = form;
+    if (!checkCredentials(username, password)) return;
+    try {
+      const { user: loggedInUser } = await loginUser({ username, password });
+      setCurrentUser(loggedInUser);
+      localStorage.setItem("currentUser", JSON.stringify(loggedInUser));
+      await mergeCart();
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -42,6 +67,7 @@ export const Login = ({ setCurrentUser }) => {
         </label>
         <input type="submit" value="log in" onClick={handleSubmit} />
       </form>
+      {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
     </div>
   );
 };

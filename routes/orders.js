@@ -5,6 +5,7 @@ const {
   getAllOrders,
   getOrderById,
   getCartByUser,
+  getOrdersByUser,
   getOrderById,
   updateOrder,
   cancelOrder,
@@ -38,7 +39,43 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/:orderId", async (req, res, next) => {
+ordersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const cart = await getCartByUser(userId);
+
+    if (cart) {
+      res.send(cart);
+    } else {
+      next({
+        name: "NoCartError",
+        message: "Cannot get cart by selected user.",
+      });
+      return;
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+ordersRouter.get("/:userId/allorders", requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const orderList = await getOrdersByUser(userId);
+    if (orderList) {
+      res.send(orderList);
+    } else {
+      next({
+        name: "NoOrdersError",
+        message: "There are no existing orders for this user.",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+ordersRouter.get("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
   try {
     const order = await getOrderById(orderId);
@@ -46,21 +83,6 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
     res.send(order);
   } catch (error) {
     throw error;
-  }
-});
-
-ordersRouter.get("/cart", requireUser, async (req, res, next) => {
-  try {
-    const cart = await getCartByUser(req.user.id);
-
-    if (cart) {
-      res.send(cart);
-    } else {
-      next({ message: "Cannot get card by selected user." });
-      return;
-    }
-  } catch ({ name, message }) {
-    next({ name, message });
   }
 });
 

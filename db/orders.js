@@ -42,13 +42,13 @@ async function getOrderById(id) {
   }
 }
 
-async function getOrdersByUser({ id }) {
+async function getOrdersByUser(id) {
   try {
     const { rows: orders } = await client.query(
       `
             SELECT *
             FROM orders
-            WHERE id = $1;
+            WHERE "userId" = $1;
         `,
       [id]
     );
@@ -105,7 +105,7 @@ async function getAllOrders() {
   }
 }
 
-async function getCartByUser(user) {
+async function getCartByUser(userId) {
   try {
     const {
       rows: [order],
@@ -113,19 +113,18 @@ async function getCartByUser(user) {
       `
             SELECT *
             FROM orders
-            WHERE orders."userId" = $1
+            WHERE "userId" = $1
             AND status = 'created';
         `,
-      [user]
+      [userId]
     );
 
     if (!order) {
-      return {
+      throw {
         name: "NoCartError",
         message: "There is no existing cart for this user.",
       };
     }
-
     return order;
   } catch (error) {
     throw error;

@@ -1,11 +1,10 @@
-const express = require('express');
+const express = require("express");
 const health = express();
 
+health.get("/", async (req, res, next) => {
+  res.send({
+    message: "HEALTHY",
+  });
+});
 
-health.get('/', async (req, res, next) => {
-    res.send({
-        message:'HEALTHY'
-    })
-})
-
-module.exports = health; 
+module.exports = health;

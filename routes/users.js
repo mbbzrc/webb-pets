@@ -2,7 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = "dontTell" } = process.env;
+const { JWT_SECRET } = process.env;
 
 const {
   getUserByUsername,
@@ -54,6 +54,7 @@ usersRouter.post("/register", async (req, res, next) => {
     res.send({
       message: "Thank you for signing up.",
       token,
+      user,
     });
   } catch ({ name, message }) {
     next({ name, message });
@@ -77,7 +78,7 @@ usersRouter.post("/login", async (req, res, next) => {
       res.send({
         message: "You are now logged in!",
         token,
-        username,
+        user,
       });
     } else {
       next({
@@ -108,7 +109,5 @@ usersRouter.get("/", isAdmin, async (req, res, next) => {
     next({ name, message });
   }
 });
-
-//update user route goes here:
 
 module.exports = usersRouter;

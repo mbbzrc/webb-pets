@@ -14,6 +14,7 @@ async function createOrder({
         return order;
 }
 
+//join products on orderId
 async function getOrderById(id) {
     try {
         const{rows: [order]} = await client.query(`

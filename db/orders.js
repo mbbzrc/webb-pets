@@ -15,6 +15,7 @@ async function createOrder({ status, userId, datePlaced }) {
   return order;
 }
 
+//join products on orderId
 async function getOrderById(id) {
   try {
     const {

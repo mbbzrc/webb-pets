@@ -6,8 +6,6 @@ const { createProduct, getAllProducts, getProductByID } = require("./products");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// const { createUser } = require("./db");
-
 async function dropTables() {
   try {
     console.log("Dropping Tables ...");
@@ -366,18 +364,3 @@ rebuildDB()
   .then(testDB)
   .catch(console.error)
   .finally(() => client.end());
-
-// async function populateInitialData() {
-//   try {
-//     // create useful starting data
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
-// buildTables()
-//   .then(populateInitialData)
-//   .catch(console.error)
-//   .finally(() => client.end());
-
-//comment

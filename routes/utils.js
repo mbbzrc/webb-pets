@@ -5,7 +5,7 @@ function requireUser(req, res, next) {
       message: "Please log in to complete this.",
     });
   }
-
+  
   next();
 }
 

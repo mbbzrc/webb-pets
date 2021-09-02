@@ -2,12 +2,13 @@ const express = require("express");
 const usersRouter = express.Router();
 
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = "dontTell" } = process.env;
+const { JWT_SECRET } = process.env;
 
 const {
   getUserByUsername,
   createUser,
   getUser,
+  getAllUsers,
   getOrdersByUser,
 } = require("../db");
 const { requireUser, isAdmin } = require("./utils");
@@ -21,6 +22,13 @@ usersRouter.post("/register", async (req, res, next) => {
       next({
         name: "UserExistsError",
         message: "A user with that username already exists",
+      });
+    }
+
+    if (password.length < 8) {
+      next({
+        name: "PasswordTooShort",
+        message: "Password must be more than 8 characters.",
       });
     }
 
@@ -44,9 +52,10 @@ usersRouter.post("/register", async (req, res, next) => {
       }
     );
 
-    res.sendStatus({
+    res.send({
       message: "Thank you for signing up.",
       token,
+      user,
     });
   } catch ({ name, message }) {
     next({ name, message });
@@ -59,7 +68,7 @@ usersRouter.post("/login", async (req, res, next) => {
   if (!username || !password) {
     next({
       name: "MissingCredentialsError",
-      message: "Please supply both a username and password",
+      message: "Please provide both a username and password",
     });
   }
 
@@ -70,7 +79,7 @@ usersRouter.post("/login", async (req, res, next) => {
       res.send({
         message: "You are now logged in!",
         token,
-        username,
+        user,
       });
     } else {
       next({
@@ -89,6 +98,16 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
     res.send(user);
   } catch (error) {
     throw error;
+  }
+});
+
+usersRouter.get("/", isAdmin, async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+
+    res.send(users);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 

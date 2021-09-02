@@ -1,3 +1,4 @@
+const express = require("express");
 const ordersRouter = express.Router();
 
 const {
@@ -6,7 +7,6 @@ const {
   getOrderById,
   getCartByUser,
   getOrdersByUser,
-  getOrderById,
   updateOrder,
   cancelOrder,
 } = require("../db");

@@ -9,6 +9,7 @@ const {
   createUser,
   getUser,
   getAllUsers,
+  getOrdersByUser,
 } = require("../db");
 const { requireUser, isAdmin } = require("./utils");
 

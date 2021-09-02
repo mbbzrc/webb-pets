@@ -42,20 +42,20 @@ orderProductsRouter.delete(
   }
 );
 
-// ordersRouter.post("/orders/:orderId/products", requireUser, async(req, res, next) => {
-//     const {orderId} = req.params;
-//     const {productId, price, quantity} = req.body;
-//     try {
-//         const addedOrderProduct = await addProductToOrder({
-//             orderId,
-//             productId,
-//             price,
-//             quantity});
+ordersRouter.post("/orders/:orderId/products", requireUser, async(req, res, next) => {
+    const {orderId} = req.params;
+    const {productId, price, quantity} = req.body;
+    try {
+        const addedOrderProduct = await addProductToOrder({
+            orderId,
+            productId,
+            price,
+            quantity});
 
-//         res.send(addedOrderProduct)
-//     } catch (error) {
-//         throw error;
-//     }
-// })
+        res.send(addedOrderProduct)
+    } catch (error) {
+        throw error;
+    }
+})
 
 module.exports = orderProductsRouter;

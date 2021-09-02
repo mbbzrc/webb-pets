@@ -143,7 +143,7 @@ async function updateOrder({ id, status, userId }) {
   }
 
   const setString = Object.keys(updateFields)
-    .map((key, index) => `"${key}"$${index + 1}`)
+    .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
 
   if (setString.length === 0) {

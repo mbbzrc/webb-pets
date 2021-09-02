@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { loginUser } from "../api";
+import { loginUser, getCartByUserId } from "../api";
 
-export const Login = ({ setCurrentUser }) => {
+export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -21,14 +21,30 @@ export const Login = ({ setCurrentUser }) => {
     }
   };
 
+  const mergeCart = async () => {
+    if (!cart) return;
+    const storedCart = await getCartByUserId(currentUser.id);
+    const mergedCart = storedCart.concat(cart);
+    setCart(mergedCart);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = form;
     checkCredentials(username, password);
-    const { user: currentUser } = await loginUser({ username, password });
-    setCurrentUser(currentUser);
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    try {
+      const { user: loggedInUser } = await loginUser({ username, password });
+      setCurrentUser(loggedInUser);
+      localStorage.setItem("currentUser", JSON.stringify(loggedInUser));
+      await mergeCart();
+    } catch (error) {
+      throw error;
+    }
   };
+
+  //
+  console.log("CART => ", cart);
+  //
 
   return (
     <div className="login">

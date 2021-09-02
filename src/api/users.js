@@ -6,6 +6,16 @@ export function getUserToken() {
   return localStorage.getItem("token");
 }
 
+export function createAuthHeader() {
+  if (getUserToken()) {
+    return {
+      headers: {
+        Authorization: `Bearer ${getUserToken()}`,
+      },
+    };
+  }
+}
+
 export async function registerUser({
   username,
   password,

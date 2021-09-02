@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { registerUser } from "../api";
 
-export const Register = ({ setCurrentUser }) => {
+export const Register = ({ setCurrentUser, cart }) => {
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -40,6 +40,11 @@ export const Register = ({ setCurrentUser }) => {
     }
   };
 
+  const storeCart = () => {
+    if (cart.length < 1) return;
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     checkCredentials();
@@ -55,6 +60,7 @@ export const Register = ({ setCurrentUser }) => {
       });
       setCurrentUser(currentUser);
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      storeCart();
     } catch (error) {
       throw error;
     }

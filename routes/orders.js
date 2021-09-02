@@ -6,6 +6,7 @@ const {
   getAllOrders,
   getOrderById,
   getCartByUser,
+  getOrdersByUser,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -36,7 +37,7 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/:userId/cart", async (req, res, next) => {
+ordersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const cart = await getCartByUser(userId);
@@ -55,7 +56,24 @@ ordersRouter.get("/:userId/cart", async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/:orderId", async (req, res, next) => {
+ordersRouter.get("/:userId/allorders", requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const orderList = await getOrdersByUser(userId);
+    if (orderList) {
+      res.send(orderList);
+    } else {
+      next({
+        name: "NoOrdersError",
+        message: "There are no existing orders for this user.",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+ordersRouter.get("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
   try {
     const order = await getOrderById(orderId);

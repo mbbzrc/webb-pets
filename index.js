@@ -10,8 +10,7 @@ const morgan = require("morgan");
 server.use(morgan("dev"));
 
 // handle application/json requests
-const bodyParser = require("body-parser");
-server.use(bodyParser.json());
+server.use(express.json());
 
 // here's our static files
 const path = require("path");
@@ -25,11 +24,11 @@ server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
 
 // bring in the DB connection
-const  client  = require("./db/client");
+const client = require("./db/client");
 
 server.use((err, req, res, next) => {
   res.status(500).send(err);

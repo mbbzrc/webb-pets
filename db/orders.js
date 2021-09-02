@@ -41,13 +41,13 @@ async function getOrderById(id) {
   }
 }
 
-async function getOrdersByUser({ id }) {
+async function getOrdersByUser(id) {
   try {
     const { rows: orders } = await client.query(
       `
             SELECT *
             FROM orders
-            WHERE id = $1;
+            WHERE "userId" = $1;
         `,
       [id]
     );

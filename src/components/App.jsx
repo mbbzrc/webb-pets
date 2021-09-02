@@ -10,39 +10,37 @@ import {
   AllProducts,
   Product,
   Order,
+  Cart,
 } from "./index";
 
-import { getCartByUserId, getUser, getUserToken } from "../api";
+import { getCartByUserId } from "../api";
 
 export const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser")) || null
+  );
 
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || null
+  );
 
-  const fetchCartData = async () => {
-    const cart = await getCartByUserId(currentUser.id);
-    setCart(cart);
+  const fetchCart = async () => {
+    try {
+      const fetchedCart = await getCartByUserId(currentUser.id);
+      setCart(fetchedCart);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    if (currentUser) {
-      fetchCartData();
+    if (currentUser && !cart) {
+      fetchCart();
     }
-  }, [currentUser]);
+  }, [currentUser, cart]);
 
-  useEffect(() => {
-    // is this needed for setting the cart?
-  }, [cart]);
-
-  useEffect(() => {
-    if (getUserToken()) {
-      setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
-    }
-  }, []);
-
-  // useEffect with cart dependency and fetchData function to get user's cart from DB if signed in, or from localStorage?
-
-  // Function to check localStorage for cart and merge it to signed in user's DB cart?
+  console.log("current user => ", currentUser);
+  console.log("cart => ", cart);
 
   return (
     <div id="app">
@@ -52,10 +50,15 @@ export const App = () => {
         {!currentUser ? (
           <>
             <Route path="/account/register">
-              <Register setCurrentUser={setCurrentUser} />
+              <Register setCurrentUser={setCurrentUser} cart={cart} />
             </Route>
             <Route path="/account/login">
-              <Login setCurrentUser={setCurrentUser} />
+              <Login
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+                cart={cart}
+                setCart={setCart}
+              />
             </Route>
           </>
         ) : (
@@ -75,7 +78,7 @@ export const App = () => {
           <Order />
         </Route>
         <Route path="/cart">
-          <Order />
+          <Cart cart={cart} currentUser={currentUser} />
         </Route>
       </Router>
     </div>

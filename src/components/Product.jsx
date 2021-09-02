@@ -4,7 +4,11 @@ import { useParams } from "react-router-dom";
 
 import { getProductById } from "../api";
 
-export const Product = ({ cart, setCart }) => {
+export const Product = (
+  {
+    // cart, setCart
+  }
+) => {
   const [openProduct, setOpenProduct] = useState({});
 
   const [inCart, setInCart] = useState(false);
@@ -29,11 +33,13 @@ export const Product = ({ cart, setCart }) => {
 
   useEffect(() => {
     fetchData();
-  }, [id, inCart]);
+  }, [inCart]);
 
   const handleAddToCart = async () => {
     try {
-      // create API function to add product to order and invoke here, passing in openProduct
+      // IF (CURRENT USER), {POST TO API (PASS IN OPENPRODUCT)
+      // AND FETCH NEW CART}
+      // THEN SET CART STATE, which trips useEffect with cart dependency in App
       // setInCart(true)
     } catch (error) {
       // set error message

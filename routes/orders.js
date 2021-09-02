@@ -1,4 +1,3 @@
-const express = require("express");
 const ordersRouter = express.Router();
 
 const {
@@ -7,6 +6,9 @@ const {
   getOrderById,
   getCartByUser,
   getOrdersByUser,
+  getOrderById,
+  updateOrder,
+  cancelOrder,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -84,6 +86,32 @@ ordersRouter.get("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
-ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {});
+ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { userId, status } = req.body;
+
+    const updatedOrder = await updateOrder({
+      id: orderId,
+      status: status,
+      userId: userId,
+    });
+
+    res.send(updatedOrder);
+  } catch (error) {
+    next(error);
+  }
+});
+
+ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const deletedOrder = await cancelOrder(orderId);
+
+    res.send(deletedOrder);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = ordersRouter;

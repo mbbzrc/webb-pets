@@ -15,6 +15,7 @@ async function createOrder({ status, userId, datePlaced }) {
   return order;
 }
 
+//join products on orderId
 async function getOrderById(id) {
   try {
     const {
@@ -124,6 +125,82 @@ async function getCartByUser(userId) {
         message: "There is no existing cart for this user.",
       };
     }
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function updateOrder({ id, status, userId }) {
+  const updateFields = {};
+
+  if (status) {
+    updateFields.status = status;
+  }
+
+  if (userId) {
+    updateFields.userId = userId;
+  }
+
+  const setString = Object.keys(updateFields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [updatedOrder],
+    } = await client.query(
+      `
+        UPDATE orders
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *;
+    `,
+      Object.values(updateFields)
+    );
+
+    return updatedOrder;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function completeOrder({ id }) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+            UPDATE orders
+            SET "status"="completed"
+            WHERE id=$1
+            RETURNING *;
+        `,
+      [id]
+    );
+
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function cancelOrder(id) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+        UPDATE orders
+        SET "status"="cancelled" 
+        WHERE id=$1
+        RETURNING *;`,
+      [id]
+    );
 
     return order;
   } catch (error) {
@@ -138,4 +215,7 @@ module.exports = {
   getOrdersByUser,
   getOrdersByProduct,
   getCartByUser,
+  updateOrder,
+  completeOrder,
+  cancelOrder,
 };

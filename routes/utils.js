@@ -1,45 +1,43 @@
 function requireUser(req, res, next) {
-    if (!req.user) {
-      next({
-        name: "MissingUserError",
-        message: "Please log in to complete this.",
-      });
-    }
-  
-    next();
+  if (!req.user) {
+    next({
+      name: "MissingUserError",
+      message: "Please log in to complete this.",
+    });
   }
   
-  function requireAdmin(req, res, next) {
-    if (!req.user) {
-      next({
-        name: "MissingUserError",
-        message: "Please log in to complete this.",
-      });
-    } else if (!req.user.isAdmin) {
-      next({
-        name: "IsNotAdminError",
-        message: "You must be an admin user to complete this.",
-      });
-    }
-  
-    next();
+  next();
+}
+
+function requireAdmin(req, res, next) {
+  if (!req.user) {
+    next({
+      name: "MissingUserError",
+      message: "Please log in to complete this.",
+    });
+  } else if (!req.user.isAdmin) {
+    next({
+      name: "IsNotAdminError",
+      message: "You must be an admin user to complete this.",
+    });
   }
-  
-  function isAdmin(req, res, next) {
-    if (!req.user.isAdmin) {
-      next({
-        name: "UnauthenticatedUserError",
-        message: "You must log in as admin user to complete this.",
-      });
-    }
-  
-    next();
+
+  next();
+}
+
+function isAdmin(req, res, next) {
+  if (!req.user.isAdmin) {
+    next({
+      name: "UnauthenticatedUserError",
+      message: "You must log in as admin user to complete this.",
+    });
   }
-  
-  
-  module.exports = {
-    requireUser,
-    requireAdmin,
-    isAdmin
-  
-  };
+
+  next();
+}
+
+module.exports = {
+  requireUser,
+  requireAdmin,
+  isAdmin,
+};

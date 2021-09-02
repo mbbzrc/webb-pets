@@ -16,12 +16,10 @@ export async function getOrder(orderId) {
 
 export async function getCartByUserId(userId) {
   try {
-    console.log("CALLING FETCH");
     const { data } = await axios.get(
       `${BASE_URL}/api/orders/${userId}/cart`,
       createAuthHeader()
     );
-    console.log("USER CART FROM API ", data);
     return data;
   } catch (error) {
     throw error;

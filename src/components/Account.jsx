@@ -6,7 +6,7 @@ export const Account = ({ currentUser }) => {
   const [userOrders, setUserOrders] = useState();
   // DESTRUCTURE ORDERS WITH ORDER PRODUCTS, AND MAP BELOW
 
-  const [orderList, setOrderList] = useState(null);
+  const [orderList, setOrderList] = useState([]);
 
   const fetchData = async () => {
     const fetchedOrders = await getOrdersByUserId(currentUser.id);
@@ -33,15 +33,14 @@ export const Account = ({ currentUser }) => {
       <div id="order-products">
         <h3>My Orders</h3>
         <ul>
-          {orderList && orderList.length > 0
-            ? orderList.map((order) => {
-                return (
-                  <li key={order.id}>
-                    Order #{order.id} - {order.status} - {order.datePlaced}
-                  </li>
-                );
-              })
-            : null}
+          {orderList.length > 0 &&
+            orderList.map((order) => {
+              return (
+                <li key={order.id}>
+                  Order #{order.id} - {order.status} - {order.datePlaced}
+                </li>
+              );
+            })}
         </ul>
       </div>
     </div>

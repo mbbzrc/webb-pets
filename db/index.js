@@ -7,6 +7,5 @@ module.exports = {
   ...require("./products"),
   ...require("./orders"),
   ...require("./orderProducts"),
-  ...require("./users"),
   // db methods
 };

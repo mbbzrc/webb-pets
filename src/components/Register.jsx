@@ -13,7 +13,7 @@ export const Register = ({ setCurrentUser, cart }) => {
     isAdmin: false,
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,20 +24,21 @@ export const Register = ({ setCurrentUser, cart }) => {
       form;
     if (!username || !password || !firstName || !lastName || !email) {
       setErrorMessage("Please complete all fields.");
-      return;
+      return false;
     }
     if (password !== passwordCheck) {
       setErrorMessage("Passwords do not match.");
-      return;
+      return false;
     }
     if (password.length < 8) {
       setErrorMessage("Password must be longer than 8 characters.");
-      return;
+      return false;
     }
     if (!email.includes("@")) {
       setErrorMessage("Please enter a valid email address.");
-      return;
+      return false;
     }
+    return true;
   };
 
   const storeCart = () => {
@@ -47,7 +48,7 @@ export const Register = ({ setCurrentUser, cart }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    checkCredentials();
+    if (!checkCredentials()) return;
     const { username, password, firstName, lastName, email, isAdmin } = form;
     try {
       const currentUser = await registerUser({
@@ -71,61 +72,61 @@ export const Register = ({ setCurrentUser, cart }) => {
       <h2>New customer? Create an account!</h2>
       <form>
         <label>
-          <span className="required">*</span>
           <span>username: </span>
           <input
             type="text"
             name="username"
+            required
             value={form.username}
             onChange={handleFormChange}
           />
         </label>
         <label>
-          <span className="required">*</span>
           <span>password: </span>
           <input
             type="password"
             name="password"
+            required
             value={form.password}
             onChange={handleFormChange}
           />
         </label>
         <label>
-          <span className="required">*</span>
           <span>retype password: </span>
           <input
             type="password"
             name="passwordCheck"
+            required
             value={form.passwordCheck}
             onChange={handleFormChange}
           />
         </label>
         <label>
-          <span className="required">*</span>
           <span>first name: </span>
           <input
             type="text"
             name="firstName"
+            required
             value={form.firstName}
             onChange={handleFormChange}
           />
         </label>
         <label>
-          <span className="required">*</span>
           <span>last name: </span>
           <input
             type="text"
             name="lastName"
+            required
             value={form.lastName}
             onChange={handleFormChange}
           />
         </label>
         <label>
-          <span className="required">*</span>
           <span>e-mail: </span>
           <input
             type="text"
             name="email"
+            required
             value={form.email}
             onChange={handleFormChange}
           />

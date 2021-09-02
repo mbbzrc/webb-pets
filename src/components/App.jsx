@@ -39,9 +39,6 @@ export const App = () => {
     }
   }, [currentUser, cart]);
 
-  console.log("current user => ", currentUser);
-  console.log("cart => ", cart);
-
   return (
     <div id="app">
       <Router>

@@ -8,7 +8,7 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,8 +17,9 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
   const checkCredentials = (username, password) => {
     if (!username || !password) {
       setErrorMessage("Please supply a valid username and password.");
-      return;
+      return false;
     }
+    return true;
   };
 
   const mergeCart = async () => {
@@ -31,7 +32,7 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = form;
-    checkCredentials(username, password);
+    if (!checkCredentials(username, password)) return;
     try {
       const { user: loggedInUser } = await loginUser({ username, password });
       setCurrentUser(loggedInUser);
@@ -41,10 +42,6 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
       throw error;
     }
   };
-
-  //
-  console.log("CART => ", cart);
-  //
 
   return (
     <div className="login">

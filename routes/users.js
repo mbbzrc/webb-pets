@@ -31,7 +31,6 @@ usersRouter.post("/register", async (req, res, next) => {
         message: "Password must be more than 8 characters.",
       });
     }
-
     const user = await createUser({
       username,
       password,
@@ -40,7 +39,6 @@ usersRouter.post("/register", async (req, res, next) => {
       email,
       isAdmin,
     });
-
     const token = jwt.sign(
       {
         id: user.id,
@@ -51,9 +49,9 @@ usersRouter.post("/register", async (req, res, next) => {
         expiresIn: "4w",
       }
     );
-
     res.send({
       message: "Thank you for signing up.",
+      user,
       token,
       user,
     });

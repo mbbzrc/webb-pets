@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { getOrdersByUserId } from "../api";
 
 export const Account = ({ currentUser }) => {
   const [userOrders, setUserOrders] = useState();
   // DESTRUCTURE ORDERS WITH ORDER PRODUCTS, AND MAP BELOW
+
+  const [orderList, setOrderList] = useState([]);
+
+  const fetchData = async () => {
+    const fetchedOrders = await getOrdersByUserId(currentUser.id);
+    setOrderList(fetchedOrders);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const { firstName, lastName, email, imageURL, username } = currentUser;
 
@@ -19,9 +32,16 @@ export const Account = ({ currentUser }) => {
       </div>
       <div id="order-products">
         <h3>My Orders</h3>
-        {
-          // MAP ORDERS + ORDER PRODUCTS HERE
-        }
+        <ul>
+          {orderList.length > 0 &&
+            orderList.map((order) => {
+              return (
+                <li key={order.id}>
+                  Order #{order.id} - {order.status} - {order.datePlaced}
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </div>
   );

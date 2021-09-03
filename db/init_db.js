@@ -101,7 +101,7 @@ async function createInitialUsers() {
         firstName: "Admin",
         lastName: "Admin",
         email: "admin@gmail.com",
-        isAdmin: false,
+        isAdmin: true,
       });
 
     console.log("Finished creating users!");
@@ -287,6 +287,26 @@ async function createInitialOrders() {
       await createOrder({
         userId: 4,
         status: "cancelled",
+        datePlaced: new Date(),
+      });
+    await createOrder({
+      userId: 1,
+      status: "created",
+      datePlaced: new Date(),
+    }),
+      await createOrder({
+        userId: 2,
+        status: "created",
+        datePlaced: new Date(),
+      }),
+      await createOrder({
+        userId: 3,
+        status: "created",
+        datePlaced: new Date(),
+      }),
+      await createOrder({
+        userId: 4,
+        status: "created",
         datePlaced: new Date(),
       });
 

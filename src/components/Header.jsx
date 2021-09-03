@@ -9,7 +9,7 @@ export const Header = ({ currentUser, setCurrentUser }) => {
   };
   const handleLogout = () => {
     setCurrentUser(null);
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
 
   return (

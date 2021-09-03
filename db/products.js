@@ -7,7 +7,7 @@ async function getProductByID(id) {
     } = await client.query(
       `
             SELECT * FROM products
-            WHERE id=$1`,
+            WHERE id=$1;`,
       [id]
     );
 
@@ -45,7 +45,7 @@ async function createProduct({
         INSERT INTO products(name, description, price, "imageURL", "inStock", category) 
         VALUES ($1, $2,$3, $4, $5, $6)
         ON CONFLICT (name) DO NOTHING
-        RETURNING *
+        RETURNING *;
         `,
       [name, description, price, imageURL, inStock, category]
     );

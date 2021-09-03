@@ -64,9 +64,6 @@ async function buildTables() {
   }
 }
 
-//map calls the callback func once for each element (good), in order (not necessary),
-//+ constructs new array from results
-
 async function createInitialUsers() {
   try {
     console.log("Creating Users ...");

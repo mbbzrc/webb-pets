@@ -5,7 +5,6 @@ const {
   getAllOrders,
   getOrderById,
   getCartByUser,
-  getOrderById,
   updateOrder,
   cancelOrder,
 } = require("../db");

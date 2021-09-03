@@ -116,7 +116,7 @@ async function createInitialProducts() {
     await createProduct({
       name: 'Best Bully Sticks 6"',
       description: "6-inch bully sticks dog treats, 20 count",
-      imageUrl: "",
+      imageUrl: "/assets/bullySticks.jpg",
       price: 40.99,
       inStock: true,
       category: "dog",
@@ -124,7 +124,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Plush Mice",
         description: "Plush mice cat toy with catnip",
-        imageUrl: "",
+        imageUrl: "/assets/plushmice.jpg",
         price: 2.7,
         inStock: true,
         category: "cat",
@@ -132,15 +132,15 @@ async function createInitialProducts() {
       await createProduct({
         name: "Cat Scratcher",
         description: "Cat scratcher toy with catnip, tropical palms",
-        imageUrl: "",
+        imageUrl: "/assets/catScratcher.jpg",
         price: 7.58,
         inStock: true,
         category: "cat",
       }),
       await createProduct({
         name: "Pond Pellets",
-        description: "Pond pellets fish foot, 10-lb bag",
-        imageUrl: "",
+        description: "Pond pellets fish food, 10-lb bag",
+        imageUrl: "/assets/fishPellets.jpg",
         price: 19.97,
         inStock: true,
         category: "fish",
@@ -148,7 +148,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Animal Exercise Ball",
         description: "Run-about small animal exercise ball",
-        imageUrl: "",
+        imageUrl: "/assets/exerciseBall.jpg",
         price: 3.89,
         inStock: false,
         category: "small animal",
@@ -156,7 +156,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Basking Lamp",
         description: "Repti basking reptile spot lamp, 100-watt, 2 count",
-        imageUrl: "",
+        imageUrl: "/assets/reptileLamp.jpg",
         price: 14.81,
         inStock: true,
         category: "reptile",
@@ -164,7 +164,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Gourmet-Style Crickets",
         description: "Gourmet-style crickets reptile food, 1.2-oz can",
-        imageUrl: "",
+        imageUrl: "/assets/crickets.jpg",
         price: 2.99,
         inStock: true,
         category: "reptile",
@@ -172,7 +172,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Temptations",
         description: "Mixups backyard cookout cat treats, 16-oz tub",
-        imageUrl: "",
+        imageUrl: "/assets/temptationsMixUps.jpg",
         price: 8.24,
         inStock: true,
         category: "cat",
@@ -180,7 +180,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Non-Clumping Cat Litter",
         description: "Febreze scented non-clumping clay cat little, 35-lb bag",
-        imageUrl: "",
+        imageUrl: "/assets/catLitter.jpg",
         price: 13.99,
         inStock: true,
         category: "cat",
@@ -188,7 +188,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Ultra Rubber Ball",
         description: "Ultra rubber ball tough dog toy, Medium, 2 pack",
-        imageUrl: "",
+        imageUrl: "/assets/ultraRubberBall.jpg",
         price: 5.95,
         inStock: true,
         category: "dog",
@@ -197,7 +197,7 @@ async function createInitialProducts() {
         name: "Life Protection Dry Dog Food",
         description:
           "Life protection formula adult chicken & brown rice recipe dry dog food, 30-lb bag",
-        imageUrl: "",
+        imageUrl: "/assets/lifeProtectDogFood.jpg",
         price: 51.98,
         inStock: true,
         category: "dog",
@@ -205,7 +205,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Aquarium Starter Kit",
         description: "Tropical panaview aquarium starter kit, 5-gal",
-        imageUrl: "",
+        imageUrl: "/assets/aquariumKit.jpg",
         price: 39.99,
         inStock: true,
         category: "fish",
@@ -213,7 +213,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "NeoGlow Aquarium Starter Kit",
         description: "LED neoGlow aquarium starter kit, Pink, 5.5-gal",
-        imageUrl: "",
+        imageUrl: "/assets/LEDNeoglowAquarium.jpg",
         price: 19.97,
         inStock: true,
         category: "fish",
@@ -221,7 +221,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Shale Ledge",
         description: "Shale ledge aquarium & terrarium decor, 1-count",
-        imageUrl: "",
+        imageUrl: "/assets/shaleLedge.jpg",
         price: 13.21,
         inStock: false,
         category: "reptile",
@@ -229,7 +229,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Rock Food & Water Dishes",
         description: "Repti rock reptile rock food & water dishes, Small",
-        imageUrl: "",
+        imageUrl: "/assets/foodWaterRock.jpg",
         price: 5.49,
         inStock: true,
         category: "reptile",
@@ -238,7 +238,7 @@ async function createInitialProducts() {
         name: "Small Animal Cage",
         description:
           "Home sweet home plastic small animal cage, Color Varies, 28-in",
-        imageUrl: "",
+        imageUrl: "/assets/smallAnimalCage.jpg",
         price: 26.99,
         inStock: true,
         category: "small animal",
@@ -246,7 +246,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Feeder & Water Fountain",
         description: "Mini rabbit feeder & water fountain, 48-oz",
-        imageUrl: "",
+        imageUrl: "/assets/rabbitFeeder.jpg",
         price: 7.99,
         inStock: true,
         category: "small animal",
@@ -254,7 +254,7 @@ async function createInitialProducts() {
       await createProduct({
         name: "Orthopedic Sofa Dog Bed",
         description: "Plush & suede orthopedic sofa dog bed, Gray, Large",
-        imageUrl: "",
+        imageUrl: "/assets/sofaDogBed.jpg",
         price: 38.99,
         inStock: false,
         category: "dog",

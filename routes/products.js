@@ -1,6 +1,6 @@
 const productsRouter = require("express").Router();
 
-const { getAllProducts, getProductByID } = require("../db/products");
+const { getAllProducts, getProductById } = require("../db/products");
 
 productsRouter.get("/", async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.get("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   try {
-    const product = await getProductByID(productId);
+    const product = await getProductById(productId);
 
     if (!product) {
       throw Error("Invalid Product");

@@ -13,6 +13,13 @@ async function getOrderProductById(id) {
       [id]
     );
 
+    if (!order_product) {
+      throw {
+        name: "getOrderProductByIdError",
+        message: "Order contains no product with this id.",
+      };
+    }
+
     return order_product;
   } catch (error) {
     throw error;
@@ -33,8 +40,6 @@ async function addProductToOrder({ orderId, productId, price, quantity }) {
       [orderId, productId]
     );
 
-    //if orderProduct exists await updateOrderProduct for order_products quantity (add passed-in quantity to the current order_products quantity)
-    // + order_products price
     if (orderProduct) {
       await updateOrderProduct({
         id: orderProduct.id,
@@ -83,6 +88,13 @@ async function updateOrderProduct({ id, price, quantity }) {
       Object.values(updateFields)
     );
 
+    if (!order_product) {
+      throw {
+        name: "UpdateOrderProductError",
+        message: "Unable to update this order product.",
+      };
+    }
+
     return order_product;
   } catch (error) {
     throw error;
@@ -101,6 +113,13 @@ async function createNewOrderProduct({ orderId, productId, price, quantity }) {
         `,
       [orderId, productId, price, quantity]
     );
+
+    if (!order_product) {
+      throw {
+        name: "CreateOrderProductError",
+        message: "Unable to add this product to order.",
+      };
+    }
 
     return order_product;
   } catch (error) {

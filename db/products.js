@@ -56,8 +56,56 @@ async function createProduct({
   }
 }
 
+async function destroyProduct({ id }) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+    DELETE FROM products 
+    WHERE id=$1
+    RETURNING *;
+    `,
+      [id]
+    );
+    return product;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function updateProduct({
+  id,
+  name,
+  description,
+  price,
+  imageURL,
+  inStock,
+  category,
+}) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+  UPDATE products
+  SET "name"=$1, "description"=$2, "price"=$3, "imageURL"=$4, "inStock"=$5, "category"=$6
+  WHERE id=$7
+  RETURNING *;
+`,
+      [name, description, price, imageURL, inStock, category, id]
+    );
+
+    return product;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 module.exports = {
   getProductByID,
   getAllProducts,
   createProduct,
+  destroyProduct,
+  updateProduct,
 };

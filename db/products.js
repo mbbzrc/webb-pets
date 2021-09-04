@@ -20,7 +20,7 @@ async function getProductByID(id) {
 async function getAllProducts() {
   try {
     const { rows } = await client.query(`
-        SELECT * FROM products 
+        SELECT * FROM products; 
         `);
 
     return rows;

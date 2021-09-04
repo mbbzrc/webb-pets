@@ -52,7 +52,7 @@ export const Product = (
       <div className="category">category / {category}</div>
       <h2>{name}</h2>
       <div className="product-image">
-        <img src={imageURL} alt="product thumbnail"/>
+        <img src={imageURL}/>
       </div>
       <div className="product-details">
         <div className="product-price">${price}</div>

@@ -20,8 +20,8 @@ orderProductsRouter.patch(
       });
 
       res.send(updatedOrderProduct);
-    } catch (error) {
-      throw error;
+    } catch ({ name, message }) {
+      next({ name, message });
     }
   }
 );
@@ -36,26 +36,31 @@ orderProductsRouter.delete(
       const deleteOrderProduct = await destroyOrderProduct(orderProductId);
 
       res.send(deleteOrderProduct);
-    } catch (error) {
-      throw error;
+    } catch ({ name, message }) {
+      next({ name, message });
     }
   }
 );
 
-ordersRouter.post("/orders/:orderId/products", requireUser, async(req, res, next) => {
-    const {orderId} = req.params;
-    const {productId, price, quantity} = req.body;
+ordersRouter.post(
+  "/orders/:orderId/products",
+  requireUser,
+  async (req, res, next) => {
+    const { orderId } = req.params;
+    const { productId, price, quantity } = req.body;
     try {
-        const addedOrderProduct = await addProductToOrder({
-            orderId,
-            productId,
-            price,
-            quantity});
+      const addedOrderProduct = await addProductToOrder({
+        orderId,
+        productId,
+        price,
+        quantity,
+      });
 
-        res.send(addedOrderProduct)
-    } catch (error) {
-        throw error;
+      res.send(addedOrderProduct);
+    } catch ({ name, message }) {
+      next({ name, message });
     }
-})
+  }
+);
 
 module.exports = orderProductsRouter;

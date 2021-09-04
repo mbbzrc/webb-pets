@@ -22,11 +22,10 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
     return true;
   };
 
-  const mergeCart = async () => {
+  const mergeCart = async ({ id }) => {
     if (!cart) return;
-    const storedCart = await getCartByUserId(currentUser.id);
-    const mergedCart = storedCart.concat(cart);
-    setCart(mergedCart);
+    const storedCart = await getCartByUserId(id);
+    setCart({ ...cart, storedCart });
   };
 
   const handleSubmit = async (e) => {
@@ -37,7 +36,7 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
       const { user: loggedInUser } = await loginUser({ username, password });
       setCurrentUser(loggedInUser);
       localStorage.setItem("currentUser", JSON.stringify(loggedInUser));
-      await mergeCart();
+      await mergeCart(loggedInUser);
     } catch (error) {
       throw error;
     }

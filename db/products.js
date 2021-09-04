@@ -1,6 +1,6 @@
 const client = require("./client");
 
-async function getProductByID(id) {
+async function getProductById(id) {
   try {
     const {
       rows: [product],
@@ -11,9 +11,16 @@ async function getProductByID(id) {
       [id]
     );
 
+    if (!product) {
+      throw {
+        name: "NoProductError",
+        message: "This product id does not exist.",
+      };
+    }
+
     return product;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -23,9 +30,16 @@ async function getAllProducts() {
         SELECT * FROM products 
         `);
 
+    if (!rows.length > 0) {
+      throw {
+        name: "NoProductsError",
+        message: "There are no existing products.",
+      };
+    }
+
     return rows;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -50,14 +64,21 @@ async function createProduct({
       [name, description, price, imageURL, inStock, category]
     );
 
+    if (!product) {
+      throw {
+        name: "CreateProductError",
+        message: "Unable to create this product.",
+      };
+    }
+
     return product;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    throw error;
   }
 }
 
 module.exports = {
-  getProductByID,
+  getProductById,
   getAllProducts,
   createProduct,
 };

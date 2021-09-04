@@ -94,8 +94,8 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
     const user = getUser();
     res.send(user);
-  } catch (error) {
-    throw error;
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 

@@ -4,6 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 
 import { getOrder } from "../api";
 
+import { OrderCreated, OrderCompleted, OrderCanceled } from "./index";
+
 export const Order = ({ cart }) => {
   const [openOrder, setOpenOrder] = useState(null);
 
@@ -28,20 +30,20 @@ export const Order = ({ cart }) => {
     }
   }, []);
 
+  const renderSwitch = () => {
+    switch (openOrder.status) {
+      case "created":
+        return <OrderCreated openOrder={openOrder} />;
+      case "completed":
+        return <OrderCompleted openOrder={openOrder} />;
+      case "canceled":
+        return <OrderCanceled openOrder={openOrder} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <>
-      {openOrder ? (
-        <div className="order">
-          <h3>Order #{openOrder.id}</h3>
-          {openOrder.status == "created" ? (
-            <p>Items in cart:</p>
-          ) : openOrder.status == "completed" ? (
-            <p>Date placed: {openOrder.datePlaced}</p>
-          ) : openOrder.status == "canceled" ? (
-            <p>Status: order canceled</p>
-          ) : null}
-        </div>
-      ) : null}
-    </>
+    <>{openOrder ? <div className="order">{renderSwitch()}</div> : null}</>
   );
 };

@@ -2,11 +2,12 @@ const productsRouter = require("express").Router();
 
 const {
   getAllProducts,
-  getProductByID,
+  getProductById,
   createProduct,
   destroyProduct,
   updateProduct,
 } = require("../db/products");
+const { getOrdersByProduct } = require("../db/orders");
 const { isAdmin } = require("./utils");
 
 productsRouter.get("/", async (req, res, next) => {
@@ -22,7 +23,7 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.get("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   try {
-    const product = await getProductByID(productId);
+    const product = await getProductById(productId);
 
     if (!product) {
       throw Error("Invalid Product");
@@ -63,7 +64,7 @@ productsRouter.delete("/:productId", isAdmin, async (req, res, next) => {
   }
 });
 
-productsRouter.patch(":/productId", requireAdmin, async (req, res, next) => {
+productsRouter.patch("/:productId", isAdmin, async (req, res, next) => {
   const { productId } = req.params;
   const { name, description, price, imageURL, inStock, category } = req.body;
 
@@ -79,6 +80,16 @@ productsRouter.patch(":/productId", requireAdmin, async (req, res, next) => {
     });
 
     res.send(updatedProduct);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+productsRouter.get("/:productId/orders", isAdmin, async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const ordersByProduct = getOrdersByProduct(productId);
+    res.send(ordersByProduct);
   } catch ({ name, message }) {
     next({ name, message });
   }

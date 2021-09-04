@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
+
 import { getOrdersByUserId } from "../api";
 
 export const Account = ({ currentUser }) => {
@@ -35,11 +37,15 @@ export const Account = ({ currentUser }) => {
         <ul>
           {orderList.length > 0 &&
             orderList.map((order) => {
-              return (
-                <li key={order.id}>
-                  Order #{order.id} - {order.status} - {order.datePlaced}
-                </li>
-              );
+              if (order.status !== "created") {
+                return (
+                  <li key={order.id}>
+                    <Link to={`/order/${order.id}`}>
+                      Order #{order.id} - {order.status} - {order.datePlaced}
+                    </Link>
+                  </li>
+                );
+              }
             })}
         </ul>
       </div>

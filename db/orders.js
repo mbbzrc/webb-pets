@@ -1,21 +1,31 @@
 const client = require("./client");
 
-async function createOrder({ status, userId, datePlaced }) {
-  const {
-    rows: [order],
-  } = await client.query(
-    `
+async function createOrder({ status, userId }) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
             INSERT INTO orders(status, "userId", "datePlaced")
-            VALUES ($1, $2, $3)
+            VALUES ($1, $2, current_date)
             RETURNING *;
         `,
-    [status, userId, datePlaced]
-  );
+      [status, userId]
+    );
 
-  return order;
+    if (!order) {
+      throw {
+        name: "CreateOrderError",
+        message: "Error creating order.",
+      };
+    }
+
+    return order;
+  } catch (error) {
+    throw error;
+  }
 }
 
-//join products on orderId
 async function getOrderById(id) {
   try {
     const {
@@ -53,7 +63,7 @@ async function getOrdersByUser(id) {
       [id]
     );
 
-    if (!orders) {
+    if (!orders.length > 0) {
       throw {
         name: "UserOrdersNotFound",
         message: "Orders for this user cannot be found.",
@@ -66,7 +76,7 @@ async function getOrdersByUser(id) {
   }
 }
 
-async function getOrdersByProduct({ id }) {
+async function getOrdersByProduct(id) {
   try {
     const { rows: orderIds } = await client.query(
       `
@@ -79,7 +89,7 @@ async function getOrdersByProduct({ id }) {
       [id]
     );
 
-    if (!orderIds) {
+    if (!orderIds.length > 0) {
       throw {
         name: "OrderWithProductNotFound",
         message: "Orders for this product cannot be found.",
@@ -98,6 +108,13 @@ async function getAllOrders() {
             SELECT * 
             FROM orders;
         `);
+
+    if (!rows.length > 0) {
+      throw {
+        name: "NoOrdersError",
+        message: "There are no existing orders.",
+      };
+    }
 
     return rows;
   } catch (error) {
@@ -163,6 +180,13 @@ async function updateOrder({ id, status, userId }) {
       Object.values(updateFields)
     );
 
+    if (!updatedOrder) {
+      throw {
+        name: "UpdateOrderError",
+        message: "Error updating order.",
+      };
+    }
+
     return updatedOrder;
   } catch (error) {
     throw error;
@@ -183,6 +207,13 @@ async function completeOrder({ id }) {
       [id]
     );
 
+    if (!order) {
+      throw {
+        name: "CompleteOrderError",
+        message: "Unable to complete this order.",
+      };
+    }
+
     return order;
   } catch (error) {
     throw error;
@@ -201,6 +232,13 @@ async function cancelOrder(id) {
         RETURNING *;`,
       [id]
     );
+
+    if (!order) {
+      throw {
+        name: "CancelOrderError",
+        message: "Unable to cancel this order.",
+      };
+    }
 
     return order;
   } catch (error) {

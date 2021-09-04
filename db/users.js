@@ -26,9 +26,16 @@ async function createUser({
     );
     delete user.password;
 
+    if (!user) {
+      throw {
+        name: "CreateUserError",
+        message: "Unable to create this user.",
+      };
+    }
+
     return user;
-  } catch (err) {
-    throw Error(`Error while creating user: ${err}`);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -50,10 +57,13 @@ async function getUser({ username, password }) {
       delete user.password;
       return user;
     } else {
-      throw error;
+      throw {
+        name: "PasswordMatchError",
+        message: "Password is incorrect.",
+      };
     }
-  } catch (err) {
-    throw Error(`Error while getting user: ${err}`);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -63,9 +73,17 @@ async function getAllUsers() {
         SELECT * FROM users
         `);
     delete users.password;
+
+    if (!users.length > 0) {
+      throw {
+        name: "GetAllUsersError",
+        message: "Error fetching all users.",
+      };
+    }
+
     return users;
-  } catch (err) {
-    throw Error(`Error while getting all users: ${err}`);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -80,10 +98,17 @@ async function getUserById(id) {
       [id]
     );
 
+    if (!user) {
+      throw {
+        name: "GetUserByIdError",
+        message: "No user matching this id.",
+      };
+    }
+
     delete user.password;
     return user;
-  } catch (err) {
-    throw Error(`Error while getting user by ID: ${err}`);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -98,6 +123,14 @@ async function getUserByUsername(username) {
         `,
       [username]
     );
+
+    if (!user) {
+      throw {
+        name: "GetUserByUsernameError",
+        message: "No user matching this username.",
+      };
+    }
+
     return user;
   } catch (err) {
     throw error;
@@ -132,4 +165,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   getUserByUsername,
+  updateUser
 };

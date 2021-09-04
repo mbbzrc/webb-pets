@@ -1,3 +1,4 @@
+const express = require("express");
 const ordersRouter = express.Router();
 
 const {
@@ -6,7 +7,6 @@ const {
   getOrderById,
   getCartByUser,
   getOrdersByUser,
-  getOrderById,
   updateOrder,
   cancelOrder,
 } = require("../db");
@@ -28,12 +28,8 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       status: "created",
       userId: req.user.id,
     });
-    if (order) {
-      res.send(order);
-    } else {
-      next({ message: "Cannot create order at this time." });
-      return;
-    }
+
+    res.send(order);
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -44,15 +40,7 @@ ordersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
     const { userId } = req.params;
     const cart = await getCartByUser(userId);
 
-    if (cart) {
-      res.send(cart);
-    } else {
-      next({
-        name: "NoCartError",
-        message: "Cannot get cart by selected user.",
-      });
-      return;
-    }
+    res.send(cart);
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -62,14 +50,8 @@ ordersRouter.get("/:userId/allorders", requireUser, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const orderList = await getOrdersByUser(userId);
-    if (orderList) {
-      res.send(orderList);
-    } else {
-      next({
-        name: "NoOrdersError",
-        message: "There are no existing orders for this user.",
-      });
-    }
+
+    res.send(orderList);
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -81,8 +63,8 @@ ordersRouter.get("/:orderId", requireUser, async (req, res, next) => {
     const order = await getOrderById(orderId);
 
     res.send(order);
-  } catch (error) {
-    throw error;
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
@@ -98,8 +80,8 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
     });
 
     res.send(updatedOrder);
-  } catch (error) {
-    next(error);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
@@ -109,8 +91,8 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
     const deletedOrder = await cancelOrder(orderId);
 
     res.send(deletedOrder);
-  } catch (error) {
-    next(error);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 

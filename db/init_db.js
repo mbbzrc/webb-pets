@@ -2,7 +2,7 @@
 const client = require("./client");
 const { createOrder, getAllOrders, getOrderById } = require("./orders");
 const { createUser, getAllUsers } = require("./users");
-const { createProduct, getAllProducts, getProductByID } = require("./products");
+const { createProduct, getAllProducts, getProductById } = require("./products");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -281,12 +281,12 @@ async function createInitialOrders() {
       }),
       await createOrder({
         userId: 3,
-        status: "cancelled",
+        status: "canceled",
         datePlaced: new Date(),
       }),
       await createOrder({
         userId: 4,
-        status: "cancelled",
+        status: "canceled",
         datePlaced: new Date(),
       });
     await createOrder({
@@ -350,8 +350,8 @@ async function testDB() {
     const products = await getAllProducts();
     console.log("Result:", products);
 
-    console.log("getProductByID with 1");
-    const bullySticks = await getProductByID(1);
+    console.log("getProductById with 1");
+    const bullySticks = await getProductById(1);
     console.log("Result:", bullySticks);
 
     console.log("Calling getAllOrders");

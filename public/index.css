@@ -122,3 +122,20 @@ input {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga";
 }
+
+.thumbnail-product {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.thumbnail-product-image img{
+  max-height: 300px;
+  max-width: 300px;
+  padding: 1rem;
+}
+
+.product-image img {
+  max-height: 500px;
+  max-width: 500px;
+  padding: 2rem;
+}

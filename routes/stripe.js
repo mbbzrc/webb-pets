@@ -1,6 +1,7 @@
 const express = require("express");
 const stripeRouter = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 
 stripeRouter.post("/pay", async (req, res, next) => {
@@ -13,7 +14,7 @@ try {
 
   res.send({charge});
 } catch (error) {
-  res.status(500).send({ error });
+  throw error
 }
 
 });

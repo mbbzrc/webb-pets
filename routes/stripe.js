@@ -7,7 +7,7 @@ stripeRouter.post("/pay", async (req, res, next) => {
  
 try {
   const charge = await stripe.charges.create(req.body);
-  res.send({ charge });
+  res.send({ success: charge });
 
   console.log('CHARGE ->', charge)
 

@@ -2,14 +2,23 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-export const Header = ({ currentUser, setCurrentUser }) => {
+export const Header = ({
+  currentUser,
+  setCurrentUser,
+  setCart,
+  setVisitorCart,
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // BUILD OUT SEARCH SUBMIT FUNCTION
   };
   const handleLogout = () => {
-    setCurrentUser(null);
     localStorage.clear();
+    setCart(null);
+    // REMOVE BELOW ITEM ONCE MERGE FUNCTION WORKS PROPERLY
+    setVisitorCart([]);
+    //
+    setCurrentUser(null);
   };
 
   return (

@@ -51,6 +51,13 @@ async function getUser({ username, password }) {
       [username]
     );
 
+    if (!user) {
+      throw {
+        name: "UserDoesNotExistError",
+        message: "This user does not exist.",
+      };
+    }
+
     const passwordsMatch = await bcrypt.compare(password, user.password);
 
     if (passwordsMatch) {

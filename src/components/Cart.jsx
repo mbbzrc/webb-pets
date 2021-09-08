@@ -36,7 +36,6 @@ export const Cart = ({ cart, setCart, currentUser }) => {
         stripeKey={STRIPE_KEY}
         token={handleToken(PRICE * 100)}
         name="Webb Pets"
-        description="Add a description here"
         billingAddress
         shippingAddress
         amount={PRICE * 100}

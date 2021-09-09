@@ -41,7 +41,7 @@ async function buildTables() {
         name VARCHAR(255) UNIQUE NOT NULL,
         description VARCHAR(255) NOT NULL,
         price NUMERIC(7, 2),
-        "imageURL" VARCHAR(255) TEXT DEFAULT 'imageURL',
+        "imageURL" VARCHAR(255) DEFAULT 'imageURL',
         "inStock" BOOLEAN DEFAULT false NOT NULL,
         category VARCHAR(255) NOT NULL
       );

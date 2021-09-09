@@ -10,7 +10,7 @@ const {
   getUser,
   getAllUsers,
   getOrdersByUser,
-  updateUser, 
+  updateUser,
 } = require("../db");
 const { requireUser, isAdmin } = require("./utils");
 
@@ -110,32 +110,34 @@ usersRouter.get("/", isAdmin, async (req, res, next) => {
   }
 });
 
-usersRouter.get("/:userId/orders", isAdmin, (req, res, next) => {
-  const { userId } = req.params; 
+usersRouter.get("/:userId/orders", isAdmin, async (req, res, next) => {
+  const { userId } = req.params;
 
   try {
     const orders = await getOrdersByUser(userId);
     res.send(orders);
-
-  } catch ({name, message}) {
-    next({name, message})
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-})
+});
 
-usersRouter.patch('/:userId', isAdmin, (req, res, next) => {
+usersRouter.patch("/:userId", isAdmin, async (req, res, next) => {
   const { userId } = req.params;
-  const { username,
-    password,
-    firstName,
-    lastName,
-    email,
-    isAdmin } = req.body;
+  const { username, password, firstName, lastName, email, isAdmin } = req.body;
   try {
-    const updatedUser = await updateUser({userId, username, password, firstName, lastName, email, isAdmin});
+    const updatedUser = await updateUser({
+      userId,
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      isAdmin,
+    });
     res.send(updatedUser);
   } catch ({ name, message }) {
     next({ name, message });
-  };
+  }
 });
 
 module.exports = usersRouter;

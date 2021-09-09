@@ -44,7 +44,6 @@ export const OrderCreated = ({
         orderProducts.length > 0 &&
         orderProducts.map((product, index) => {
           const { orderId } = openOrder;
-          console.log("PRODUCT =>>> ", product);
           return (
             <OrderProduct
               orderId={orderId}

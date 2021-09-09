@@ -68,11 +68,8 @@ export const OrderProduct = ({
       }
     } else {
       const idx = visitorCart.findIndex((product) => product.id === id);
-      console.log("productId", id);
-      console.log("IDX ", idx);
       const updatedCart = [...visitorCart];
       updatedCart.splice(idx, 1);
-      console.log("UPDATED CART ", updatedCart);
       setVisitorCart(updatedCart);
     }
   };

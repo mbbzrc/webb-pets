@@ -125,9 +125,7 @@ async function createNewOrderProduct({ orderId, productId, price, quantity }) {
         message: "Unable to add this product to order.",
       };
     }
-    //
-    console.log("ORDER PRODUCT => ", order_product);
-    //
+
     return order_product;
   } catch (error) {
     throw error;
@@ -147,7 +145,7 @@ async function destroyOrderProduct(id) {
         `,
       [id]
     );
-    console.log("HER HERE HERERE", order_product);
+
     return order_product;
   } catch (error) {
     throw error;

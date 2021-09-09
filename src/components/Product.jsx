@@ -101,7 +101,7 @@ export const Product = ({
       <div className="category">category / {category}</div>
       <h2>{name}</h2>
       <div className="product-image">
-        <img src={imageURL} alt="product" />
+        <img src={imageURL}/>
       </div>
       <div className="product-details">
         {inStock && (

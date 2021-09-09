@@ -2,6 +2,15 @@ import axios from "axios";
 
 import { BASE_URL, createAuthHeader } from "./index";
 
+export async function createOrder(userId) {
+  try {
+    const { data } = axios.post(`${BASE_URL}/api/orders`, createAuthHeader);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getOrder(orderId) {
   try {
     const { data } = await axios.get(

@@ -8,4 +8,5 @@ if (process.env.NODE_ENV === "production") {
 
 export * from "./orders";
 export * from "./products";
+export * from "./orderProducts";
 export * from "./users";

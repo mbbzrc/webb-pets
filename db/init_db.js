@@ -3,6 +3,7 @@ const client = require("./client");
 const { createOrder, getAllOrders, getOrderById } = require("./orders");
 const { createUser, getAllUsers } = require("./users");
 const { createProduct, getAllProducts, getProductById } = require("./products");
+const { createNewOrderProduct } = require("./orderProducts");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -52,10 +53,11 @@ async function buildTables() {
       );
       CREATE TABLE order_products(
         id SERIAL PRIMARY KEY,
-        "productId" INTEGER REFERENCES products(id) UNIQUE,
-        "orderId" INTEGER REFERENCES orders(id) UNIQUE,
+        "productId" INTEGER REFERENCES products(id),
+        "orderId" INTEGER REFERENCES orders(id),
         price NUMERIC(7, 2),
-        quantity INTEGER NOT NULL DEFAULT 0
+        quantity INTEGER NOT NULL DEFAULT 0,
+        UNIQUE ("productId", "orderId")
       );
     `);
     console.log("Finished building tables.");
@@ -314,28 +316,29 @@ async function createInitialOrders() {
   }
 }
 
-// async function createInitialOrderProducts() {
-
-//   try {
-//     const createInitialOrderProducts = [
-//       { productId: 1, orderId: 1, price: 40.99, quantity: 1 },
-//       { productId: 2, orderId: 1, price: 27, quantity: 10 },
-//       { productId: 3, orderId: 2, price: 151.6, quantity: 20 },
-//       { productId: 4, orderId: 3, price: 19.97, quantity: 1 },
-//       { productId: 5, orderId: 3, price: 19.45, quantity: 5 },
-//       { productId: 10, orderId: 3, price: 5.95, quantity: 1 },
-//       { productId: 17, orderId: 4, price: 7.99, quantity: 1 },
-//       { productId: 18, orderId: 4, price: 38.99, quantity: 1 },
-//     ];
-//     // const orderProducts = await Promise
-//     //   .all
-//     //   // createInitialOrderProducts.map(createOrderProduct)
-//     //   ();
-//     console.log("Finished creating order products!");
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+async function createInitialOrderProducts() {
+  try {
+    console.log("Creating initial order products...");
+    const initialOrderProducts = [
+      { orderId: 1, productId: 1, price: 40.99, quantity: 1 },
+      { orderId: 1, productId: 2, price: 27, quantity: 10 },
+      { orderId: 2, productId: 3, price: 151.6, quantity: 20 },
+      { orderId: 3, productId: 4, price: 19.97, quantity: 1 },
+      { orderId: 3, productId: 5, price: 19.45, quantity: 5 },
+      { orderId: 3, productId: 10, price: 5.95, quantity: 1 },
+      { orderId: 4, productId: 17, price: 7.99, quantity: 1 },
+      { orderId: 4, productId: 18, price: 38.99, quantity: 1 },
+    ];
+    await Promise.all(
+      initialOrderProducts.map((orderProduct) => {
+        createNewOrderProduct(orderProduct);
+      })
+    );
+    console.log("Finished creating order products!");
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function testDB() {
   try {
@@ -371,6 +374,7 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialOrders();
+    await createInitialOrderProducts();
   } catch (error) {
     console.log("error durring rebuildDB");
     throw error;

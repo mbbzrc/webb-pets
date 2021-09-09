@@ -1,4 +1,4 @@
-const { client } = require("./client");
+const client = require("./client");
 
 async function getOrderProductById(id) {
   try {
@@ -28,11 +28,11 @@ async function getOrderProductById(id) {
 
 async function addProductToOrder({ orderId, productId, price, quantity }) {
   try {
-    const {
+    let {
       rows: [orderProduct],
     } = await client.query(
       `
-            SELECT * 
+            SELECT *
             FROM order_products
             WHERE "orderId" = $1
             AND "productId" = $2;
@@ -41,13 +41,18 @@ async function addProductToOrder({ orderId, productId, price, quantity }) {
     );
 
     if (orderProduct) {
-      await updateOrderProduct({
+      orderProduct = await updateOrderProduct({
         id: orderProduct.id,
-        price: orderProduct.price,
-        quantity: orderProduct.quantity,
+        price: price,
+        quantity: quantity,
       });
     } else {
-      await createNewOrderProduct({ orderId, productId, price, quantity });
+      orderProduct = await createNewOrderProduct({
+        orderId,
+        productId,
+        price,
+        quantity,
+      });
     }
 
     return orderProduct;
@@ -120,7 +125,9 @@ async function createNewOrderProduct({ orderId, productId, price, quantity }) {
         message: "Unable to add this product to order.",
       };
     }
-
+    //
+    console.log("ORDER PRODUCT => ", order_product);
+    //
     return order_product;
   } catch (error) {
     throw error;
@@ -130,7 +137,7 @@ async function createNewOrderProduct({ orderId, productId, price, quantity }) {
 async function destroyOrderProduct(id) {
   try {
     const {
-      rows: [order_products],
+      rows: [order_product],
     } = await client.query(
       `
             DELETE
@@ -140,8 +147,8 @@ async function destroyOrderProduct(id) {
         `,
       [id]
     );
-
-    return order_products;
+    console.log("HER HERE HERERE", order_product);
+    return order_product;
   } catch (error) {
     throw error;
   }

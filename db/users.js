@@ -147,7 +147,7 @@ async function updateUser({    id,
     try {
       const {rows: [user] } = await client.query(`
       UPDATE users 
-      SET "username"=$1, "password"=$2, "firstName"=$3, "lastName"=$4, "email"=$5, "isAmin"=$6
+      SET "username"=$1, "password"=$2, "firstName"=$3, "lastName"=$4, "email"=$5, "isAdmin"=$6
       WHERE id=$7 
       RETURNING *;
       `, [username, password, firstName, lastName, email, isAdmin, id])

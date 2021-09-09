@@ -104,7 +104,7 @@ usersRouter.get("/", isAdmin, async (req, res, next) => {
   try {
     const users = await getAllUsers();
 
-    res.send(users);s
+    res.send(users);
   } catch ({ name, message }) {
     next({ name, message });
   }

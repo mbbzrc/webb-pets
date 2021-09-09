@@ -90,8 +90,8 @@ async function destroyProduct({ id }) {
       [id]
     );
     return product;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    throw error; 
   }
 }
 
@@ -118,8 +118,8 @@ async function updateProduct({
     );
 
     return product;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    throw error
   }
 }
 

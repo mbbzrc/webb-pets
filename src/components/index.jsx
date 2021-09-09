@@ -9,4 +9,4 @@ export { Order } from "./Order";
 export { OrderCreated } from "./OrderCreated";
 export { OrderCompleted } from "./OrderCompleted";
 export { OrderCanceled } from "./OrderCanceled";
-export { Cart } from "./Cart";
+export { OrderProduct } from "./OrderProduct";

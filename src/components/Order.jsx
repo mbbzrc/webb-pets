@@ -6,7 +6,13 @@ import { getOrder } from "../api";
 
 import { OrderCreated, OrderCompleted, OrderCanceled } from "./index";
 
-export const Order = ({ cart }) => {
+export const Order = ({
+  cart,
+  setCart,
+  visitorCart,
+  setVisitorCart,
+  currentUser,
+}) => {
   const [openOrder, setOpenOrder] = useState(null);
 
   const { pathname } = useLocation();
@@ -23,17 +29,30 @@ export const Order = ({ cart }) => {
   };
 
   useEffect(() => {
-    if (pathname === "/cart") {
+    if (pathname === "/cart" && currentUser) {
       setOpenOrder(cart);
+    } else if (pathname === "/cart" && visitorCart.length > 0) {
+      setOpenOrder({ orderProducts: [...visitorCart], status: "created" });
+    } else if (pathname === "/cart") {
+      setOpenOrder({ status: "created" });
     } else if (params.orderId) {
       fetchData();
     }
-  }, []);
+  }, [cart, visitorCart]);
 
   const renderSwitch = () => {
     switch (openOrder.status) {
       case "created":
-        return <OrderCreated openOrder={openOrder} />;
+        return (
+          <OrderCreated
+            openOrder={openOrder}
+            currentUser={currentUser}
+            cart={cart}
+            setCart={setCart}
+            visitorCart={visitorCart}
+            setVisitorCart={setVisitorCart}
+          />
+        );
       case "completed":
         return <OrderCompleted openOrder={openOrder} />;
       case "canceled":
@@ -43,7 +62,5 @@ export const Order = ({ cart }) => {
     }
   };
 
-  return (
-    <>{openOrder ? <div className="order">{renderSwitch()}</div> : null}</>
-  );
+  return <>{openOrder && <div className="order">{renderSwitch()}</div>}</>;
 };

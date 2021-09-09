@@ -26,17 +26,17 @@ async function createOrder({ status, userId }) {
   }
 }
 
-async function getOrderById(id) {
+async function getOrderById(orderId) {
   try {
     const {
       rows: [order],
     } = await client.query(
       `
-        SELECT *
+        SELECT id AS "orderId", status, "userId", "datePlaced"
         FROM orders
         WHERE id = $1;
         `,
-      [id]
+      [orderId]
     );
 
     if (!order) {
@@ -45,6 +45,18 @@ async function getOrderById(id) {
         message: "Order with selected id cannot be found.",
       };
     }
+
+    const { rows: order_products } = await client.query(
+      `
+        SELECT order_products.id AS "orderProductId", "productId", order_products.price, quantity, name, description, "imageURL", "inStock", category
+        FROM order_products
+        INNER JOIN products ON products.id = "productId"
+        WHERE "orderId" = $1;
+        `,
+      [orderId]
+    );
+
+    order.orderProducts = order_products;
 
     return order;
   } catch (error) {
@@ -142,6 +154,19 @@ async function getCartByUser(userId) {
         message: "There is no existing cart for this user.",
       };
     }
+
+    const { rows: order_products } = await client.query(
+      `
+        SELECT order_products.id AS "orderProductId", "productId", order_products.price, quantity, name, description, "imageURL", "inStock", category
+        FROM order_products
+        INNER JOIN products ON products.id = "productId"
+        WHERE "orderId" = $1;
+        `,
+      [order.id]
+    );
+
+    order.orderProducts = order_products;
+
     return order;
   } catch (error) {
     throw error;

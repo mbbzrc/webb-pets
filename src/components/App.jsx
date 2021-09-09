@@ -10,10 +10,9 @@ import {
   AllProducts,
   Product,
   Order,
-  Cart,
 } from "./index";
 
-import { getCartByUserId } from "../api";
+import { getCartByUserId, updateOrderProduct, createOrder } from "../api";
 
 export const App = () => {
   const [currentUser, setCurrentUser] = useState(
@@ -24,37 +23,67 @@ export const App = () => {
     JSON.parse(localStorage.getItem("cart")) || null
   );
 
-  const fetchCart = async () => {
-    try {
-      const fetchedCart = await getCartByUserId(currentUser.id);
-      setCart(fetchedCart);
-    } catch (error) {
-      console.error(error);
+  const [visitorCart, setVisitorCart] = useState(
+    JSON.parse(localStorage.getItem("visitorCart")) || []
+  );
+
+  const mergeCart = async ({ id }) => {
+    const existingCart = await getCartByUserId(id);
+    if (!existingCart) {
+      const newCart = await createOrder(id);
+      await Promise.all(
+        visitorCart.map(({ id, price, quantity }) =>
+          updateOrderProduct(newCart.id, id, price, quantity)
+        )
+      );
+    } else {
+      await Promise.all(
+        visitorCart.map(({ id: productId, price, quantity }) => {
+          updateOrderProduct(existingCart.id, productId, price, quantity);
+        })
+      );
     }
   };
 
   useEffect(() => {
-    if (currentUser && !cart) {
-      fetchCart();
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      cart && localStorage.setItem("cart", JSON.stringify(cart));
+    } else if (visitorCart && visitorCart.length > 0) {
+      localStorage.setItem("visitorCart", JSON.stringify(visitorCart));
+    } else {
+      localStorage.removeItem("visitorCart");
     }
-  }, [currentUser, cart]);
+  }, [currentUser, cart, visitorCart]);
 
   return (
     <div id="app">
       <Router>
-        <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        <Header
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          setCart={setCart}
+          setVisitorCart={setVisitorCart}
+        />
         {/* HOME PAGE, WITH PRODUCT CATEGORIES? */}
         {!currentUser ? (
           <>
             <Route path="/account/register">
-              <Register setCurrentUser={setCurrentUser} cart={cart} />
+              <Register
+                setCurrentUser={setCurrentUser}
+                visitorCart={visitorCart}
+                setVisitorCart={setVisitorCart}
+                setCart={setCart}
+                mergeCart={mergeCart}
+              />
             </Route>
             <Route path="/account/login">
               <Login
-                currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
-                cart={cart}
+                visitorCart={visitorCart}
+                setVisitorCart={setVisitorCart}
                 setCart={setCart}
+                mergeCart={mergeCart}
               />
             </Route>
           </>
@@ -69,13 +98,25 @@ export const App = () => {
           <AllProducts />
         </Route>
         <Route path="/product/:productId">
-          <Product cart={cart} setCart={setCart} />
+          <Product
+            currentUser={currentUser}
+            cart={cart}
+            setCart={setCart}
+            visitorCart={visitorCart}
+            setVisitorCart={setVisitorCart}
+          />
         </Route>
         <Route path="/order/:orderId">
           <Order />
         </Route>
         <Route path="/cart">
-          <Cart cart={cart} currentUser={currentUser} />
+          <Order
+            cart={cart}
+            setCart={setCart}
+            visitorCart={visitorCart}
+            setVisitorCart={setVisitorCart}
+            currentUser={currentUser}
+          />
         </Route>
       </Router>
     </div>

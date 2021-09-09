@@ -2,7 +2,13 @@ import React, { useState } from "react";
 
 import { loginUser, getCartByUserId } from "../api";
 
-export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
+export const Login = ({
+  setCurrentUser,
+  visitorCart,
+  setVisitorCart,
+  setCart,
+  mergeCart,
+}) => {
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -22,23 +28,19 @@ export const Login = ({ currentUser, setCurrentUser, cart, setCart }) => {
     return true;
   };
 
-  const mergeCart = async ({ id }) => {
-    if (!cart) return;
-    const storedCart = await getCartByUserId(id);
-    setCart({ ...cart, storedCart });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = form;
     if (!checkCredentials(username, password)) return;
     try {
       const { user: loggedInUser } = await loginUser({ username, password });
+      visitorCart.length > 0 && (await mergeCart(loggedInUser));
+      const userCart = await getCartByUserId(loggedInUser.id);
+      setCart(userCart);
+      setVisitorCart([]);
       setCurrentUser(loggedInUser);
-      localStorage.setItem("currentUser", JSON.stringify(loggedInUser));
-      await mergeCart(loggedInUser);
     } catch (error) {
-      throw error;
+      console.log(error.response.data);
     }
   };
 

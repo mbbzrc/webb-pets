@@ -42,9 +42,7 @@ export const Cart = ({ cart, setCart, currentUser }) => {
         amount={PRICE * 100}
         currency={CURRENCY}
       >
-        <Button className="checkout-button" variant="contained" color="primary">
-          Proceed to checkout
-        </Button>
+       
       </StripeCheckout>
     </div>
   );

@@ -46,5 +46,7 @@ apiRouter.use("/orders", ordersRouter);
 
 const stripeRouter = require("./stripe");;
 apiRouter.use("/stripe", stripeRouter);
+const orderProductsRouter = require("./orderProducts");
+apiRouter.use("/order-products", orderProductsRouter);
 
 module.exports = apiRouter;

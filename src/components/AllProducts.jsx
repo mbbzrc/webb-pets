@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 
-import { getAllProducts } from "../api";
+import { getAllProducts, formatCurrency } from "../api";
 
 export const AllProducts = () => {
   const [productList, setProductList] = useState([]);
@@ -27,10 +27,12 @@ export const AllProducts = () => {
                 <Link to={`/product/${id}`}>{name}</Link>
               </h2>
               <div className="thumbnail-product-image">
-                <img src={imageURL} alt="product thumbnail" />
+                <img src={imageURL} />
               </div>
               <div className="thumbnail-product-details">
-                <div className="thumbnail-product-price">${price}</div>
+                <div className="thumbnail-product-price">
+                  {formatCurrency(price)}
+                </div>
               </div>
             </div>
           );

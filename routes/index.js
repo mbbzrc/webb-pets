@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
 const { JWT_SECRET } = process.env;
 
+
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
@@ -30,6 +31,7 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
+
 const healthRouter = require("./health");
 apiRouter.use("/health", healthRouter);
 
@@ -42,6 +44,8 @@ apiRouter.use("/users", usersRouter);
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter);
 
+const stripeRouter = require("./stripe");;
+apiRouter.use("/stripe", stripeRouter);
 const orderProductsRouter = require("./orderProducts");
 apiRouter.use("/order-products", orderProductsRouter);
 

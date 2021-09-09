@@ -4,10 +4,11 @@ import axios from "axios";
 import { Button } from "@material-ui/core";
 
 import { Order } from "./index";
+import { BASE_URL } from "../api/index";
 
 const STRIPE_KEY =
   "pk_test_51JW40NGfeiZyi0bkzQs8BV34mMmKvaUDgmsf1ciXrLlMKqCs7nJncEu4H8WpCM1vnN9pxOocNckKSK04iQOChC7R00gecuqekO";
-const PAYMENT_URL = "http://localhost:5000/api/stripe/pay"; // need to set to heroku address
+const PAYMENT_URL = `${BASE_URL}/api/stripe/pay`;
 const CURRENCY = "USD";
 
 // Testing purposes only need to get cart total
@@ -20,7 +21,7 @@ const handleToken = (amount) => async (token) => {
       currency: CURRENCY,
       amount,
     });
-    console.log("Payment Success!", response);
+
     // set completed order here
   } catch (error) {
     console.error(error);

@@ -27,7 +27,7 @@ export const AllProducts = () => {
                 <Link to={`/product/${id}`}>{name}</Link>
               </h2>
               <div className="thumbnail-product-image">
-                <img src={imageURL}/>
+                <img src={imageURL} />
               </div>
               <div className="thumbnail-product-details">
                 <div className="thumbnail-product-price">${price}</div>

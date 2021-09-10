@@ -23,11 +23,9 @@ ordersRouter.get("/", [requireUser, requireAdmin], async (req, res, next) => {
 });
 
 ordersRouter.post("/", requireUser, async (req, res, next) => {
+  const { userId } = req.body;
   try {
-    const order = await createOrder({
-      status: "created",
-      userId: req.user.id,
-    });
+    const order = await createOrder({ status: "created", userId: userId });
 
     res.send(order);
   } catch ({ name, message }) {

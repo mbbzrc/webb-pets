@@ -12,7 +12,6 @@ const STRIPE_KEY =
 const PAYMENT_URL = `${BASE_URL}/api/stripe/pay`;
 const CURRENCY = "USD";
 
-
 const handleToken = (amount) => async (token) => {
   try {
     const response = await axios.post(PAYMENT_URL, {
@@ -41,15 +40,12 @@ export const OrderCreated = ({
 
   const [orderSubtotal, setOrderSubtotal] = useState(null);
 
-  const [orderPrice, setOrderPrice] = useState(null);
-
   useEffect(() => {
     openOrder && setOrderProducts(openOrder.orderProducts || []);
   }, [cart, visitorCart, openOrder]);
 
   useEffect(() => {
     if (orderProducts && orderProducts.length > 0) {
-      console.log(orderProducts)
       const subtotal = formatCurrency(
         orderProducts.reduce((total, { price, quantity }) => {
           return total + price * quantity;
@@ -84,17 +80,18 @@ export const OrderCreated = ({
           );
         })}
       <p>Order Subtotal: {orderSubtotal || <span>order is empty</span>}</p>
-    {console.log(orderSubtotal)}
-       {orderSubtotal ?   <StripeCheckout
-        stripeKey={STRIPE_KEY}
-        token={handleToken(orderSubtotal * 100)}
-        name="Webb Pets"
-        billingAddress
-        shippingAddress
-        amount={orderSubtotal * 100}
-        currency={CURRENCY}
-      ></StripeCheckout> : '' }
-      
+      {console.log(orderSubtotal)}
+      {orderSubtotal && (
+        <StripeCheckout
+          stripeKey={STRIPE_KEY}
+          token={handleToken(orderSubtotal * 100)}
+          name="Webb Pets"
+          billingAddress
+          shippingAddress
+          amount={orderSubtotal * 100}
+          currency={CURRENCY}
+        />
+      )}
     </>
   );
 };

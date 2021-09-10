@@ -93,13 +93,6 @@ async function updateOrderProduct({ id, price, quantity }) {
       Object.values(updateFields)
     );
 
-    if (!order_product) {
-      throw {
-        name: "UpdateOrderProductError",
-        message: "Unable to update this order product.",
-      };
-    }
-
     return order_product;
   } catch (error) {
     throw error;

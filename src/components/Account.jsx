@@ -6,13 +6,16 @@ import { getOrdersByUserId } from "../api";
 
 export const Account = ({ currentUser }) => {
   const [userOrders, setUserOrders] = useState();
-  // DESTRUCTURE ORDERS WITH ORDER PRODUCTS, AND MAP BELOW
 
   const [orderList, setOrderList] = useState([]);
 
   const fetchData = async () => {
-    const fetchedOrders = await getOrdersByUserId(currentUser.id);
-    setOrderList(fetchedOrders);
+    try {
+      const fetchedOrders = await getOrdersByUserId(currentUser.id);
+      setOrderList(fetchedOrders);
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
 
   useEffect(() => {
@@ -52,5 +55,3 @@ export const Account = ({ currentUser }) => {
     </div>
   );
 };
-
-// THIS IS A CHANGE

@@ -279,7 +279,7 @@ async function createInitialOrders() {
         datePlaced: new Date(),
       }),
       await createOrder({
-        userId: 3,
+        userId: 2,
         status: "canceled",
         datePlaced: new Date(),
       }),

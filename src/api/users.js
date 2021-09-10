@@ -13,6 +13,8 @@ export function createAuthHeader() {
         Authorization: `Bearer ${getUserToken()}`,
       },
     };
+  } else {
+    console.error("Unable to create authorization header!");
   }
 }
 

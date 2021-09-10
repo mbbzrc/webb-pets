@@ -1,16 +1,18 @@
 const client = require("./client");
 
 async function createOrder({ status, userId }) {
+  const currentDate = new Date();
+
   try {
     const {
       rows: [order],
     } = await client.query(
       `
             INSERT INTO orders(status, "userId", "datePlaced")
-            VALUES ($1, $2, current_date)
+            VALUES ($1, $2, $3)
             RETURNING *;
         `,
-      [status, userId]
+      [status, userId, currentDate]
     );
 
     if (!order) {
@@ -64,23 +66,37 @@ async function getOrderById(orderId) {
   }
 }
 
-async function getOrdersByUser(id) {
+async function getOrdersByUser(userId) {
   try {
-    const { rows: orders } = await client.query(
+    const { rows: results } = await client.query(
       `
             SELECT *
             FROM orders
             WHERE "userId" = $1;
         `,
-      [id]
+      [userId]
     );
 
-    if (!orders.length > 0) {
-      throw {
-        name: "UserOrdersNotFound",
-        message: "Orders for this user cannot be found.",
-      };
-    }
+    if (!results) return;
+
+    const orders = await Promise.all(
+      results.map(async (result) => {
+        const { id: orderId } = result;
+        const { rows: order_products } = await client.query(
+          `
+        SELECT order_products.id AS "orderProductId", "productId", order_products.price, quantity, name, description, "imageURL", "inStock", category
+        FROM order_products
+        INNER JOIN products ON products.id = "productId"
+        WHERE "orderId" = $1;
+        `,
+          [orderId]
+        );
+
+        result.orderProducts = order_products;
+
+        return result;
+      })
+    );
 
     return orders;
   } catch (error) {
@@ -148,12 +164,7 @@ async function getCartByUser(userId) {
       [userId]
     );
 
-    if (!order) {
-      throw {
-        name: "NoCartError",
-        message: "There is no existing cart for this user.",
-      };
-    }
+    if (!order) return null;
 
     const { rows: order_products } = await client.query(
       `

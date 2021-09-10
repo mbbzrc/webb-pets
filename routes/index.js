@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
 const { JWT_SECRET } = process.env;
 
-
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
@@ -19,6 +18,11 @@ apiRouter.use(async (req, res, next) => {
       if (id) {
         req.user = await getUserById(id);
         next();
+      } else {
+        next({
+          name: "TokenNotValidError",
+          message: "The token supplied is not valid.",
+        });
       }
     } catch ({ name, message }) {
       next({ name, message });
@@ -31,22 +35,16 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
+apiRouter.use("/health", require("./health"));
 
-const healthRouter = require("./health");
-apiRouter.use("/health", healthRouter);
+apiRouter.use("/products", require("./products"));
 
-const productsRouter = require("./products");
-apiRouter.use("/products", productsRouter);
+apiRouter.use("/users", require("./users"));
 
-const usersRouter = require("./users");
-apiRouter.use("/users", usersRouter);
+apiRouter.use("/orders", require("./orders"));
 
-const ordersRouter = require("./orders");
-apiRouter.use("/orders", ordersRouter);
+apiRouter.use("/stripe", require("./stripe"));
 
-const stripeRouter = require("./stripe");;
-apiRouter.use("/stripe", stripeRouter);
-const orderProductsRouter = require("./orderProducts");
-apiRouter.use("/order-products", orderProductsRouter);
+apiRouter.use("/order-products", require("./orderProducts"));
 
 module.exports = apiRouter;

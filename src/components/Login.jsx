@@ -40,7 +40,7 @@ export const Login = ({
       setVisitorCart([]);
       setCurrentUser(loggedInUser);
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
     }
   };
 

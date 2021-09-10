@@ -131,12 +131,33 @@ async function getUserByUsername(username) {
       [username]
     );
 
-    if (!user) {
-      throw {
-        name: "GetUserByUsernameError",
-        message: "No user matching this username.",
-      };
-    }
+    return user;
+  } catch (err) {
+    throw error;
+  }
+}
+
+async function updateUser({
+  id,
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isAdmin,
+}) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      UPDATE users 
+      SET "username"=$1, "password"=$2, "firstName"=$3, "lastName"=$4, "email"=$5, "isAdmin"=$6
+      WHERE id=$7 
+      RETURNING *;
+      `,
+      [username, password, firstName, lastName, email, isAdmin, id]
+    );
 
     return user;
   } catch (err) {
@@ -144,33 +165,11 @@ async function getUserByUsername(username) {
   }
 }
 
-async function updateUser({    id,
-  username,
-  password,
-  firstName,
-  lastName,
-  email,
-  isAdmin,}) {
-    try {
-      const {rows: [user] } = await client.query(`
-      UPDATE users 
-      SET "username"=$1, "password"=$2, "firstName"=$3, "lastName"=$4, "email"=$5, "isAdmin"=$6
-      WHERE id=$7 
-      RETURNING *;
-      `, [username, password, firstName, lastName, email, isAdmin, id])
-
-      return user; 
-
-    } catch (err) {
-      throw error
-    }
-  }
-
 module.exports = {
   createUser,
   getUser,
   getAllUsers,
   getUserById,
   getUserByUsername,
-  updateUser
+  updateUser,
 };

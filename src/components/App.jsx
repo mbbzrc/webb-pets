@@ -12,7 +12,12 @@ import {
   Order,
 } from "./index";
 
-import { getCartByUserId, updateOrderProduct, createOrder } from "../api";
+import {
+  getCartByUserId,
+  addProductToOrder,
+  updateOrderProduct,
+  createOrder,
+} from "../api";
 
 export const App = () => {
   const [currentUser, setCurrentUser] = useState(
@@ -27,23 +32,40 @@ export const App = () => {
     JSON.parse(localStorage.getItem("visitorCart")) || []
   );
 
-  const [search_filter, setSearchFilter] = useState(null)
+  const [searchFilter, setSearchFilter] = useState(null)
 
-  const mergeCart = async ({ id }) => {
-    const existingCart = await getCartByUserId(id);
-    if (!existingCart) {
-      const newCart = await createOrder(id);
-      await Promise.all(
-        visitorCart.map(({ id, price, quantity }) =>
-          updateOrderProduct(newCart.id, id, price, quantity)
-        )
-      );
-    } else {
-      await Promise.all(
-        visitorCart.map(({ id: productId, price, quantity }) => {
-          updateOrderProduct(existingCart.id, productId, price, quantity);
-        })
-      );
+  const mergeCart = async ({ id: userId }) => {
+    try {
+      const existingCart = await getCartByUserId(userId);
+      if (!existingCart) {
+        const { id: orderId } = await createOrder(userId);
+        await Promise.all(
+          visitorCart.map(
+            async ({ id: productId, price, quantity }) =>
+              await addProductToOrder(orderId, productId, price, quantity)
+          )
+        );
+      } else {
+        alert(
+          "Items currently in cart will be added to your existing user cart."
+        );
+        await Promise.all(
+          visitorCart.map(async ({ id: productId, price, quantity }) => {
+            const [productToUpdate] = existingCart.orderProducts.filter(
+              (product) => product.productId === productId
+            );
+            if (!productToUpdate) {
+              const { id: orderId } = existingCart;
+              await addProductToOrder(orderId, productId, price, quantity);
+            } else {
+              const { orderProductId } = productToUpdate;
+              await updateOrderProduct(orderProductId, price, quantity);
+            }
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -98,7 +120,7 @@ export const App = () => {
           </>
         )}
         <Route path="/products">
-          <AllProducts search_filter={search_filter}/>
+          <AllProducts searchFilter={searchFilter}/>
         </Route>
         <Route path="/product/:productId">
           <Product

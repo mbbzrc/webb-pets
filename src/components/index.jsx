@@ -6,6 +6,7 @@ export { Account } from "./Account";
 export { AllProducts } from "./AllProducts";
 export { Product } from "./Product";
 export { Order } from "./Order";
+export { OrderSwitch } from "./OrderSwitch";
 export { OrderCreated } from "./OrderCreated";
 export { OrderCompleted } from "./OrderCompleted";
 export { OrderCanceled } from "./OrderCanceled";

@@ -13,12 +13,10 @@ export const OrderProduct = ({
   visitorCart,
   setVisitorCart,
   product,
-  orderId,
   index,
 }) => {
   const {
     id,
-    productId,
     orderProductId,
     name,
     description,
@@ -28,6 +26,7 @@ export const OrderProduct = ({
     imageURL,
   } = product;
   const [itemQuantity, setItemQuantity] = useState(quantity);
+
   const handleQuantityChange = (e) => {
     setItemQuantity(Number(e.target.value));
   };
@@ -36,7 +35,7 @@ export const OrderProduct = ({
     e.preventDefault();
     if (currentUser) {
       try {
-        await updateOrderProduct(orderId, productId, price, itemQuantity);
+        await updateOrderProduct(orderProductId, price, itemQuantity);
         const updatedCart = await getCartByUserId(currentUser.id);
         setCart(updatedCart);
       } catch (error) {
@@ -98,7 +97,7 @@ export const OrderProduct = ({
           />
         </label>
       </form>
-      <p>Product price: ${price}</p>
+      <p>Product price: {formatCurrency(price)}</p>
       <p>Item subtotal: {formatCurrency(price * itemQuantity)}</p>
       <p>In stock: {inStock ? "YES, AVAILABLE!" : "PRODUCT UNAVAILABLE"}</p>
       <span className="material-icons-outlined" onClick={handleRemoveFromCart}>

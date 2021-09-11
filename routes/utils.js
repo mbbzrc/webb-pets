@@ -1,11 +1,12 @@
 function requireUser(req, res, next) {
+  console.log("REQ.USER", req.user);
   if (!req.user) {
     next({
       name: "MissingUserError",
       message: "Please log in to complete this.",
     });
   }
-  
+
   next();
 }
 

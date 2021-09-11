@@ -60,12 +60,15 @@ export const Register = ({
         email,
         isAdmin,
       });
-      visitorCart.length > 0 && (await mergeCart(newUser));
-      const userCart = await getCartByUserId(newUser.id);
-      setCart(userCart);
-      setVisitorCart([]);
+      if (visitorCart.length > 0) {
+        await mergeCart(newUser);
+        const userCart = await getCartByUserId(newUser.id);
+        setCart(userCart);
+        setVisitorCart([]);
+      }
       setCurrentUser(newUser);
     } catch (error) {
+      console.error(error.response.data || error);
       throw error;
     }
   };

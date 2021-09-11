@@ -5,8 +5,10 @@ import { useParams } from "react-router-dom";
 import {
   getCartByUserId,
   getProductById,
-  updateOrderProduct,
   formatCurrency,
+  addProductToOrder,
+  updateOrderProduct,
+  createOrder,
 } from "../api";
 
 export const Product = ({
@@ -21,26 +23,35 @@ export const Product = ({
   let { id, name, description, price, imageURL, inStock, category } =
     openProduct;
 
-  const [form, setForm] = useState({
-    quantity: 1,
-    price: null,
-  });
+  const [itemQuantity, setItemQuantity] = useState(1);
 
-  const checkProductInCart = () => {
+  const handleQuantityChange = (e) => {
+    setItemQuantity(Number(e.target.value));
+  };
+
+  const checkProductInVisitorCart = () => {
     return (
       visitorCart.length > 0 && visitorCart.some((product) => product.id === id)
     );
   };
 
-  const editProductInCart = () => {
+  const editProductInVisitorCart = () => {
     const [itemInVisitorCart] = visitorCart.filter(
       (product) => product.id === id
     );
     return {
       ...itemInVisitorCart,
-      price: form.price + itemInVisitorCart.price,
-      quantity: form.quantity + itemInVisitorCart.quantity,
+      quantity: itemQuantity + itemInVisitorCart.quantity,
     };
+  };
+
+  const checkProductInUserCart = () => {
+    if (cart.orderProducts && cart.orderProducts.length > 0) {
+      const [results] = cart.orderProducts.filter(
+        (product) => product.productId === id
+      );
+      return results;
+    }
   };
 
   const params = useParams();
@@ -48,35 +59,33 @@ export const Product = ({
   const fetchData = async () => {
     const fetchedProduct = await getProductById(params.productId);
     setOpenProduct(fetchedProduct);
-    setForm({ ...form, price: fetchedProduct.price });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleQuantityChange = (e) => {
-    setForm({
-      ...form,
-      quantity: Number(e.target.value),
-      price: Number(e.target.value) * price,
-    });
-  };
-
   const handleAddToCart = async () => {
     try {
       if (currentUser) {
-        await updateOrderProduct(
-          cart.id,
-          openProduct.id,
-          form.price,
-          form.quantity
-        );
+        if (!cart) {
+          createOrder();
+        }
+        const { id: productId, price } = openProduct;
+        const { id: cartId } = cart;
+        const cartItem = checkProductInUserCart();
+        if (cartItem) {
+          const { orderProductId, quantity } = cartItem;
+          const newQuantity = quantity + itemQuantity;
+          await updateOrderProduct(orderProductId, price, newQuantity);
+        } else {
+          await addProductToOrder(cartId, productId, price, itemQuantity);
+        }
         const updatedCart = await getCartByUserId(currentUser.id);
         setCart(updatedCart);
       } else {
-        if (checkProductInCart()) {
-          const updatedProduct = editProductInCart();
+        if (checkProductInVisitorCart()) {
+          const updatedProduct = editProductInVisitorCart();
           const idx = visitorCart.findIndex((product) => product.id === id);
           const newCart = [...visitorCart];
           newCart.splice(idx, 1, updatedProduct);
@@ -84,14 +93,12 @@ export const Product = ({
         } else {
           const addedProduct = {
             ...openProduct,
-            price: form.price,
-            quantity: form.quantity,
+            quantity: itemQuantity,
           };
           setVisitorCart([...visitorCart, addedProduct]);
         }
       }
     } catch (error) {
-      // set error message
       throw error;
     }
   };
@@ -101,7 +108,7 @@ export const Product = ({
       <div className="category">category / {category}</div>
       <h2>{name}</h2>
       <div className="product-image">
-        <img src={imageURL}/>
+        <img src={imageURL} />
       </div>
       <div className="product-details">
         {inStock && (
@@ -110,9 +117,9 @@ export const Product = ({
               <span>Quantity: </span>
               <input
                 type="number"
-                value={form.quantity}
-                min="1"
-                max="99"
+                value={itemQuantity}
+                min={1}
+                max={99}
                 required
                 onChange={handleQuantityChange}
               />

@@ -27,6 +27,8 @@ export const App = () => {
     JSON.parse(localStorage.getItem("visitorCart")) || []
   );
 
+  const [search_filter, setSearchFilter] = useState(null)
+
   const mergeCart = async ({ id }) => {
     const existingCart = await getCartByUserId(id);
     if (!existingCart) {
@@ -64,6 +66,7 @@ export const App = () => {
           setCurrentUser={setCurrentUser}
           setCart={setCart}
           setVisitorCart={setVisitorCart}
+          handleSearch={setSearchFilter}
         />
         {/* HOME PAGE, WITH PRODUCT CATEGORIES? */}
         {!currentUser ? (
@@ -95,7 +98,7 @@ export const App = () => {
           </>
         )}
         <Route path="/products">
-          <AllProducts />
+          <AllProducts search_filter={search_filter}/>
         </Route>
         <Route path="/product/:productId">
           <Product

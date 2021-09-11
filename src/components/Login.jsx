@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { toast } from "react-toastify";
+
 import { loginUser, getCartByUserId } from "../api";
 
 export const Login = ({
@@ -14,15 +16,13 @@ export const Login = ({
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const checkCredentials = (username, password) => {
     if (!username || !password) {
-      setErrorMessage("Please supply a valid username and password.");
+      toast.error("Please supply a valid username and password!");
       return false;
     }
     return true;
@@ -39,8 +39,9 @@ export const Login = ({
       setCart(userCart);
       setVisitorCart([]);
       setCurrentUser(loggedInUser);
+      toast.success("Sign in successful!");
     } catch (error) {
-      console.log(error);
+      toast.error(`${error.response.data.message}`);
     }
   };
 
@@ -68,7 +69,6 @@ export const Login = ({
         </label>
         <input type="submit" value="log in" onClick={handleSubmit} />
       </form>
-      {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
     </div>
   );
 };

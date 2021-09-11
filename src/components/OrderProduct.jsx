@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { toast } from "react-toastify";
+
 import {
   formatCurrency,
   updateOrderProduct,
@@ -53,6 +55,7 @@ export const OrderProduct = ({
       const newCart = [...visitorCart];
       newCart.splice(idx, 1, updatedProduct);
       setVisitorCart(newCart);
+      toast.success("Quantity updated!");
     }
   };
 
@@ -62,14 +65,16 @@ export const OrderProduct = ({
         await removeOrderProduct(orderProductId);
         const updatedCart = await getCartByUserId(currentUser.id);
         setCart(updatedCart);
+        toast.success("Item removed from cart.");
       } catch (error) {
-        console.log(error);
+        toast.error(`${error.response.data.message}`);
       }
     } else {
       const idx = visitorCart.findIndex((product) => product.id === id);
       const updatedCart = [...visitorCart];
       updatedCart.splice(idx, 1);
       setVisitorCart(updatedCart);
+      toast.success("Item removed from cart.");
     }
   };
 

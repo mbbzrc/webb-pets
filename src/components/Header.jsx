@@ -15,9 +15,7 @@ export const Header = ({
   const handleLogout = () => {
     localStorage.clear();
     setCart(null);
-    // REMOVE BELOW ITEM ONCE MERGE FUNCTION WORKS PROPERLY
     setVisitorCart([]);
-    //
     setCurrentUser(null);
   };
 
@@ -47,7 +45,6 @@ export const Header = ({
       )}
       <Link to="/cart">
         <span className="material-icons-outlined">shopping_cart</span>
-        {/* Add counter for shopping cart items! */}
       </Link>
     </nav>
   );

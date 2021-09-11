@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   Header,
   Register,
@@ -44,9 +48,7 @@ export const App = () => {
           )
         );
       } else {
-        alert(
-          "Items currently in cart will be added to your existing user cart."
-        );
+        toast.info("Cart has been added to your account.", { autoClose: 5000 });
         await Promise.all(
           visitorCart.map(async ({ id: productId, price, quantity }) => {
             const [productToUpdate] = existingCart.orderProducts.filter(
@@ -64,7 +66,7 @@ export const App = () => {
         );
       }
     } catch (error) {
-      console.error(error);
+      toast.error(`${error.response.data.message}`);
     }
   };
 
@@ -88,6 +90,7 @@ export const App = () => {
           setCart={setCart}
           setVisitorCart={setVisitorCart}
         />
+        <ToastContainer autoClose={3000} position={"bottom-right"} />
         {/* HOME PAGE, WITH PRODUCT CATEGORIES? */}
         {!currentUser ? (
           <>

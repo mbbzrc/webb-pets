@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import { getOrdersByUserId } from "../api";
 
 export const Account = ({ currentUser }) => {
-  const [userOrders, setUserOrders] = useState();
-
   const [orderList, setOrderList] = useState([]);
 
   const fetchData = async () => {
@@ -14,7 +14,7 @@ export const Account = ({ currentUser }) => {
       const fetchedOrders = await getOrdersByUserId(currentUser.id);
       setOrderList(fetchedOrders);
     } catch (error) {
-      console.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
 

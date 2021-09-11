@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import {
   getCartByUserId,
   getProductById,
@@ -103,8 +105,9 @@ export const Product = ({
           setVisitorCart([...visitorCart, addedProduct]);
         }
       }
+      toast.success("Item added to cart!");
     } catch (error) {
-      throw error;
+      toast.error(`${error.response.data.message}`);
     }
   };
 
@@ -141,7 +144,6 @@ export const Product = ({
             add_shopping_cart
           </span>
         )}
-        {/* delete from cart */}
       </div>
     </div>
   );

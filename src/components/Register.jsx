@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { toast } from "react-toastify";
+
 import { registerUser, getCartByUserId } from "../api";
 
 export const Register = ({
@@ -65,11 +67,13 @@ export const Register = ({
         const userCart = await getCartByUserId(newUser.id);
         setCart(userCart);
         setVisitorCart([]);
+        toast.success("Welcome to WEBB Pets! Your account has been created.", {
+          autoClose: 5000,
+        });
       }
       setCurrentUser(newUser);
     } catch (error) {
-      console.error(error.response.data || error);
-      throw error;
+      toast.error(`${error.response.data.message}`);
     }
   };
 

@@ -46,11 +46,13 @@ export const Product = ({
   };
 
   const checkProductInUserCart = () => {
-    if (cart.orderProducts && cart.orderProducts.length > 0) {
+    if (cart && cart.orderProducts && cart.orderProducts.length > 0) {
       const [results] = cart.orderProducts.filter(
         (product) => product.productId === id
       );
       return results;
+    } else {
+      return null;
     }
   };
 
@@ -68,11 +70,14 @@ export const Product = ({
   const handleAddToCart = async () => {
     try {
       if (currentUser) {
+        let cartId;
         if (!cart) {
-          createOrder();
+          const newCart = await createOrder(currentUser.id);
+          cartId = newCart.id;
+        } else {
+          cartId = cart.id;
         }
         const { id: productId, price } = openProduct;
-        const { id: cartId } = cart;
         const cartItem = checkProductInUserCart();
         if (cartItem) {
           const { orderProductId, quantity } = cartItem;

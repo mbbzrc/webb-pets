@@ -76,8 +76,8 @@ export const Register = ({
   return (
     <div id="register">
       <h2>New customer? Create an account!</h2>
-      <form>
-        <label>
+      <form className="register-form">
+        <label className="reg-username">
           <span>username: </span>
           <input
             type="text"
@@ -87,7 +87,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="reg-password">
           <span>password: </span>
           <input
             type="password"
@@ -97,7 +97,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="reg-confirm">
           <span>retype password: </span>
           <input
             type="password"
@@ -107,7 +107,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="reg-first">
           <span>first name: </span>
           <input
             type="text"
@@ -117,7 +117,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="reg-last">
           <span>last name: </span>
           <input
             type="text"
@@ -127,7 +127,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="reg-email">
           <span>e-mail: </span>
           <input
             type="text"
@@ -137,7 +137,7 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <input type="submit" value="join" onClick={handleSubmit} />
+        <input className="btn" type="submit" value="join" onClick={handleSubmit} />
       </form>
       {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
     </div>

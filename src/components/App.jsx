@@ -32,7 +32,7 @@ export const App = () => {
     JSON.parse(localStorage.getItem("visitorCart")) || []
   );
 
-  const [searchFilter, setSearchFilter] = useState(null)
+  const [searchFilter, setSearchFilter] = useState(null);
 
   const mergeCart = async ({ id: userId }) => {
     try {
@@ -121,7 +121,7 @@ export const App = () => {
           </>
         )}
         <Route path="/products">
-          <AllProducts searchFilter={searchFilter}/>
+          <AllProducts searchFilter={searchFilter} />
         </Route>
         <Route path="/product/:productId">
           <Product

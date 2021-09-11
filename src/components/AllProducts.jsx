@@ -9,12 +9,14 @@ export const AllProducts = ({searchFilter=null}) => {
 
   const fetchData = async () => {
     const fetchedProducts = await getAllProducts();
-    setProductList(fetchedProducts.filter(product =>{
-      if (!searchFilter) return product
+    if (!searchFilter) {
+      setProductList(fetchedProducts);
+    } else {
+      setProductList(fetchedProducts.filter(product =>{
 
-      if ( product.name.toLowerCase().includes(searchFilter.toLowerCase())) return product
-
-    }));
+        if ( product.name.toLowerCase().includes(searchFilter.toLowerCase())) return product
+  
+    }))}
   };
 
   useEffect(() => {

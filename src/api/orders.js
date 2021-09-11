@@ -51,3 +51,21 @@ export async function getOrdersByUserId(userId) {
     throw error;
   }
 }
+
+export async function updateOrder(orderId, status, userId) {
+  try {
+    const { data } = await axios.patch(
+      `${BASE_URL}/api/orders/${orderId}`,
+      {
+        id: orderId,
+        status: status,
+        userId: userId,
+      },
+      createAuthHeader()
+    );
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -92,7 +92,9 @@ async function updateOrderProduct({ id, price, quantity }) {
         `,
       Object.values(updateFields)
     );
-
+    //
+    console.log("DB - ORDER_PRODUCT: ", order_product);
+    //
     return order_product;
   } catch (error) {
     throw error;

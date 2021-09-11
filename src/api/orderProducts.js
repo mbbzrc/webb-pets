@@ -20,6 +20,7 @@ export async function addProductToOrder(orderId, productId, price, quantity) {
 }
 
 export async function updateOrderProduct(orderProductId, price, quantity) {
+  console.log("PRICE: ", price);
   try {
     const { data } = axios.patch(
       `${BASE_URL}/api/order-products/${orderProductId}`,
@@ -29,6 +30,7 @@ export async function updateOrderProduct(orderProductId, price, quantity) {
       },
       createAuthHeader()
     );
+    await console.log("DATA RETURNED: ", data);
     return data;
   } catch (error) {
     throw error;

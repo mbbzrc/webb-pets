@@ -58,8 +58,9 @@ export const App = () => {
               const { id: orderId } = existingCart;
               await addProductToOrder(orderId, productId, price, quantity);
             } else {
-              const { orderProductId } = productToUpdate;
-              await updateOrderProduct(orderProductId, price, quantity);
+              const { orderProductId, quantity: oldQuantity } = productToUpdate;
+              const newQuantity = oldQuantity + quantity;
+              await updateOrderProduct(orderProductId, price, newQuantity);
             }
           })
         );

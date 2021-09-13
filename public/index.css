@@ -145,3 +145,78 @@ img.image-thumbnail {
   max-width: 300px;
   padding: 1rem;
 }
+
+.login{
+  width: 300px;  
+  overflow: hidden;  
+  margin: auto;  
+  margin: 20px 0px 0px 450px;  
+  padding: 80px;
+  text-align: center;
+  background: #e4daa7;  
+  border: rgb(223, 223, 223) 5px solid;
+  /* border-radius: 15px ; */
+}
+
+.login h2 {
+  color: white;
+}
+
+.login input {
+  border-radius: 4px;
+}
+
+.username {
+  width: 300px;  
+  height: 30px;  
+  border: none;  
+  border-radius: 3px;  
+  padding-left: 8px;
+}
+
+.password {
+  width: 300px;  
+  height: 30px;  
+  border: none;  
+  border-radius: 3px;  
+  padding-left: 8px;
+}
+
+.btn {
+  background:#122f78;
+  width:100px;
+  margin-top: 15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  color:white;
+  border-radius:4px;
+  border: #0d2257 1px solid;
+}
+
+#register {
+  width: 350px;  
+  overflow: hidden;  
+  margin: auto;  
+  margin: 20px 0px 0px 450px;  
+  padding: 80px;
+  text-align: center;
+  background: #e4daa7;  
+  border: rgb(223, 223, 223) 5px solid;
+}
+
+#register label {
+  display: block;
+  padding: 5px;
+}
+
+#register h2 {
+  color: white;
+}
+
+#register input {
+  border-radius: 4px;
+}
+
+.btn:hover{
+  background: #1d3675e5; 
+}

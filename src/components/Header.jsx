@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
@@ -7,10 +8,25 @@ export const Header = ({
   setCurrentUser,
   setCart,
   setVisitorCart,
+  handleSearch,
 }) => {
+  let history = useHistory();
+
+  const [searchInput, setSearchInput] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // BUILD OUT SEARCH SUBMIT FUNCTION
+    if (searchInput) {
+      setSearchTerm("");
+      handleSearch(null);
+      setSearchInput(false);
+      history.push("/products");
+      return;
+    }
+
+    handleSearch(searchTerm);
+    setSearchInput(true);
+    history.push("/products");
   };
   const handleLogout = () => {
     localStorage.clear();
@@ -19,13 +35,22 @@ export const Header = ({
     setCurrentUser(null);
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <nav>
       <h1>webb PETS</h1>
       <form id="search-bar">
-        <input type="text" placeholder="search..." />
+        <input
+          type="text"
+          placeholder="search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <button type="submit" onClick={handleSubmit}>
-          <span className="material-icons-outlined">search</span>
+          <span className="material-icons-outlined">
+            {searchInput ? "delete" : "search"}
+          </span>
         </button>
       </form>
       <Link to="/">Home</Link>

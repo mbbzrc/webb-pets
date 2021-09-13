@@ -48,8 +48,8 @@ export const Login = ({
   return (
     <div className="login">
       <h2>Welcome back! Log in here.</h2>
-      <form>
-        <label>
+      <form className="login-form">
+        <label className="username">
           <span>username: </span>
           <input
             type="text"
@@ -58,7 +58,7 @@ export const Login = ({
             onChange={handleFormChange}
           />
         </label>
-        <label>
+        <label className="password">
           <span>password: </span>
           <input
             type="password"
@@ -67,7 +67,7 @@ export const Login = ({
             onChange={handleFormChange}
           />
         </label>
-        <input type="submit" value="log in" onClick={handleSubmit} />
+        <input className="btn" type="submit" value="log in" onClick={handleSubmit} />
       </form>
     </div>
   );

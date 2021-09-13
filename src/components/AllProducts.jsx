@@ -4,17 +4,24 @@ import { Link } from "react-router-dom";
 
 import { getAllProducts, formatCurrency } from "../api";
 
-export const AllProducts = () => {
+export const AllProducts = ({searchFilter=null}) => {
   const [productList, setProductList] = useState([]);
 
   const fetchData = async () => {
     const fetchedProducts = await getAllProducts();
-    setProductList(fetchedProducts);
+    if (!searchFilter) {
+      setProductList(fetchedProducts);
+    } else {
+      setProductList(fetchedProducts.filter(product =>{
+
+        if ( product.name.toLowerCase().includes(searchFilter.toLowerCase())) return product
+  
+    }))}
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchFilter]);
 
   return (
     <div className="all-products">

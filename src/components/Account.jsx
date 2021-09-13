@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: "auto",
     maxWidth: 1000,
+    textTransform: 'uppercase'
   },
   img: {
     margin: "auto",
@@ -129,7 +130,7 @@ export const Account = ({ currentUser }) => {
                         orderList.map((order) => {
                           if (order.status !== "created") {
                             return (
-                              <li key={order.id} style={{ marginLeft: "10px" }}>
+                              <li key={order.id} style={{ marginLeft: "10px", paddingTop: '10px' }}>
                                 <Link to={`/order/${order.id}`}>
                                   Order #{order.id} - {order.status} -{" "}
                                   {order.datePlaced}

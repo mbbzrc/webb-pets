@@ -97,6 +97,7 @@ export const OrderCreated = ({
         amount,
       });
       const data = response.data;
+      console.log(data.success.receipt_url);
       if (data && currentUser) {
         const existingCart = await getCartByUserId(currentUser.id);
         const orderId = existingCart.id;
@@ -180,7 +181,9 @@ export const OrderCreated = ({
             </StripeCheckout>{" "}
           </div>
         ) : (
-          <h3 style={{ textTransform: 'uppercase', color: '#159397'}}>there are no items in your cart</h3>
+          <h3 style={{ textTransform: "uppercase", color: "#159397" }}>
+            there are no items in your cart
+          </h3>
         )}
       </div>
     </>

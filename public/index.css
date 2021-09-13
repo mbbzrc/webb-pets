@@ -190,7 +190,7 @@ img.image-thumbnail {
   width: 160px;
 }
 
-.checkout-title, .order-title { 
+.checkout-title, .order-title, .account-title { 
   
     text-align: center;
     margin-bottom: 40px;
@@ -199,3 +199,17 @@ img.image-thumbnail {
    text-shadow: 3px 2px 10px rgba(0,0,0,0.58) ;
    
   }
+
+  .accordian-button {
+    height: 60px;
+    width: 200px;
+    margin-top: 2px !important;
+}
+
+
+#account-details {
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

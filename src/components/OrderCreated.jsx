@@ -157,10 +157,10 @@ export const OrderCreated = ({
 
         {orderSubtotal ? (
           <div className="total">
-            <p>
+            <div>
               <h3>Order Subtotal:</h3>{" "}
               <h2 style={{ padding: "10px" }}>{orderSubtotal} </h2>{" "}
-            </p>
+            </div>
             <StripeCheckout
               stripeKey={STRIPE_KEY}
               token={handleToken(orderPrice * 100)}

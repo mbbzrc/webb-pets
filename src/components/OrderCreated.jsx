@@ -3,6 +3,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import { Button } from "@material-ui/core";
 
 import { OrderProduct } from "./index";
 import { updateOrder, getCartByUserId } from "../api";
@@ -99,7 +100,12 @@ export const OrderCreated = ({
       if (data && currentUser) {
         const existingCart = await getCartByUserId(currentUser.id);
         const orderId = existingCart.id;
-        await handleCompleteOrder({ setVisitorCart, currentUser, setCart, orderId });
+        await handleCompleteOrder({
+          setVisitorCart,
+          currentUser,
+          setCart,
+          orderId,
+        });
 
         history.push(`order/${orderId}`);
       } else if (data) {
@@ -118,38 +124,65 @@ export const OrderCreated = ({
 
   return (
     <>
-      <h2>My Cart {currentUser && `(${currentUser.firstName})`}</h2>
-      {!currentUser && <p>Log in or register to save your cart!</p>}
-      <p>Items in cart:</p>
-      {orderProducts &&
-        orderProducts.length > 0 &&
-        orderProducts.map((product, index) => {
-          const { orderId } = openOrder;
-          return (
-            <OrderProduct
-              orderId={orderId}
-              product={product}
-              index={index}
-              currentUser={currentUser}
-              setCart={setCart}
-              visitorCart={visitorCart}
-              setVisitorCart={setVisitorCart}
-              key={product.orderProductId || product.id}
-            />
-          );
-        })}
-      <p>Order Subtotal: {orderSubtotal || <span>order is empty</span>}</p>
-      {orderSubtotal ? (
-        <StripeCheckout
-          stripeKey={STRIPE_KEY}
-          token={handleToken(orderPrice * 100)}
-          name="Webb Pets"
-          billingAddress
-          shippingAddress
-          amount={orderPrice * 100}
-          currency={CURRENCY}
-        ></StripeCheckout>
-      ) : null}
+      {" "}
+      <div className="my-cart">
+        <h2 className="checkout-title">
+          My Cart {currentUser && `(${currentUser.firstName})`}
+        </h2>
+        {orderSubtotal ? (
+          <div className="cart-box">
+            {!currentUser && <p>Log in or register to save your cart!</p>}
+            <h2 style={{ paddingBottom: "16px" }}>Items in cart:</h2>
+            <div className="cart-items">
+              {orderProducts &&
+                orderProducts.length > 0 &&
+                orderProducts.map((product, index) => {
+                  const { orderId } = openOrder;
+                  return (
+                    <OrderProduct
+                      orderId={orderId}
+                      product={product}
+                      index={index}
+                      currentUser={currentUser}
+                      setCart={setCart}
+                      visitorCart={visitorCart}
+                      setVisitorCart={setVisitorCart}
+                      key={product.orderProductId || product.id}
+                    />
+                  );
+                })}
+            </div>
+          </div>
+        ) : null}
+
+        {orderSubtotal ? (
+          <div className="total">
+            <p>
+              <h3>Order Subtotal:</h3>{" "}
+              <h2 style={{ padding: "10px" }}>{orderSubtotal} </h2>{" "}
+            </p>
+            <StripeCheckout
+              stripeKey={STRIPE_KEY}
+              token={handleToken(orderPrice * 100)}
+              name="Webb Pets"
+              billingAddress
+              shippingAddress
+              amount={orderPrice * 100}
+              currency={CURRENCY}
+            >
+              <Button
+                className="checkout-button"
+                variant="contained"
+                color="primary"
+              >
+                CHECKOUT
+              </Button>
+            </StripeCheckout>{" "}
+          </div>
+        ) : (
+          <h3 style={{ textTransform: 'uppercase', color: '#159397'}}>there are no items in your cart</h3>
+        )}
+      </div>
     </>
   );
 };

@@ -185,10 +185,6 @@ img.image-thumbnail {
   padding: 16px;
 }
 
-.checkout-button {
-  height: 60px;
-  width: 160px;
-}
 
 .checkout-title, .order-title, .account-title { 
   
@@ -200,11 +196,6 @@ img.image-thumbnail {
    
   }
 
-  .accordian-button {
-    height: 60px;
-    width: 200px;
-    margin-top: 2px !important;
-}
 
 
 #account-details {

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { OrderProduct } from "./index";
 import { updateOrder, getCartByUserId } from "../api";
@@ -15,6 +16,16 @@ const STRIPE_KEY =
   "pk_test_51JW40NGfeiZyi0bkzQs8BV34mMmKvaUDgmsf1ciXrLlMKqCs7nJncEu4H8WpCM1vnN9pxOocNckKSK04iQOChC7R00gecuqekO";
 const PAYMENT_URL = `${BASE_URL}/api/stripe/pay`;
 const CURRENCY = "USD";
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    height: "60px",
+    width: "200px",
+    marginTop: "2px",
+    color: "black",
+    backgroundColor: "#159397",
+  },
+}));
 
 export const OrderCreated = ({
   openOrder,
@@ -32,6 +43,7 @@ export const OrderCreated = ({
 
   const [orderPrice, setOrderPrice] = useState(null);
   const history = useHistory();
+  const classes = useStyles();
 
   useEffect(() => {
     openOrder && setOrderProducts(openOrder.orderProducts || []);
@@ -171,11 +183,7 @@ export const OrderCreated = ({
               amount={orderPrice * 100}
               currency={CURRENCY}
             >
-              <Button
-                className="checkout-button"
-                variant="contained"
-                color="primary"
-              >
+              <Button className={classes.button} variant="contained">
                 CHECKOUT
               </Button>
             </StripeCheckout>{" "}

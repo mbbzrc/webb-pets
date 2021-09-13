@@ -79,7 +79,9 @@ export const OrderProduct = ({
   };
 
   return (
+    
     <div className="order-product" key={orderProductId}>
+      <div></div>
       <img src={imageURL} alt="product thumbnail" className="image-thumbnail" />
       <p>Item #{index + 1}</p>
       <span className="product-title">Product: {name}</span>

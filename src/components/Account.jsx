@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "230px",
     maxHeight: "219px",
   },
+  button: {
+    height: "60px",
+    width: "200px",
+    marginTop: "2px",
+    color: "black",
+    backgroundColor: "#159397",
+  },
 }));
 
 export const Account = ({ currentUser }) => {
@@ -64,14 +71,15 @@ export const Account = ({ currentUser }) => {
       </h2>
 
       <Button
-        className="accordian-button"
+        className={classes.button}
         variant="outlined"
         color="primary"
         onClick={() => {
           setUserInfoOpen(!userInfoOpen);
         }}
       >
-        User Info {userInfoOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
+        User Info{" "}
+        {userInfoOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
       </Button>
 
       {userInfoOpen ? (
@@ -111,7 +119,7 @@ export const Account = ({ currentUser }) => {
       )}
       <div>
         <Button
-          className="accordian-button"
+          className={classes.button}
           variant="outlined"
           color="primary"
           onClick={() => {
@@ -137,13 +145,12 @@ export const Account = ({ currentUser }) => {
                               <li
                                 key={order.id}
                                 style={{
-                                  marginLeft: "10px",
-                                  paddingTop: "10px",
+                                  marginLeft: "3rem",
+                                  paddingTop: "1rem",
                                 }}
                               >
                                 <Link to={`/order/${order.id}`}>
-                                  Order #{order.id} - {order.status} -{" "}
-                                  {order.datePlaced}
+                                  Order #{order.id}
                                 </Link>
                               </li>
                             );
@@ -160,16 +167,15 @@ export const Account = ({ currentUser }) => {
         )}
       </div>
       <Button
-          className="accordian-button"
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            history.push('cart')
-          }}
-        >
-          Go To Cart <KeyboardArrowRight />
-        
-        </Button>
+        className={classes.button}
+        variant="outlined"
+        color="primary"
+        onClick={() => {
+          history.push("cart");
+        }}
+      >
+        Go To Cart <KeyboardArrowRight />
+      </Button>
     </div>
   );
 };

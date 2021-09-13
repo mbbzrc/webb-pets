@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Account = ({ currentUser }) => {
   const [orderList, setOrderList] = useState([]);
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [userInfoOpen, setUserInfoOpen] = useState(false);
   const [ordersOpen, setOrdersOpen] = useState(false);
 
   const classes = useStyles();
@@ -67,13 +67,13 @@ export const Account = ({ currentUser }) => {
         variant="outlined"
         color="primary"
         onClick={() => {
-          setDetailsOpen(!detailsOpen);
+          setUserInfoOpen(!userInfoOpen);
         }}
       >
-        User Info {detailsOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
+        User Info {userInfoOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
       </Button>
 
-      {detailsOpen ? (
+      {userInfoOpen ? (
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Grid container spacing={2}>
@@ -117,7 +117,7 @@ export const Account = ({ currentUser }) => {
             setOrdersOpen(!ordersOpen);
           }}
         >
-          Order History{" "}
+          Order History
           {ordersOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
         </Button>
 

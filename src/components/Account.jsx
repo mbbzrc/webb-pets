@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: "auto",
     maxWidth: 1000,
-    textTransform: 'uppercase'
+    textTransform: "uppercase",
   },
   img: {
     margin: "auto",
@@ -91,13 +91,16 @@ export const Account = ({ currentUser }) => {
               </Grid>
 
               <Grid item>
-                <img
-                  className={classes.img}
-                  alt="complex"
-                  // src={imageURL} 
-                  // Use image below for testing purposes 
-                  src="assets/userAvatar.png"  
-                />
+                {imageURL ? (
+                  <img
+                    className={classes.img}
+                    // src={imageURL}
+                    // Use image below for testing purposes
+                    src="assets/userAvatar.png"
+                  />
+                ) : (
+                  <img className={classes.img} src="assets/userAvatar.png" />
+                )}
               </Grid>
             </Grid>
           </Paper>
@@ -130,7 +133,13 @@ export const Account = ({ currentUser }) => {
                         orderList.map((order) => {
                           if (order.status !== "created") {
                             return (
-                              <li key={order.id} style={{ marginLeft: "10px", paddingTop: '10px' }}>
+                              <li
+                                key={order.id}
+                                style={{
+                                  marginLeft: "10px",
+                                  paddingTop: "10px",
+                                }}
+                              >
                                 <Link to={`/order/${order.id}`}>
                                   Order #{order.id} - {order.status} -{" "}
                                   {order.datePlaced}

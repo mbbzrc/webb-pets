@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
@@ -36,6 +36,7 @@ export const Account = ({ currentUser }) => {
   const [ordersOpen, setOrdersOpen] = useState(false);
 
   const classes = useStyles();
+  const history = useHistory();
 
   const fetchData = async () => {
     try {
@@ -158,6 +159,17 @@ export const Account = ({ currentUser }) => {
           ""
         )}
       </div>
+      <Button
+          className="accordian-button"
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            history.push('cart')
+          }}
+        >
+          Go To Cart <KeyboardArrowRight />
+        
+        </Button>
     </div>
   );
 };

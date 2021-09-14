@@ -126,7 +126,7 @@ export const Account = ({ currentUser }) => {
             setOrdersOpen(!ordersOpen);
           }}
         >
-          Order History
+          Previous Orders
           {ordersOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
         </Button>
 

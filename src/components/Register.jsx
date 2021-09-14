@@ -79,8 +79,9 @@ export const Register = ({
 
   return (
     <div id="register">
-      <h2>New customer? Create an account!</h2>
-      <form className="register-form">
+      <h2>New customer?</h2>
+      <h2>Create an account!</h2>
+      <form id="register-form">
         <label className="reg-username">
           <span>username: </span>
           <input
@@ -141,8 +142,13 @@ export const Register = ({
             onChange={handleFormChange}
           />
         </label>
-        <input className="btn" type="submit" value="join" onClick={handleSubmit} />
       </form>
+      <input
+        className="btn"
+        type="submit"
+        value="join"
+        onClick={handleSubmit}
+      />
       {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
     </div>
   );

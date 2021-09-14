@@ -68,7 +68,7 @@ export const OrderCreated = ({
         return total + price * quantity;
       }, 0);
 
-      setOrderPrice((Math.round(orderPrice * 100) / 100));
+      setOrderPrice(Math.round(orderPrice * 100) / 100);
     } else {
       setOrderPrice(null);
     }

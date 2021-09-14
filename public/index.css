@@ -8,6 +8,8 @@ light blue {color: #159397;} */
 /* **CONTENTS** */
 /* MAIN ELEMENTS */
 /* NAVIGATION */
+/* CATEGORIES */
+/* PRODUCTS */
 /* DETAILS */
 /* * */
 
@@ -38,6 +40,10 @@ h1 {
 
 h2 {
   color: #159397;
+}
+
+h3 {
+  color: #122f78;
 }
 
 /* NAVIGATION */
@@ -129,6 +135,45 @@ input {
   border-radius: 15px;
 }
 
+/* PRODUCTS */
+
+#all-products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#all-products a {
+  text-decoration: none;
+}
+
+.thumbnail-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  margin: 1rem;
+  width: 30vw;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.thumbnail-product-image {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10%;
+  margin: 5%;
+  border-bottom: rgb(223, 223, 223) 2px solid;
+}
+
+.thumbnail-product-image img {
+  width: 90%;
+}
+
 /* DETAILS */
 
 .error-message {
@@ -151,17 +196,6 @@ input {
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga";
-}
-
-.thumbnail-product {
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-}
-
-.thumbnail-product-image img {
-  max-height: 300px;
-  max-width: 300px;
-  padding: 1rem;
 }
 
 .product-image img {
@@ -210,9 +244,6 @@ img.image-thumbnail {
   padding: 16px;
   border-top: 1px solid black;
 }
-/* .order-product {
-  padding: 16px;
-} */
 
 .checkout-title,
 .order-title,
@@ -231,23 +262,26 @@ img.image-thumbnail {
   align-items: center;
 }
 
-.login {
+#login {
   width: 300px;
   overflow: hidden;
   margin: auto;
-  margin: 20px 0px 0px 450px;
   padding: 80px;
   text-align: center;
   background: #e4daa7;
   border: rgb(223, 223, 223) 5px solid;
 }
 
-.login h2 {
+#login h2 {
   color: white;
 }
 
-.login input {
+#login input {
   border-radius: 4px;
+}
+
+#login-form {
+  margin: 10px 0px;
 }
 
 .username {
@@ -281,7 +315,6 @@ img.image-thumbnail {
   width: 350px;
   overflow: hidden;
   margin: auto;
-  margin: 20px 0px 0px 450px;
   padding: 80px;
   text-align: center;
   background: #e4daa7;
@@ -298,7 +331,12 @@ img.image-thumbnail {
 }
 
 #register input {
+  width: 100%;
   border-radius: 4px;
+}
+
+#register-form {
+  text-align: left;
 }
 
 .btn:hover {

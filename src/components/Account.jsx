@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     maxWidth: 1000,
     textTransform: "uppercase",
+    boxShadow: '1px 1px 10px'
+
   },
   img: {
     margin: "auto",
@@ -70,44 +72,44 @@ export const Account = ({ currentUser }) => {
         {firstName}
       </h2>
 
-     
-        <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <h3 style={{ paddingTop: "5px" }}>Username: </h3>
-                  <h2>{username}</h2>
-                  <h3 style={{ paddingTop: "5px" }}>First Name: </h3>
-                  <h2>{firstName}</h2>
-                  <h3 style={{ paddingTop: "5px" }}>Last Name: </h3>
-                  <h2>{lastName}</h2>
-                  <h3 style={{ paddingTop: "5px" }}>Email: </h3>
-                  <h2>{email}</h2>
-                </Grid>
-              </Grid>
-
-              <Grid item>
-                {imageURL ? (
-                  <img
-                    className={classes.img}
-                    // src={imageURL}
-                    // Use image below for testing purposes
-                    src="assets/userAvatar.png"
-                  />
-                ) : (
-                  <img className={classes.img} src="assets/userAvatar.png" />
-                )}
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <Grid container spacing={2}>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <h3 style={{ paddingTop: "5px" }}>Username: </h3>
+                <h2>{username}</h2>
+                <h3 style={{ paddingTop: "5px" }}>First Name: </h3>
+                <h2>{firstName}</h2>
+                <h3 style={{ paddingTop: "5px" }}>Last Name: </h3>
+                <h2>{lastName}</h2>
+                <h3 style={{ paddingTop: "5px" }}>Email: </h3>
+                <h2>{email}</h2>
               </Grid>
             </Grid>
-          </Paper>
-        </div>
-      
+
+            <Grid item>
+              {imageURL ? (
+                <img
+                  className={classes.img}
+                  // src={imageURL}
+                  // Use image below for testing purposes
+                  src="assets/userAvatar.png"
+                />
+              ) : (
+                <img className={classes.img} src="assets/userAvatar.png" />
+              )}
+            </Grid>
+          </Grid>
+        </Paper>
+      </div>
+
       <div>
         <Button
           className={classes.button}
           variant="outlined"
-          color="primary" co
+          color="primary"
+          co
           onClick={() => {
             setOrdersOpen(!ordersOpen);
           }}
@@ -152,16 +154,11 @@ export const Account = ({ currentUser }) => {
           ""
         )}
       </div>
-      <Button
-        className={classes.button}
-        variant="outlined"
-        color="primary"
-        onClick={() => {
-          history.push("cart");
-        }}
-      >
-        Go To Cart <KeyboardArrowRight />
-      </Button>
+      <Link to={`/cart`} style={{ textDecoration: "none" }}>
+        <Button className={classes.button} variant="outlined" color="primary">
+          Go To Cart <KeyboardArrowRight />
+        </Button>
+      </Link>
     </div>
   );
 };

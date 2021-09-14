@@ -118,6 +118,10 @@ input {
   margin: 10px;
 }
 
+.category-card:hover {
+  cursor: pointer;
+}
+
 .category-card img {
   width: 90%;
   height: 80%;

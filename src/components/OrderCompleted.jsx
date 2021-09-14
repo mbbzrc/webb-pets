@@ -16,7 +16,7 @@ export const OrderCompleted = ({ openOrder }) => {
         orderProducts.map(
           ({ name, price, quantity, imageURL, orderProductId, index }) => {
             return (
-              <div className="order-product" key={orderProductId}>
+              <div className="product" key={orderProductId}>
                 <img
                   src={imageURL}
                   alt="product thumbnail"

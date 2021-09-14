@@ -68,7 +68,7 @@ export const OrderCreated = ({
         return total + price * quantity;
       }, 0);
 
-      setOrderPrice(orderPrice);
+      setOrderPrice((Math.round(orderPrice * 100) / 100));
     } else {
       setOrderPrice(null);
     }
@@ -109,7 +109,7 @@ export const OrderCreated = ({
         amount,
       });
       const data = response.data;
-      console.log(data.success.receipt_url);
+      // console.log(data.success.receipt_url);
       if (data && currentUser) {
         const existingCart = await getCartByUserId(currentUser.id);
         const orderId = existingCart.id;

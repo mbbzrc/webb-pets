@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 1000,
     maxWidth: 1000,
     textTransform: "uppercase",
+    boxShadow: '1px 1px 10px'
   },
   image: {
     height: "200px",
@@ -118,7 +119,7 @@ export const OrderProduct = ({
   return (
     <div className="order-product" key={orderProductId}>
       <div className={classes.root}>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} >
           <Grid container spacing={2}>
             <Grid item>
               <img

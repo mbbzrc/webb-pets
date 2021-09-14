@@ -14,6 +14,8 @@ const useStyles = makeStyles({
   root: {
     maxWidth: 345,
     margin: "1rem",
+    boxShadow: '1px 1px 10px'
+
   },
   media: {
     height: 140,

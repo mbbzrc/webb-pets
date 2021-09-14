@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     maxWidth: 1000,
     textTransform: "uppercase",
-    boxShadow: '1px 1px 10px'
+    boxShadow: '1px 1px 5px'
 
   },
   img: {

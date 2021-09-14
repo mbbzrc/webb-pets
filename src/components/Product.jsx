@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 1000,
     maxWidth: 1000,
     textTransform: "uppercase",
-    boxShadow: '1px 1px 10px'
+    boxShadow: '1px 1px 5px'
 
   },
   image: {

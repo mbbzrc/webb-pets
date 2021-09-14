@@ -270,6 +270,8 @@ img.image-thumbnail {
   text-align: center;
   background: #e4daa7;
   border: rgb(223, 223, 223) 5px solid;
+  box-Shadow: 1px 1px 5px;
+
 }
 
 #login h2 {
@@ -284,6 +286,7 @@ img.image-thumbnail {
 
 #login-form {
   margin: 10px 0px;
+
 }
 
 .username {
@@ -321,6 +324,8 @@ img.image-thumbnail {
   text-align: center;
   background: #e4daa7;
   border: rgb(223, 223, 223) 5px solid;
+  box-Shadow: 1px 1px 10px;
+
 }
 
 #register label {

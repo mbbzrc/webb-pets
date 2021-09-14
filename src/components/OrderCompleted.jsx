@@ -7,7 +7,11 @@ export const OrderCompleted = ({ openOrder }) => {
 
   return (
     <>
+    <div className="my-cart">
+  <h2 className="order-title">Order #{openOrder.orderId}</h2>
+    {console.log(openOrder)}
       <p>Date placed: {openOrder.datePlaced}</p>
+      <div className="cart-items">
       {orderProducts.length > 0 &&
         orderProducts.map(
           ({ name, price, quantity, imageURL, orderProductId, index }) => {
@@ -18,7 +22,7 @@ export const OrderCompleted = ({ openOrder }) => {
                   alt="product thumbnail"
                   className="image-thumbnail"
                 />
-                <span> Item #{index}</span>
+                <p> Item #{index}</p>
                 <span className="product-title">Product: {name}</span>
                 <p>Quantity: {quantity}</p>
                 <p>Item price: {formatCurrency(price)}</p>
@@ -27,6 +31,8 @@ export const OrderCompleted = ({ openOrder }) => {
             );
           }
         )}
+        </div>
+        </div>
     </>
   );
 };

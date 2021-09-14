@@ -99,6 +99,32 @@ input {
   background-color: #eeeeee;
 }
 
+/* CATEGORIES */
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  max-width: 400px;
+  max-height: 400px;
+  margin: 10px;
+}
+
+.category-card img {
+  width: 90%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
 /* DETAILS */
 
 .error-message {
@@ -128,7 +154,7 @@ input {
   padding-bottom: 2rem;
 }
 
-.thumbnail-product-image img{
+.thumbnail-product-image img {
   max-height: 300px;
   max-width: 300px;
   padding: 1rem;
@@ -146,16 +172,15 @@ img.image-thumbnail {
   padding: 1rem;
 }
 
-.login{
-  width: 300px;  
-  overflow: hidden;  
-  margin: auto;  
-  margin: 20px 0px 0px 450px;  
+.login {
+  width: 300px;
+  overflow: hidden;
+  margin: auto;
+  margin: 20px 0px 0px 450px;
   padding: 80px;
   text-align: center;
-  background: #e4daa7;  
+  background: #e4daa7;
   border: rgb(223, 223, 223) 5px solid;
-  /* border-radius: 15px ; */
 }
 
 .login h2 {
@@ -167,40 +192,40 @@ img.image-thumbnail {
 }
 
 .username {
-  width: 300px;  
-  height: 30px;  
-  border: none;  
-  border-radius: 3px;  
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
   padding-left: 8px;
 }
 
 .password {
-  width: 300px;  
-  height: 30px;  
-  border: none;  
-  border-radius: 3px;  
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
   padding-left: 8px;
 }
 
 .btn {
-  background:#122f78;
-  width:100px;
+  background: #122f78;
+  width: 100px;
   margin-top: 15px;
-  padding-top:5px;
-  padding-bottom:5px;
-  color:white;
-  border-radius:4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  border-radius: 4px;
   border: #0d2257 1px solid;
 }
 
 #register {
-  width: 350px;  
-  overflow: hidden;  
-  margin: auto;  
-  margin: 20px 0px 0px 450px;  
+  width: 350px;
+  overflow: hidden;
+  margin: auto;
+  margin: 20px 0px 0px 450px;
   padding: 80px;
   text-align: center;
-  background: #e4daa7;  
+  background: #e4daa7;
   border: rgb(223, 223, 223) 5px solid;
 }
 
@@ -217,6 +242,6 @@ img.image-thumbnail {
   border-radius: 4px;
 }
 
-.btn:hover{
-  background: #1d3675e5; 
+.btn:hover {
+  background: #1d3675e5;
 }

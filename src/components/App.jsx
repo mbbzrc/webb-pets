@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {
   Header,
+  Categories,
   Register,
   Login,
   Account,
@@ -94,7 +95,9 @@ export const App = () => {
           handleSearch={setSearchFilter}
         />
         <ToastContainer autoClose={3000} position={"bottom-right"} />
-        {/* HOME PAGE, WITH PRODUCT CATEGORIES? */}
+        <Route exact path="/">
+          <Categories handleSearch={setSearchFilter} />
+        </Route>
         {!currentUser ? (
           <>
             <Route path="/account/register">

@@ -278,6 +278,8 @@ img.image-thumbnail {
 
 #login input {
   border-radius: 4px;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 #login-form {
@@ -333,6 +335,8 @@ img.image-thumbnail {
 #register input {
   width: 100%;
   border-radius: 4px;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 #register-form {

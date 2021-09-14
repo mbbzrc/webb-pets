@@ -70,19 +70,7 @@ export const Account = ({ currentUser }) => {
         {firstName}
       </h2>
 
-      <Button
-        className={classes.button}
-        variant="outlined"
-        color="primary"
-        onClick={() => {
-          setUserInfoOpen(!userInfoOpen);
-        }}
-      >
-        User Info{" "}
-        {userInfoOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
-      </Button>
-
-      {userInfoOpen ? (
+     
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Grid container spacing={2}>
@@ -114,14 +102,12 @@ export const Account = ({ currentUser }) => {
             </Grid>
           </Paper>
         </div>
-      ) : (
-        ""
-      )}
+      
       <div>
         <Button
           className={classes.button}
           variant="outlined"
-          color="primary"
+          color="primary" co
           onClick={() => {
             setOrdersOpen(!ordersOpen);
           }}

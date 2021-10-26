@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { getAllProducts, formatCurrency } from "../api";
 
-export const AllProducts = ({ searchFilter = null }) => {
+export const AllProducts = ({ searchFilter = null, setSearchFilter }) => {
   const [productList, setProductList] = useState([]);
 
   const fetchData = async () => {
@@ -14,8 +14,9 @@ export const AllProducts = ({ searchFilter = null }) => {
     } else {
       setProductList(
         fetchedProducts.filter((product) => {
-          if (product.name.toLowerCase().includes(searchFilter.toLowerCase()))
+          if (product.name.toLowerCase().includes(searchFilter.toLowerCase())) {
             return product;
+          }
         })
       );
     }
@@ -27,6 +28,11 @@ export const AllProducts = ({ searchFilter = null }) => {
 
   return (
     <div id="all-products">
+      {searchFilter && (
+        <div id="all-products-link" onClick={() => setSearchFilter(null)}>
+          &lt;&lt; All products
+        </div>
+      )}
       {productList.length > 0 &&
         productList.map(({ id, name, price, imageURL }) => {
           return (

@@ -127,7 +127,10 @@ export const App = () => {
           </>
         )}
         <Route path="/products">
-          <AllProducts searchFilter={searchFilter} />
+          <AllProducts
+            searchFilter={searchFilter}
+            setSearchFilter={setSearchFilter}
+          />
         </Route>
         <Route path="/product/:productId">
           <Product
@@ -151,6 +154,7 @@ export const App = () => {
           />
         </Route>
       </Router>
+      <footer>&copy; WEBB Pets 2021</footer>
     </div>
   );
 };

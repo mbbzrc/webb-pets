@@ -1,5 +1,4 @@
 const client = require("./client");
-const bcrypt = require("bcrypt");
 
 async function createUser({
   username,
@@ -9,9 +8,6 @@ async function createUser({
   email,
   isAdmin,
 }) {
-  const SALT_COUNT = 10;
-  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-
   try {
     const {
       rows: [user],
@@ -22,16 +18,11 @@ async function createUser({
             ON CONFLICT (username) DO NOTHING
             RETURNING *;
             `,
-      [username, hashedPassword, firstName, lastName, email, isAdmin]
+      [username, password, firstName, lastName, email, isAdmin]
     );
     delete user.password;
 
-    if (!user) {
-      throw {
-        name: "CreateUserError",
-        message: "Unable to create this user.",
-      };
-    }
+    if (!user) throw error;
 
     return user;
   } catch (error) {

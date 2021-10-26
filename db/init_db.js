@@ -1,9 +1,17 @@
-// code to build and initialize DB goes here
 const client = require("./client");
-const { createOrder, getAllOrders, getOrderById } = require("./orders");
-const { createUser, getAllUsers } = require("./users");
-const { createProduct, getAllProducts, getProductById } = require("./products");
-const { createNewOrderProduct } = require("./orderProducts");
+
+const {
+  createOrder,
+  getAllOrders,
+  getOrderById,
+  createUser,
+  getAllUsers,
+  createProduct,
+  getAllProducts,
+  getProductById,
+  createNewOrderProduct,
+} = require("./index");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -375,7 +383,7 @@ async function rebuildDB() {
     await createInitialOrders();
     await createInitialOrderProducts();
   } catch (error) {
-    console.log("error durring rebuildDB");
+    console.error("Error durring rebuildDB: ", error);
     throw error;
   }
 }

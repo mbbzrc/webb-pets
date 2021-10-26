@@ -4,6 +4,8 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 
+const { hash, genSalt, compare } = require("bcrypt");
+
 const {
   getUserByUsername,
   createUser,
@@ -32,14 +34,19 @@ usersRouter.post("/register", async (req, res, next) => {
         message: "Password must be more than 8 characters.",
       });
     }
+
+    const salt = await genSalt();
+    const hashedPassword = await hash(password, salt);
+
     const user = await createUser({
       username,
-      password,
+      password: hashedPassword,
       firstName,
       lastName,
       email,
       isAdmin,
     });
+
     const token = jwt.sign(
       {
         id: user.id,
@@ -50,11 +57,10 @@ usersRouter.post("/register", async (req, res, next) => {
         expiresIn: "4w",
       }
     );
+
     res.send({
-      message: "Thank you for signing up.",
       user,
       token,
-      user,
     });
   } catch ({ name, message }) {
     next({ name, message });

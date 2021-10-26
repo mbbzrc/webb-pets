@@ -69,7 +69,6 @@ async function buildTables() {
 async function createInitialUsers() {
   try {
     console.log("Creating Users ...");
-    // create useful starting data
     await createUser({
       username: "beatricewhite",
       password: "111111",

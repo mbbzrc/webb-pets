@@ -1,5 +1,7 @@
 const client = require("./client");
 
+const { hash, genSalt } = require("bcrypt");
+
 const {
   createOrder,
   getAllOrders,
@@ -77,38 +79,57 @@ async function buildTables() {
 async function createInitialUsers() {
   try {
     console.log("Creating Users ...");
-    await createUser({
-      username: "beatricewhite",
-      password: "111111",
-      firstName: "Beatrice",
-      lastName: "White",
-      email: "beatricewhitee@gmail.com",
-      isAdmin: false,
-    }),
-      await createUser({
+    const initialUsers = [
+      {
+        username: "beatricewhite",
+        password: "Password123$",
+        firstName: "Beatrice",
+        lastName: "White",
+        email: "beatricewhitee@gmail.com",
+        isAdmin: false,
+      },
+      {
         username: "anthonybeesley",
-        password: "222222",
+        password: "Password123$",
         firstName: "Anthony",
         lastName: "Beesley",
         email: "anthonybeesley@gmail.com",
         isAdmin: false,
-      }),
-      await createUser({
+      },
+      {
         username: "seanburns",
-        password: "333333",
+        password: "Password123$",
         firstName: "Sean",
         lastName: "Burns",
         email: "seanburns@gmail.com",
         isAdmin: false,
-      }),
-      await createUser({
+      },
+      {
         username: "admin",
-        password: "admin",
+        password: "Password123$",
         firstName: "Admin",
         lastName: "Admin",
         email: "admin@gmail.com",
         isAdmin: true,
-      });
+      },
+    ];
+
+    await Promise.all(
+      initialUsers.map(
+        async ({ username, password, firstName, lastName, email, isAdmin }) => {
+          const salt = await genSalt();
+          const hashedPassword = await hash(password, salt);
+          createUser({
+            username,
+            password: hashedPassword,
+            firstName,
+            lastName,
+            email,
+            isAdmin,
+          });
+        }
+      )
+    );
 
     console.log("Finished creating users!");
   } catch (error) {

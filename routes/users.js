@@ -7,7 +7,6 @@ const { JWT_SECRET } = process.env;
 const { hash, genSalt, compare } = require("bcrypt");
 
 const {
-  getUserByUsername,
   createUser,
   getUser,
   getAllUsers,
@@ -17,10 +16,17 @@ const {
 const { requireUser, isAdmin } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, firstName, lastName, email, isAdmin } = req.body;
+  const {
+    username,
+    password,
+    firstName,
+    lastName,
+    email,
+    isAdmin = false,
+  } = req.body;
 
   try {
-    const _user = await getUserByUsername(username);
+    const _user = await getUser({ username });
     if (_user) {
       next({
         name: "UserExistsError",
@@ -62,8 +68,8 @@ usersRouter.post("/register", async (req, res, next) => {
       user,
       token,
     });
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -78,8 +84,19 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 
   try {
-    const user = await getUser({ username, password });
+    const user = await getUser({ username });
+
     if (user) {
+      const passwordsMatch = await compare(password, user.password);
+      if (passwordsMatch) {
+        delete user.password;
+      } else {
+        next({
+          name: "PasswordMatchError",
+          message: "Password is incorrect.",
+        });
+      }
+
       const token = jwt.sign(user, JWT_SECRET);
       res.send({
         message: "You are now logged in!",

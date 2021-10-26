@@ -1,6 +1,6 @@
 function requireUser(req, res, next) {
   if (!req.user) {
-    next({
+    return next({
       name: "MissingUserError",
       message: "Please log in to complete this.",
     });
@@ -11,12 +11,12 @@ function requireUser(req, res, next) {
 
 function requireAdmin(req, res, next) {
   if (!req.user) {
-    next({
+    return next({
       name: "MissingUserError",
       message: "Please log in to complete this.",
     });
   } else if (!req.user.isAdmin) {
-    next({
+    return next({
       name: "IsNotAdminError",
       message: "You must be an admin user to complete this.",
     });
@@ -27,7 +27,7 @@ function requireAdmin(req, res, next) {
 
 function isAdmin(req, res, next) {
   if (!req.user.isAdmin) {
-    next({
+    return next({
       name: "UnauthenticatedUserError",
       message: "You must log in as admin user to complete this.",
     });

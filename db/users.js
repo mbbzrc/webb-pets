@@ -20,17 +20,17 @@ async function createUser({
             `,
       [username, password, firstName, lastName, email, isAdmin]
     );
-    delete user.password;
 
-    if (!user) throw error;
+    if (!user) throw new Error("Error creating user!");
 
     return user;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
 
-async function getUser({ username, password }) {
+async function getUser({ username }) {
   try {
     const {
       rows: [user],
@@ -42,24 +42,7 @@ async function getUser({ username, password }) {
       [username]
     );
 
-    if (!user) {
-      throw {
-        name: "UserDoesNotExistError",
-        message: "This user does not exist.",
-      };
-    }
-
-    const passwordsMatch = await bcrypt.compare(password, user.password);
-
-    if (passwordsMatch) {
-      delete user.password;
-      return user;
-    } else {
-      throw {
-        name: "PasswordMatchError",
-        message: "Password is incorrect.",
-      };
-    }
+    return user;
   } catch (error) {
     throw error;
   }
@@ -85,7 +68,7 @@ async function getAllUsers() {
   }
 }
 
-async function getUserById(id) {
+async function getUserById({ id }) {
   try {
     const {
       rows: [user],
@@ -106,24 +89,6 @@ async function getUserById(id) {
     delete user.password;
     return user;
   } catch (error) {
-    throw error;
-  }
-}
-
-async function getUserByUsername(username) {
-  try {
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-        SELECT * FROM users
-        WHERE username = $1;
-        `,
-      [username]
-    );
-
-    return user;
-  } catch (err) {
     throw error;
   }
 }
@@ -161,6 +126,5 @@ module.exports = {
   getUser,
   getAllUsers,
   getUserById,
-  getUserByUsername,
   updateUser,
 };

@@ -109,17 +109,17 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Username and/or password is incorrect",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-    const user = getUser();
+    const user = req.user;
     res.send(user);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -128,8 +128,8 @@ usersRouter.get("/", isAdmin, async (req, res, next) => {
     const users = await getAllUsers();
 
     res.send(users);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -139,8 +139,8 @@ usersRouter.get("/:userId/orders", isAdmin, async (req, res, next) => {
   try {
     const orders = await getOrdersByUser(userId);
     res.send(orders);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -158,8 +158,8 @@ usersRouter.patch("/:userId", isAdmin, async (req, res, next) => {
       isAdmin,
     });
     res.send(updatedUser);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 

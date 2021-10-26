@@ -91,7 +91,7 @@ async function destroyProduct({ id }) {
     );
     return product;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 }
 
@@ -119,7 +119,7 @@ async function updateProduct({
 
     return product;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 

@@ -29,12 +29,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 1000,
     maxWidth: 1000,
     textTransform: "uppercase",
-    boxShadow: '1px 1px 5px'
-
+    boxShadow: "1px 1px 5px",
   },
   image: {
-    maxWidth: '300px',
-    maxHeight: '300px',
+    maxWidth: "300px",
+    maxHeight: "300px",
     marginRight: "3rem",
   },
   img: {
@@ -153,7 +152,7 @@ export const Product = ({
 
   return (
     <div className="product" data-id={id}>
-        <div className={classes.root}>
+      <div className={classes.root}>
         <Paper className={classes.paper}>
           <Grid container spacing={2}>
             <Grid item>
@@ -188,7 +187,7 @@ export const Product = ({
                         required
                         onChange={handleQuantityChange}
                       />
-                      <div style={{paddingTop: '2rem'}}>
+                      <div style={{ paddingTop: "2rem" }}>
                         <Button
                           className={classes.button}
                           variant="contained"
@@ -196,7 +195,6 @@ export const Product = ({
                         >
                           Add to cart
                         </Button>
-                      
                       </div>
                     </label>
                   </form>
@@ -243,19 +241,6 @@ export const Product = ({
           </Grid>
         </Paper>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* <div className="category">category / {category}</div>
       <h2>{name}</h2>

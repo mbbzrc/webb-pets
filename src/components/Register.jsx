@@ -79,8 +79,11 @@ export const Register = ({
 
   return (
     <div id="register">
-      <h2>New customer?</h2>
-      <h2>Create an account!</h2>
+      <h2>
+        New customer?
+        <br />
+        Create an account!
+      </h2>
       <form id="register-form">
         <label className="reg-username">
           <span>username: </span>

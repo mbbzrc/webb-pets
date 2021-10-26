@@ -47,11 +47,7 @@ export const Header = ({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit" onClick={handleSubmit}>
-          <span className="material-icons-outlined">
-            {searchInput ? "delete" : "search"}
-          </span>
-        </button>
+        <span id="search-ball" onClick={handleSubmit}></span>
       </form>
       <Link to="/">Home</Link>
       <Link to="/products">Shop</Link>

@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     maxWidth: 1000,
     textTransform: "uppercase",
-    boxShadow: '1px 1px 5px'
-
+    boxShadow: "1px 1px 5px",
   },
   img: {
     margin: "auto",
@@ -154,7 +153,7 @@ export const Account = ({ currentUser }) => {
           ""
         )}
       </div>
-      <Link to={`/cart`} style={{ textDecoration: "none" }}>
+      <Link to="/cart" style={{ textDecoration: "none" }}>
         <Button className={classes.button} variant="outlined" color="primary">
           Go To Cart <KeyboardArrowRight />
         </Button>

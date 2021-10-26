@@ -47,23 +47,28 @@ export const Login = ({
 
   return (
     <div id="login">
-      <h2>Welcome back!</h2>
-      <h2>Log in here.</h2>
+      <h2>
+        Welcome back!
+        <br />
+        Log in here.
+      </h2>
       <form id="login-form">
-        <label className="username">
+        <label>
           <span>username: </span>
           <input
             type="text"
             name="username"
+            required
             value={form.username}
             onChange={handleFormChange}
           />
         </label>
-        <label className="password">
+        <label>
           <span>password: </span>
           <input
             type="password"
             name="password"
+            required
             value={form.password}
             onChange={handleFormChange}
           />

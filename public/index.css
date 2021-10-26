@@ -24,6 +24,7 @@ light blue {color: #159397;} */
 
 #app {
   font-family: "Montserrat", sans-serif;
+  height: 100vh;
 }
 
 #app > div {
@@ -78,6 +79,7 @@ nav .material-icons-outlined {
 
 #search-bar {
   display: flex;
+  align-items: center;
 }
 
 #search-bar input {
@@ -87,12 +89,27 @@ nav .material-icons-outlined {
   padding: 5px;
 }
 
-#search-bar button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  color: #122f78;
+#search-ball {
+  background: radial-gradient(
+    circle at 70% 30%,
+    #f4b496 10%,
+    #ed8351 40%,
+    #963b10 100%
+  );
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  right: 35px;
+}
+
+#search-ball:hover {
+  background: radial-gradient(
+    circle at 70% 30%,
+    #f4b496 15%,
+    #ed8351 50%,
+    #963b10 90%
+  );
 }
 
 #register {
@@ -263,89 +280,97 @@ img.image-thumbnail {
 }
 
 #login {
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 40%;
+  max-height: 300px;
+  width: 60%;
+  max-width: 700px;
   overflow: hidden;
-  margin: auto;
-  padding: 80px;
-  text-align: center;
-  background: #e4daa7;
-  border: rgb(223, 223, 223) 5px solid;
-  box-Shadow: 1px 1px 5px;
-
+  margin: 5% auto;
+  border: 5px solid #f2d380;
+  background: linear-gradient(#122f78 50%, #15939720 100%);
 }
 
 #login h2 {
   color: white;
+  text-align: center;
+  margin: 10px 0px 20px 0px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px 0px;
+  height: 60%;
+  width: 100%;
+}
+
+#login label {
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 #login input {
   border-radius: 4px;
   height: 30px;
-  margin-bottom: 10px;
 }
 
-#login-form {
+#login input[type="text"],
+#login input[type="password"] {
+  flex-grow: 2;
+  margin: 0px 10px;
+  padding: 5px;
+}
+
+#register {
+  height: 70%;
+  max-height: 550px;
+  width: 70%;
+  max-width: 700px;
+  margin: 5% auto;
+  padding: 80px;
+  border: 5px solid #f2d380;
+  background: linear-gradient(#122f78 50%, #15939720 100%);
+}
+
+#register label {
+  display: flex;
+  flex-direction: column;
   margin: 10px 0px;
-
+  color: #ffffff;
 }
 
-.username {
-  width: 300px;
-  height: 30px;
-  border: none;
-  border-radius: 3px;
-  padding-left: 8px;
+#register h2 {
+  color: white;
+  text-align: center;
 }
 
-.password {
-  width: 300px;
+#register input {
+  border-radius: 4px;
   height: 30px;
-  border: none;
-  border-radius: 3px;
-  padding-left: 8px;
+  margin-top: 5px;
+}
+
+#register input[type="text"],
+#register input[type="password"] {
+  flex-grow: 2;
+  padding: 5px;
 }
 
 .btn {
   background: #122f78;
   width: 100px;
-  margin-top: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 5px 0px;
   color: white;
   border-radius: 4px;
   border: #0d2257 1px solid;
-}
-
-#register {
-  width: 350px;
-  overflow: hidden;
-  margin: auto;
-  padding: 80px;
-  text-align: center;
-  background: #e4daa7;
-  border: rgb(223, 223, 223) 5px solid;
-  box-Shadow: 1px 1px 10px;
-
-}
-
-#register label {
-  display: block;
-  padding: 5px;
-}
-
-#register h2 {
-  color: white;
-}
-
-#register input {
-  width: 100%;
-  border-radius: 4px;
-  height: 30px;
-  margin-bottom: 10px;
-}
-
-#register-form {
-  text-align: left;
 }
 
 .btn:hover {

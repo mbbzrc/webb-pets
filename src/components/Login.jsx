@@ -46,12 +46,9 @@ export const Login = ({
   };
 
   return (
-    <div id="login">
-      <h2>
-        Welcome back!
-        <br />
-        Log in here.
-      </h2>
+    <div className="account-form" id="login">
+      <p className="account-header">Welcome back!</p>
+      <p className="account-subheader">Log in here.</p>
       <form id="login-form">
         <label>
           <span>username: </span>

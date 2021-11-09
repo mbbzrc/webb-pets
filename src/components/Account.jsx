@@ -6,44 +6,37 @@ import { toast } from "react-toastify";
 
 import { getOrdersByUserId } from "../api";
 
-import { Button } from "@material-ui/core";
-import { KeyboardArrowDown, KeyboardArrowRight } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 1000,
-    textTransform: "uppercase",
-    boxShadow: "1px 1px 5px",
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "230px",
-    maxHeight: "219px",
-  },
-  button: {
-    height: "60px",
-    width: "200px",
-    marginTop: "2px",
-    color: "black",
-    backgroundColor: "#159397",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     margin: "auto",
+//     maxWidth: 1000,
+//     textTransform: "uppercase",
+//     boxShadow: "1px 1px 5px",
+//   },
+//   img: {
+//     margin: "auto",
+//     display: "block",
+//     maxWidth: "230px",
+//     maxHeight: "219px",
+//   },
+//   button: {
+//     height: "60px",
+//     width: "200px",
+//     marginTop: "2px",
+//     color: "black",
+//     backgroundColor: "#159397",
+//   },
+// }));
 
 export const Account = ({ currentUser }) => {
   const [orderList, setOrderList] = useState([]);
   const [userInfoOpen, setUserInfoOpen] = useState(false);
   const [ordersOpen, setOrdersOpen] = useState(false);
 
-  const classes = useStyles();
   const history = useHistory();
 
   const fetchData = async () => {
@@ -65,13 +58,9 @@ export const Account = ({ currentUser }) => {
     <div id="account">
       <h2 className="account-title">My Account</h2>
       <h3>Welcome, </h3>
-      <h2
-        style={{ fontSize: "2rem", paddingTop: "10px", paddingBottom: "10px" }}
-      >
-        {firstName}
-      </h2>
+      <h2>{firstName}</h2>
 
-      <div className={classes.root}>
+      {/* <div className={classes.root}>
         <Paper className={classes.paper}>
           <Grid container spacing={2}>
             <Grid item xs container direction="column" spacing={2}>
@@ -101,11 +90,10 @@ export const Account = ({ currentUser }) => {
             </Grid>
           </Grid>
         </Paper>
-      </div>
+      </div> */}
 
       <div>
-        <Button
-          className={classes.button}
+        {/* <Button
           variant="outlined"
           color="primary"
           co
@@ -115,11 +103,11 @@ export const Account = ({ currentUser }) => {
         >
           Previous Orders
           {ordersOpen ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
-        </Button>
+        </Button> */}
 
-        {ordersOpen ? (
-          <div className={classes.root}>
-            <Paper className={classes.paper}>
+        {/* {ordersOpen ? (
+          <div>
+            <Paper>
               <Grid container spacing={2}>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
@@ -151,13 +139,9 @@ export const Account = ({ currentUser }) => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
       </div>
-      <Link to="/cart" style={{ textDecoration: "none" }}>
-        <Button className={classes.button} variant="outlined" color="primary">
-          Go To Cart <KeyboardArrowRight />
-        </Button>
-      </Link>
+      <Link to="/cart" style={{ textDecoration: "none" }}></Link>
     </div>
   );
 };

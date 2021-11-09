@@ -69,3 +69,17 @@ export async function updateOrder(orderId, status, userId) {
     throw error;
   }
 }
+
+export const createStripeToken = async (token, amount) => {
+  try {
+    const { data } = await axios.post(`${BASE_URL}/api/stripe/pay`, {
+      source: token.id,
+      currency: "USD",
+      amount,
+    });
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

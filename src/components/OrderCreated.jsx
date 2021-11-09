@@ -1,31 +1,14 @@
 import React, { useState, useEffect } from "react";
-import StripeCheckout from "react-stripe-checkout";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import swal from "sweetalert";
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+
+import StripeCheckout from "react-stripe-checkout";
+
+import { toast } from "react-toastify";
 
 import { OrderProduct } from "./index";
-import { updateOrder, getCartByUserId } from "../api";
+import { updateOrder, getCartByUserId, createStripeToken } from "../api";
 
 import { formatCurrency } from "../api";
-import { BASE_URL } from "../api/index";
-
-const STRIPE_KEY =
-  "pk_test_51JW40NGfeiZyi0bkzQs8BV34mMmKvaUDgmsf1ciXrLlMKqCs7nJncEu4H8WpCM1vnN9pxOocNckKSK04iQOChC7R00gecuqekO";
-const PAYMENT_URL = `${BASE_URL}/api/stripe/pay`;
-const CURRENCY = "USD";
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    height: "60px",
-    width: "200px",
-    marginTop: "2px",
-    color: "black",
-    backgroundColor: "#159397",
-  },
-}));
 
 export const OrderCreated = ({
   openOrder,
@@ -42,8 +25,11 @@ export const OrderCreated = ({
   const [orderSubtotal, setOrderSubtotal] = useState(null);
 
   const [orderPrice, setOrderPrice] = useState(null);
+
   const history = useHistory();
-  const classes = useStyles();
+
+  const STRIPE_PUBLISHABLE_KEY =
+    "pk_test_51JsH8cKFy3CE12wzJ5xeGPaamQUz33iVzfKzX7XcxyE6S3c1TPIUS4NAuRYPzTLTNu0MZ7VT3XjKj77XIiVAY3Lg00CT8jQGoA";
 
   useEffect(() => {
     openOrder && setOrderProducts(openOrder.orderProducts || []);
@@ -74,60 +60,36 @@ export const OrderCreated = ({
     }
   }, [cart, visitorCart, orderProducts]);
 
-  const handleCompleteOrder = async ({
-    setVisitorCart,
-    currentUser,
-    setCart,
-    orderId,
-  }) => {
+  const handleCompleteOrder = async (orderId) => {
     const status = "completed";
 
     try {
-      swal(
-        "Success!",
-        "Thank you for your order! Please check your email for your receipt & shipping updates!",
-        "success"
-      );
+      toast.success("Success! Thanks for your order.");
 
       if (currentUser) {
         await updateOrder(orderId, status, currentUser.id);
-
         setCart(null);
+      } else {
+        setVisitorCart([]);
       }
-      setVisitorCart([]);
     } catch (error) {
       console.error(error);
     } finally {
     }
   };
 
-  const handleToken = (amount) => async (token) => {
+  const onToken = (amount) => async (token) => {
     try {
-      const response = await axios.post(PAYMENT_URL, {
-        source: token.id,
-        currency: CURRENCY,
-        amount,
-      });
-      const data = response.data;
-      // console.log(data.success.receipt_url);
+      const data = await createStripeToken(token, amount);
       if (data && currentUser) {
-        const existingCart = await getCartByUserId(currentUser.id);
-        const orderId = existingCart.id;
-        await handleCompleteOrder({
-          setVisitorCart,
-          currentUser,
-          setCart,
-          orderId,
-        });
-
+        const { id: orderId } = await getCartByUserId(currentUser.id);
+        await handleCompleteOrder(orderId);
         history.push(`order/${orderId}`);
       } else if (data) {
-        await handleCompleteOrder({ setVisitorCart, currentUser, setCart });
+        await handleCompleteOrder();
       } else {
-        swal(
-          "Oops!",
-          "Unable to process payment! Please contact customer service.",
-          "error"
+        toast.error(
+          "Unable to process payment! Please contact customer service."
         );
       }
     } catch (error) {
@@ -137,25 +99,19 @@ export const OrderCreated = ({
 
   return (
     <>
-      {" "}
-      <div className="my-cart">
-        <h2 className="checkout-title">
-          My Cart {currentUser && `(${currentUser.firstName})`}
-        </h2>
+      <div id="cart">
+        <h2>my cart</h2>
         {orderSubtotal ? (
-          <div className="cart-box">
-            {!currentUser && <p>Log in or register to save your cart!</p>}
-            <h2 style={{ paddingBottom: "16px" }}>Items in cart:</h2>
-            <div className="cart-items">
+          <>
+            <div id="cart-items">
               {orderProducts &&
                 orderProducts.length > 0 &&
-                orderProducts.map((product, index) => {
+                orderProducts.map((product) => {
                   const { orderId } = openOrder;
                   return (
                     <OrderProduct
                       orderId={orderId}
                       product={product}
-                      index={index}
                       currentUser={currentUser}
                       setCart={setCart}
                       visitorCart={visitorCart}
@@ -165,33 +121,26 @@ export const OrderCreated = ({
                   );
                 })}
             </div>
-          </div>
+          </>
         ) : null}
 
         {orderSubtotal ? (
-          <div className="total">
-            <div>
-              <h3>Order Subtotal:</h3>{" "}
-              <h2 style={{ padding: "10px" }}>{orderSubtotal} </h2>{" "}
-            </div>
+          <div id="checkout">
+            <h3>Order subtotal: {orderSubtotal}</h3>
             <StripeCheckout
-              stripeKey={STRIPE_KEY}
-              token={handleToken(orderPrice * 100)}
-              name="Webb Pets"
+              stripeKey={STRIPE_PUBLISHABLE_KEY}
+              name="WEBB Pets"
               billingAddress
               shippingAddress
               amount={orderPrice * 100}
-              currency={CURRENCY}
+              token={onToken(orderPrice * 100)}
+              currency="USD"
             >
-              <Button className={classes.button} variant="contained">
-                CHECKOUT
-              </Button>
-            </StripeCheckout>{" "}
+              <button>checkout</button>
+            </StripeCheckout>
           </div>
         ) : (
-          <h3 style={{ textTransform: "uppercase", color: "#159397" }}>
-            there are no items in your cart
-          </h3>
+          <h3>Your cart is empty!</h3>
         )}
       </div>
     </>

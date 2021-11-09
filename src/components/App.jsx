@@ -95,64 +95,66 @@ export const App = () => {
           handleSearch={setSearchFilter}
         />
         <ToastContainer autoClose={3000} position={"bottom-right"} />
-        <Route exact path="/">
-          <Categories handleSearch={setSearchFilter} />
-        </Route>
-        {!currentUser ? (
-          <>
-            <Route path="/account/register">
-              <Register
-                setCurrentUser={setCurrentUser}
-                visitorCart={visitorCart}
-                setVisitorCart={setVisitorCart}
-                setCart={setCart}
-                mergeCart={mergeCart}
-              />
-            </Route>
-            <Route path="/account/login">
-              <Login
-                setCurrentUser={setCurrentUser}
-                visitorCart={visitorCart}
-                setVisitorCart={setVisitorCart}
-                setCart={setCart}
-                mergeCart={mergeCart}
-              />
-            </Route>
-          </>
-        ) : (
-          <>
-            <Route path="/account">
-              <Account currentUser={currentUser} />
-            </Route>
-          </>
-        )}
-        <Route path="/products">
-          <AllProducts
-            searchFilter={searchFilter}
-            setSearchFilter={setSearchFilter}
-          />
-        </Route>
-        <Route path="/product/:productId">
-          <Product
-            currentUser={currentUser}
-            cart={cart}
-            setCart={setCart}
-            visitorCart={visitorCart}
-            setVisitorCart={setVisitorCart}
-          />
-        </Route>
-        <Route path="/order/:orderId">
-          <Order />
-        </Route>
-        <Route path="/cart">
-          <Order
-            cart={cart}
-            setCart={setCart}
-            visitorCart={visitorCart}
-            setVisitorCart={setVisitorCart}
-            currentUser={currentUser}
-          />
-        </Route>
+        <div id="window">
+          <Route exact path="/">
+            <Categories handleSearch={setSearchFilter} />
+          </Route>
+          {!currentUser ? (
+            <>
+              <Route path="/account/register">
+                <Register
+                  setCurrentUser={setCurrentUser}
+                  visitorCart={visitorCart}
+                  setVisitorCart={setVisitorCart}
+                  setCart={setCart}
+                  mergeCart={mergeCart}
+                />
+              </Route>
+              <Route path="/account/login">
+                <Login
+                  setCurrentUser={setCurrentUser}
+                  visitorCart={visitorCart}
+                  setVisitorCart={setVisitorCart}
+                  setCart={setCart}
+                  mergeCart={mergeCart}
+                />
+              </Route>
+            </>
+          ) : (
+            <>
+              <Route path="/account">
+                <Account currentUser={currentUser} />
+              </Route>
+            </>
+          )}
+          <Route path="/products">
+            <AllProducts
+              searchFilter={searchFilter}
+              setSearchFilter={setSearchFilter}
+            />
+          </Route>
+          <Route path="/product/:productId">
+            <Product
+              currentUser={currentUser}
+              cart={cart}
+              setCart={setCart}
+              visitorCart={visitorCart}
+              setVisitorCart={setVisitorCart}
+            />
+          </Route>
+          <Route path="/order/:orderId">
+            <Order />
+          </Route>
+          <Route path="/cart">
+            <Order
+              cart={cart}
+              setCart={setCart}
+              visitorCart={visitorCart}
+              setVisitorCart={setVisitorCart}
+              currentUser={currentUser}
+            />
+          </Route>
+        </div>
       </Router>
       <footer>&copy; WEBB Pets 2021</footer>
     </div>

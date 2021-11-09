@@ -1,10 +1,9 @@
-const express = require("express");
-const health = express();
+const healthRouter = require("express").Router();
 
-health.get("/", async (req, res, next) => {
+healthRouter.get("/", async (req, res, next) => {
   res.send({
     message: "HEALTHY",
   });
 });
 
-module.exports = health;
+module.exports = healthRouter;

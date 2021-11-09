@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+
+import { QuantityButton } from "./index";
 
 import {
   getCartByUserId,
@@ -18,39 +17,6 @@ import {
   createOrder,
 } from "../api";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    marginTop: "1rem",
-    minWidth: 1000,
-    maxWidth: 1000,
-    textTransform: "uppercase",
-    boxShadow: "1px 1px 5px",
-  },
-  image: {
-    maxWidth: "300px",
-    maxHeight: "300px",
-    marginRight: "3rem",
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  button: {
-    color: "black",
-    backgroundColor: "light gray",
-    margin: "5px",
-    height: "40px",
-    width: "200px",
-  },
-}));
-
 export const Product = ({
   currentUser,
   cart,
@@ -59,15 +25,28 @@ export const Product = ({
   setVisitorCart,
 }) => {
   const [openProduct, setOpenProduct] = useState({});
-  const classes = useStyles();
 
   let { id, name, description, price, imageURL, inStock, category } =
     openProduct;
 
   const [itemQuantity, setItemQuantity] = useState(1);
 
-  const handleQuantityChange = (e) => {
-    setItemQuantity(Number(e.target.value));
+  const capitalizeFirstLetter = (string) => {
+    return string[0].toUpperCase() + string.slice(1);
+  };
+
+  const handleDecrement = (e) => {
+    e.preventDefault();
+    if (itemQuantity > 1) {
+      setItemQuantity(itemQuantity - 1);
+    }
+  };
+
+  const handleIncrement = (e) => {
+    e.preventDefault();
+    if (itemQuantity < 100) {
+      setItemQuantity(itemQuantity + 1);
+    }
   };
 
   const checkProductInVisitorCart = () => {
@@ -108,7 +87,8 @@ export const Product = ({
     fetchData();
   }, []);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
     try {
       if (currentUser) {
         let cartId;
@@ -151,129 +131,33 @@ export const Product = ({
   };
 
   return (
-    <div className="product" data-id={id}>
-      <div className={classes.root}>
-        <Paper className={classes.paper}>
-          <Grid container spacing={2}>
-            <Grid item>
-              <img
-                src={imageURL}
-                alt="product thumbnail"
-                className={classes.image}
-              />
-            </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <h2 className="product-title">{name}</h2>
-                  <Typography variant="body2" gutterBottom>
-                    {description}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {/* Item #{index + 1} */}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs>
-                  <form>
-                    <label style={{ fontSize: "larger" }}>
-                      <span style={{ paddingRight: "5px" }}>Quantity: </span>
-                      <input
-                        style={{ fontSize: "1.4rem", paddingLeft: "10px" }}
-                        type="number"
-                        value={itemQuantity}
-                        min="1"
-                        max="99"
-                        required
-                        onChange={handleQuantityChange}
-                      />
-                      <div style={{ paddingTop: "2rem" }}>
-                        <Button
-                          className={classes.button}
-                          variant="contained"
-                          onClick={handleAddToCart}
-                        >
-                          Add to cart
-                        </Button>
-                      </div>
-                    </label>
-                  </form>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={6} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid
-                  item
-                  style={{
-                    textAlign: "center",
-                    justifyContent: "center",
-                    marginTop: "3rem",
-                  }}
-                >
-                  <h3>
-                    Item Quantity:{" "}
-                    <span style={{ color: "#159397", marginLeft: "2.5rem" }}>
-                      {itemQuantity}
-                    </span>
-                  </h3>
-                  <h3 style={{ borderBottom: "1px solid black" }}>
-                    Product price:{" "}
-                    <span
-                      style={{
-                        color: "#159397",
-                        borderBottom: "1px solid black",
-                      }}
-                    >
-                      {formatCurrency(price)}
-                    </span>
-                  </h3>
-                  <h3 style={{ paddingTop: "5px" }}>
-                    Item subtotal:{" "}
-                    <span style={{ color: "#159397" }}>
-                      {formatCurrency(price * itemQuantity)}
-                    </span>
-                  </h3>
-                </Grid>
-                <Grid item xs></Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
-      </div>
-
-      {/* <div className="category">category / {category}</div>
+    <div id="product" data-id={id}>
+      <ul>
+        <Link to="/">Home</Link>
+        <span> / </span>
+        <span>{category && capitalizeFirstLetter(category)}</span>
+      </ul>
       <h2>{name}</h2>
-      <div className="product-image">
-        <img src={imageURL} />
+      <img src={imageURL} alt="product thumbnail" />
+      <div id="product-price">{formatCurrency(price)}</div>
+      <div className="product-box">
+        <h3>Description:</h3>
+        <p>{description}</p>
       </div>
-      <div className="product-details">
-        {inStock && (
-          <form>
-            <label>
-              <span>Quantity: </span>
-              <input
-                type="number"
-                value={itemQuantity}
-                min={1}
-                max={99}
-                required
-                onChange={handleQuantityChange}
-              />
-            </label>
-          </form>
-        )}
-        <div className="product-price">{formatCurrency(price)}</div>
-        <div className="inStock">
-          In stock: {inStock ? "YES, AVAILABLE!" : "PRODUCT UNAVAILABLE"}
-        </div>
-        <div className="product-description">{description}</div>
-        {inStock && (
-          <span className="material-icons-outlined" onClick={handleAddToCart}>
-            add_shopping_cart
-          </span>
-        )}
-      </div> */}
+      <div className="product-box">
+        <h3>In stock:</h3>
+        <p>{inStock ? "AVAILABLE" : "UNAVAILABLE"}</p>
+      </div>
+      <form id="product-form">
+        <button id="add-to-cart" onClick={handleAddToCart}>
+          add to cart
+        </button>
+        <QuantityButton
+          itemQuantity={itemQuantity}
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+        />
+      </form>
     </div>
   );
 };

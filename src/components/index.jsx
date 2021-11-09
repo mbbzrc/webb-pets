@@ -6,6 +6,7 @@ export { Login } from "./Login";
 export { Account } from "./Account";
 export { AllProducts } from "./AllProducts";
 export { Product } from "./Product";
+export { QuantityButton } from "./QuantityButton";
 export { Order } from "./Order";
 export { OrderSwitch } from "./OrderSwitch";
 export { OrderCreated } from "./OrderCreated";

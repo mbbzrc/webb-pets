@@ -72,7 +72,8 @@ async function getOrdersByUser(userId) {
       `
             SELECT *
             FROM orders
-            WHERE "userId" = $1;
+            WHERE "userId" = $1
+            ORDER BY "datePlaced" ASC;
         `,
       [userId]
     );
@@ -87,7 +88,8 @@ async function getOrdersByUser(userId) {
         SELECT order_products.id AS "orderProductId", "productId", order_products.price, quantity, name, description, "imageURL", "inStock", category
         FROM order_products
         INNER JOIN products ON products.id = "productId"
-        WHERE "orderId" = $1;
+        WHERE "orderId" = $1
+        ORDER BY "orderProductId" ASC;
         `,
           [orderId]
         );
@@ -110,8 +112,8 @@ async function getOrdersByProduct(id) {
       `
             SELECT orders.id
             FROM orders
-            JOIN order_products ON orders.id=order_products."orderId"
-            JOIN products ON products.id=order_products."productId"
+            INNER JOIN order_products ON orders.id=order_products."orderId"
+            INNER JOIN products ON products.id=order_products."productId"
             WHERE products.id=$1
         `,
       [id]
@@ -171,7 +173,8 @@ async function getCartByUser(userId) {
         SELECT order_products.id AS "orderProductId", "productId", order_products.price, quantity, name, description, "imageURL", "inStock", category
         FROM order_products
         INNER JOIN products ON products.id = "productId"
-        WHERE "orderId" = $1;
+        WHERE "orderId" = $1
+        ORDER BY "orderProductId" ASC;
         `,
       [order.id]
     );
@@ -256,32 +259,6 @@ async function completeOrder({ id }) {
   }
 }
 
-async function cancelOrder(id) {
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
-        UPDATE orders
-        SET "status"="cancelled" 
-        WHERE id=$1
-        RETURNING *;`,
-      [id]
-    );
-
-    if (!order) {
-      throw {
-        name: "CancelOrderError",
-        message: "Unable to cancel this order.",
-      };
-    }
-
-    return order;
-  } catch (error) {
-    throw error;
-  }
-}
-
 module.exports = {
   createOrder,
   getAllOrders,
@@ -291,5 +268,4 @@ module.exports = {
   getCartByUser,
   updateOrder,
   completeOrder,
-  cancelOrder,
 };

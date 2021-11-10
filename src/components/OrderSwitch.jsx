@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OrderCreated, OrderCompleted, OrderCanceled } from "./index";
+import { OrderCreated, OrderCompleted } from "./index";
 
 export const OrderSwitch = ({
   openOrder,
@@ -25,8 +25,6 @@ export const OrderSwitch = ({
         );
       case "completed":
         return <OrderCompleted openOrder={openOrder} />;
-      case "canceled":
-        return <OrderCanceled openOrder={openOrder} />;
       default:
         return null;
     }

@@ -14,7 +14,12 @@ export const AllProducts = ({ searchFilter = null, setSearchFilter }) => {
     } else {
       setProductList(
         fetchedProducts.filter((product) => {
-          if (product.name.toLowerCase().includes(searchFilter.toLowerCase())) {
+          const searchString = [
+            product.name,
+            product.description,
+            product.category,
+          ].join(" ");
+          if (searchString.toLowerCase().includes(searchFilter.toLowerCase())) {
             return product;
           }
         })

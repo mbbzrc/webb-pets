@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export const Categories = ({ handleSearch }) => {
   const history = useHistory();
@@ -38,12 +37,9 @@ export const Categories = ({ handleSearch }) => {
           <img src="/assets/fish.jpg" alt="fish" />
           <p>fish</p>
         </div>
-        <div
-          className="category-card"
-          onClick={() => handleCategory("small animal")}
-        >
-          <img src="/assets/small-animal.jpg" alt="small animals" />
-          <p>small animal</p>
+        <div className="category-card" onClick={() => handleCategory("rodent")}>
+          <img src="/assets/rodent.jpg" alt="rodent" />
+          <p>rodent</p>
         </div>
       </div>
     </>

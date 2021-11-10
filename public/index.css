@@ -208,6 +208,11 @@ nav .material-icons {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+#all-products h3 {
+  color: #122f78;
+  text-align: center;
+}
+
 #all-products a {
   text-decoration: none;
 }
@@ -459,6 +464,10 @@ nav .material-icons {
   cursor: pointer;
   background-color: #0e4058;
   color: #ffffff;
+}
+
+#order-completed {
+  margin-bottom: 15px;
 }
 
 /* ACCOUNT */
@@ -728,5 +737,9 @@ nav .material-icons {
   }
   #register {
     width: 100%;
+  }
+  #previous-orders h2,
+  #order-completed h2 {
+    font-size: 3rem;
   }
 }

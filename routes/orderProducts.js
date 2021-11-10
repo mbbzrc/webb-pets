@@ -40,7 +40,7 @@ orderProductsRouter.patch(
         quantity: quantity,
       });
 
-      if (updatedOrderProduct) res.send(updatedOrderProduct);
+      res.send(updatedOrderProduct);
     } catch ({ name, message }) {
       next({ name, message });
     }

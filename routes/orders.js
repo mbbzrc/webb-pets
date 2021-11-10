@@ -7,7 +7,6 @@ const {
   getCartByUser,
   getOrdersByUser,
   updateOrder,
-  cancelOrder,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -77,17 +76,6 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
     });
 
     res.send(updatedOrder);
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
-  try {
-    const { orderId } = req.params;
-    const deletedOrder = await cancelOrder(orderId);
-
-    res.send(deletedOrder);
   } catch ({ name, message }) {
     next({ name, message });
   }

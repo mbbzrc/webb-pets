@@ -11,5 +11,4 @@ export { Order } from "./Order";
 export { OrderSwitch } from "./OrderSwitch";
 export { OrderCreated } from "./OrderCreated";
 export { OrderCompleted } from "./OrderCompleted";
-export { OrderCanceled } from "./OrderCanceled";
 export { OrderProduct } from "./OrderProduct";

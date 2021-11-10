@@ -45,7 +45,9 @@ export const OrderProduct = ({
       try {
         await updateOrderProduct(orderProductId, price, itemQuantity);
         const updatedCart = await getCartByUserId(currentUser.id);
+        console.log(updatedCart);
         setCart(updatedCart);
+        toast.success("Quantity updated!");
       } catch (error) {
         console.log(error);
       }
@@ -65,7 +67,8 @@ export const OrderProduct = ({
     }
   };
 
-  const handleRemoveFromCart = async () => {
+  const handleRemoveFromCart = async (e) => {
+    e.preventDefault();
     if (currentUser) {
       try {
         await removeOrderProduct(orderProductId);
@@ -83,7 +86,7 @@ export const OrderProduct = ({
       toast.success("Item removed from cart.");
     }
   };
-  console.log(openOrder);
+
   return (
     <div className="order-product" key={orderProductId}>
       <img src={imageURL} alt="product thumbnail" />
@@ -93,6 +96,9 @@ export const OrderProduct = ({
         </Link>
         <ul>
           <li>Item price: {formatCurrency(price)}</li>
+          {openOrder && openOrder.status !== "created" && (
+            <li>Quantity: {quantity}</li>
+          )}{" "}
           <li>Item subtotal: {formatCurrency(price * quantity)}</li>
         </ul>
         {openOrder && openOrder.status !== "completed" && (

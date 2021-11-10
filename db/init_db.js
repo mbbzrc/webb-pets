@@ -138,154 +138,194 @@ async function createInitialUsers() {
 }
 
 async function createInitialProducts() {
-  try {
-    console.log("Creating Products ...");
-    await createProduct({
-      name: 'Best Bully Sticks 6"',
-      description: "6-inch bully sticks dog treats, 20 count",
+  const initialProducts = [
+    {
+      name: "Hanaway Bully Sticks",
+      description:
+        "Protein-rich bully stick treats for dogs, 20 count. Give your dog a healthy outlet for its urge to chew. Our bully sticks are made with premium natural ingredients guaranteed to delight canines of all sizes.",
       imageURL: "/assets/bullySticks.jpg",
       price: 40.99,
       inStock: true,
       category: "dog",
-    }),
-      await createProduct({
-        name: "Plush Mice",
-        description: "Plush mice cat toy with catnip",
-        imageURL: "/assets/plushmice.jpg",
-        price: 2.7,
-        inStock: true,
-        category: "cat",
-      }),
-      await createProduct({
-        name: "Cat Scratcher",
-        description: "Cat scratcher toy with catnip, tropical palms",
-        imageURL: "/assets/catScratcher.jpg",
-        price: 7.58,
-        inStock: true,
-        category: "cat",
-      }),
-      await createProduct({
-        name: "Pond Pellets",
-        description: "Pond pellets fish food, 10-lb bag",
-        imageURL: "/assets/fishPellets.jpg",
-        price: 19.97,
-        inStock: true,
-        category: "fish",
-      }),
-      await createProduct({
-        name: "Animal Exercise Ball",
-        description: "Run-about small animal exercise ball",
-        imageURL: "/assets/exerciseBall.jpg",
-        price: 3.89,
-        inStock: false,
-        category: "small animal",
-      }),
-      await createProduct({
-        name: "Basking Lamp",
-        description: "Repti basking reptile spot lamp, 100-watt, 2 count",
-        imageURL: "/assets/reptileLamp.jpg",
-        price: 14.81,
-        inStock: true,
-        category: "reptile",
-      }),
-      await createProduct({
-        name: "Gourmet-Style Crickets",
-        description: "Gourmet-style crickets reptile food, 1.2-oz can",
-        imageURL: "/assets/crickets.jpg",
-        price: 2.99,
-        inStock: true,
-        category: "reptile",
-      }),
-      await createProduct({
-        name: "Temptations",
-        description: "Mixups backyard cookout cat treats, 16-oz tub",
-        imageURL: "/assets/temptationsMixUps.jpg",
-        price: 8.24,
-        inStock: true,
-        category: "cat",
-      }),
-      await createProduct({
-        name: "Non-Clumping Cat Litter",
-        description: "Febreze scented non-clumping clay cat little, 35-lb bag",
-        imageURL: "/assets/catLitter.jpg",
-        price: 13.99,
-        inStock: true,
-        category: "cat",
-      }),
-      await createProduct({
-        name: "Ultra Rubber Ball",
-        description: "Ultra rubber ball tough dog toy, Medium, 2 pack",
-        imageURL: "/assets/ultraRubberBall.jpg",
-        price: 5.95,
-        inStock: true,
-        category: "dog",
-      }),
-      await createProduct({
-        name: "Life Protection Dry Dog Food",
-        description:
-          "Life protection formula adult chicken & brown rice recipe dry dog food, 30-lb bag",
-        imageURL: "/assets/lifeProtectDogFood.jpg",
-        price: 51.98,
-        inStock: true,
-        category: "dog",
-      }),
-      await createProduct({
-        name: "Aquarium Starter Kit",
-        description: "Tropical panaview aquarium starter kit, 5-gal",
-        imageURL: "/assets/aquariumKit.jpg",
-        price: 39.99,
-        inStock: true,
-        category: "fish",
-      }),
-      await createProduct({
-        name: "NeoGlow Aquarium Starter Kit",
-        description: "LED neoGlow aquarium starter kit, Pink, 5.5-gal",
-        imageURL: "/assets/LEDNeoglowAquarium.jpg",
-        price: 19.97,
-        inStock: true,
-        category: "fish",
-      }),
-      await createProduct({
-        name: "Shale Ledge",
-        description: "Shale ledge aquarium & terrarium decor, 1-count",
-        imageURL: "/assets/shaleLedge.jpg",
-        price: 13.21,
-        inStock: false,
-        category: "reptile",
-      }),
-      await createProduct({
-        name: "Rock Food & Water Dishes",
-        description: "Repti rock reptile rock food & water dishes, Small",
-        imageURL: "/assets/foodWaterRock.jpg",
-        price: 5.49,
-        inStock: true,
-        category: "reptile",
-      }),
-      await createProduct({
-        name: "Small Animal Cage",
-        description:
-          "Home sweet home plastic small animal cage, Color Varies, 28-in",
-        imageURL: "/assets/smallAnimalCage.jpg",
-        price: 26.99,
-        inStock: true,
-        category: "small animal",
-      }),
-      await createProduct({
-        name: "Feeder & Water Fountain",
-        description: "Mini rabbit feeder & water fountain, 48-oz",
-        imageURL: "/assets/rabbitFeeder.jpg",
-        price: 7.99,
-        inStock: true,
-        category: "small animal",
-      }),
-      await createProduct({
-        name: "Orthopedic Sofa Dog Bed",
-        description: "Plush & suede orthopedic sofa dog bed, Gray, Large",
-        imageURL: "/assets/sofaDogBed.jpg",
-        price: 38.99,
-        inStock: false,
-        category: "dog",
-      });
+    },
+    {
+      name: "CatSafe Plush Mice",
+      description:
+        "Plush mouse toy with inner pouch for catnip, 3 count. These mice toys are built tough and won't wear quickly.",
+      imageURL: "/assets/plushmice.jpg",
+      price: 6.99,
+      inStock: true,
+      category: "cat",
+    },
+    {
+      name: "CatSafe Cat Scratcher",
+      description:
+        "Cat scratcher toy with tropical palms design. Guaranteed to help your cat relieve the urge to scratch! Protect your furniture by giving your cat a better option.",
+      imageURL: "/assets/catScratcher.jpg",
+      price: 17.99,
+      inStock: true,
+      category: "cat",
+    },
+    {
+      name: "Animal Exercise Ball",
+      description: "Run-about small animal exercise ball. ",
+      imageURL: "/assets/exerciseBall.jpg",
+      price: 4.99,
+      inStock: false,
+      category: "rodent",
+    },
+    {
+      name: "Repti Basking Spot Lamp",
+      description: "Spot lamp for snakes and lizards, 100-watt, 2 count.",
+      imageURL: "/assets/reptileLamp.jpg",
+      price: 14.99,
+      inStock: true,
+      category: "reptile",
+    },
+    {
+      name: "Gourmet-Style Crickets",
+      description: "Gourmet-style crickets reptile food, 1.2-oz can",
+      imageURL: "/assets/crickets.jpg",
+      price: 2.99,
+      inStock: true,
+      category: "reptile",
+    },
+    {
+      name: "Mix Ups Cat Treats",
+      description: "Mix Ups backyard cookout cat treats, 16-oz tub.",
+      imageURL: "/assets/temptationsMixUps.jpg",
+      price: 11.99,
+      inStock: true,
+      category: "cat",
+    },
+    {
+      name: "Non-Clumping Cat Litter",
+      description: "Clean scented non-clumping cat litter, 35-lb bag.",
+      imageURL: "/assets/catLitter.jpg",
+      price: 13.99,
+      inStock: true,
+      category: "cat",
+    },
+    {
+      name: "Ultra Rubber Ball",
+      description: "Ultra rubber ball tough dog toy, Medium, 2 pack.",
+      imageURL: "/assets/ultraRubberBall.jpg",
+      price: 5.95,
+      inStock: true,
+      category: "dog",
+    },
+    {
+      name: "Life Protection Dry Dog Food",
+      description:
+        "Life protection formula adult chicken & brown rice recipe dry dog food, 30-lb bag.",
+      imageURL: "/assets/lifeProtectDogFood.jpg",
+      price: 51.98,
+      inStock: true,
+      category: "dog",
+    },
+    {
+      name: "Fairlane Aquarium Starter Kit",
+      description:
+        "Tropical panaview aquarium starter kit, 5-gallon. Easy way to get started with pet fish!",
+      imageURL: "/assets/aquariumKit.jpg",
+      price: 39.99,
+      inStock: true,
+      category: "fish",
+    },
+    {
+      name: "Fairlane Pond Pellets",
+      description: "Pond pellets fish food, 10-lb bag.",
+      imageURL: "/assets/fishPellets.jpg",
+      price: 19.97,
+      inStock: true,
+      category: "fish",
+    },
+    {
+      name: "NeoGlow Aquarium Starter Kit",
+      description: "LED neoGlow aquarium starter kit, Pink, 5.5 gallon.",
+      imageURL: "/assets/LEDNeoglowAquarium.jpg",
+      price: 19.97,
+      inStock: true,
+      category: "fish",
+    },
+    {
+      name: "Shale Ledge",
+      description: "Shale ledge aquarium & terrarium decor, 1-count",
+      imageURL: "/assets/shaleLedge.jpg",
+      price: 13.21,
+      inStock: false,
+      category: "reptile",
+    },
+    {
+      name: "Rock Food & Water Dishes",
+      description: "Repti rock reptile rock food & water dishes, Small",
+      imageURL: "/assets/foodWaterRock.jpg",
+      price: 5.49,
+      inStock: true,
+      category: "reptile",
+    },
+    {
+      name: "Small Animal Cage",
+      description:
+        "Home sweet home plastic small animal cage, Color Varies, 28-in",
+      imageURL: "/assets/smallAnimalCage.jpg",
+      price: 26.99,
+      inStock: true,
+      category: "rodent",
+    },
+    {
+      name: "Feeder & Water Fountain",
+      description: "Mini rabbit feeder & water fountain, 48-oz",
+      imageURL: "/assets/rabbitFeeder.jpg",
+      price: 7.99,
+      inStock: true,
+      category: "rodent",
+    },
+    {
+      name: "Orthopedic Sofa Dog Bed",
+      description: "Plush & suede orthopedic sofa dog bed, Gray, Large",
+      imageURL: "/assets/sofaDogBed.jpg",
+      price: 38.99,
+      inStock: false,
+      category: "dog",
+    },
+    {
+      name: "Fairlane Acquarium Tank 50 Gallon",
+      description:
+        "Standard glass 50-gallon aquarium for freshwater or marine fish.",
+      imageURL: "/assets/aquarium.jpg",
+      price: 49.99,
+      inStock: true,
+      category: "fish",
+    },
+    {
+      name: "PairOkay Natural Hardwood Perch 12 Inch",
+      description:
+        "Natural hardwood birch product, 12 inches. Intended for larger birds. Includes secure mounting screw.",
+      imageURL: "/assets/perch.jpg",
+      price: 9.99,
+      inStock: true,
+      category: "bird",
+    },
+    {
+      name: "PairOkay Parrot Cage",
+      description:
+        "Spacious parrot cage with multiple access points. Easy removal of cage from base to facilitate quick cleaning. For birds up to 8 inches.",
+      imageURL: "/assets/parrot_cage.png",
+      price: 29.99,
+      inStock: true,
+      category: "bird",
+    },
+  ];
+
+  try {
+    console.log("Creating Products ...");
+
+    await Promise.all(
+      initialProducts.map(async (product) => {
+        await createProduct(product);
+      })
+    );
 
     console.log("Finished creating products!");
   } catch (error) {
@@ -308,12 +348,12 @@ async function createInitialOrders() {
       }),
       await createOrder({
         userId: 2,
-        status: "canceled",
+        status: "completed",
         datePlaced: new Date(),
       }),
       await createOrder({
         userId: 4,
-        status: "canceled",
+        status: "completed",
         datePlaced: new Date(),
       });
     await createOrder({

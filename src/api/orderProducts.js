@@ -4,7 +4,7 @@ import { BASE_URL, createAuthHeader } from "./index";
 
 export async function addProductToOrder(orderId, productId, price, quantity) {
   try {
-    const { data } = axios.post(
+    const { data } = await axios.post(
       `${BASE_URL}/api/order-products/order/${orderId}`,
       {
         productId: productId,
@@ -20,9 +20,8 @@ export async function addProductToOrder(orderId, productId, price, quantity) {
 }
 
 export async function updateOrderProduct(orderProductId, price, quantity) {
-  console.log("PRICE: ", price);
   try {
-    const { data } = axios.patch(
+    const { data } = await axios.patch(
       `${BASE_URL}/api/order-products/${orderProductId}`,
       {
         price: price,
@@ -30,7 +29,7 @@ export async function updateOrderProduct(orderProductId, price, quantity) {
       },
       createAuthHeader()
     );
-    await console.log("DATA RETURNED: ", data);
+
     return data;
   } catch (error) {
     throw error;

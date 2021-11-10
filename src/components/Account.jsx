@@ -64,12 +64,7 @@ export const Account = ({ currentUser }) => {
                     return (
                       <li key={id}>
                         <Link to={`/order/${id}`}>
-                          <span>
-                            {status !== "canceled"
-                              ? "Order placed on "
-                              : "Order (canceled) on "}
-                            {formatDate(datePlaced)}
-                          </span>
+                          <span>Order placed on {formatDate(datePlaced)}</span>
                         </Link>
                         {orderProducts.map(({ orderProductId, imageURL }) => {
                           return <img key={orderProductId} src={imageURL} />;

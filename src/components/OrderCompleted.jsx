@@ -1,67 +1,36 @@
 import React from "react";
 
-import { formatCurrency } from "../api";
-
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//     margin: "1rem",
-//     boxShadow: '1px 1px 5px'
-
-//   },
-//   media: {
-//     height: 140,
-//   },
-// });
+import { OrderProduct } from "./OrderProduct";
 
 export const OrderCompleted = ({ openOrder }) => {
-  const { orderProducts } = openOrder;
+  const { orderProducts, orderId, datePlaced } = openOrder;
+
+  const formatDate = (timestamp) => {
+    const date = timestamp.slice(0, 10);
+    const arr = date.split("-");
+    arr.push(arr.shift());
+    return arr.join("-");
+  };
+
+  const orderNumber = orderId.toString().padStart(6, "0");
 
   return (
     <>
       <div className="my-cart">
-        <h2 className="order-title">Order #{openOrder.orderId}</h2>
-        <p>Date placed: {openOrder.datePlaced}</p>
+        <h2 className="order-title">Order #{orderNumber}</h2>
+        <p>Date placed: {formatDate(datePlaced)}</p>
         <div className="cart-items">
           {orderProducts.length > 0 &&
-            orderProducts.map(
-              ({ name, price, quantity, imageURL, orderProductId, index }) => {
-                return (
-                  <div className="product" key={orderProductId}>
-                    {/* <Card className={classes.root}>
-                      <CardActionArea>
-                        <CardMedia className={classes.media} image={imageURL} />
-                        <CardContent>
-                          <h2 style={{ textAlign: "center" }}>{name}</h2>
-
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            Quantity: {quantity}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            Item price: {formatCurrency(price)}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            Product subtotal: ${(price * quantity).toFixed(2)}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card> */}
-                  </div>
-                );
-              }
-            )}
+            orderProducts.map((product) => {
+              return (
+                <OrderProduct
+                  key={product.orderProductId}
+                  orderId={orderId}
+                  product={product}
+                  openOrder={openOrder}
+                />
+              );
+            })}
         </div>
       </div>
     </>

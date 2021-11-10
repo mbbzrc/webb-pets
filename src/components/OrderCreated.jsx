@@ -107,10 +107,9 @@ export const OrderCreated = ({
               {orderProducts &&
                 orderProducts.length > 0 &&
                 orderProducts.map((product) => {
-                  const { orderId } = openOrder;
                   return (
                     <OrderProduct
-                      orderId={orderId}
+                      openOrder={openOrder}
                       product={product}
                       currentUser={currentUser}
                       setCart={setCart}
@@ -127,6 +126,7 @@ export const OrderCreated = ({
         {orderSubtotal ? (
           <div id="checkout">
             <h3>Order subtotal: {orderSubtotal}</h3>
+            <p>Ready to purchase? Proceed to checkout:</p>
             <StripeCheckout
               stripeKey={STRIPE_PUBLISHABLE_KEY}
               name="WEBB Pets"

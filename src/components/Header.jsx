@@ -87,20 +87,18 @@ export const Header = ({
           </>
         ) : (
           <>
-            <div className="nav-item">
-              <Link to="/account">
+            <Link to="/account">
+              <div className="nav-item">
                 <span className="nav-text">Account</span>
                 <span className="material-icons nav-icon">person</span>
-              </Link>
-            </div>
-            <div className="nav-item">
-              <Link to="/account/login" onClick={handleLogout}>
+              </div>
+            </Link>
+            <Link to="/account/login" onClick={handleLogout}>
+              <div className="nav-item">
                 <span className="nav-text">Log Out</span>
-                <span className="material-icons" nav-icon>
-                  logout
-                </span>
-              </Link>
-            </div>
+                <span className="material-icons nav-icon">logout</span>
+              </div>
+            </Link>
           </>
         )}
       </div>

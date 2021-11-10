@@ -19,8 +19,10 @@ export const OrderProduct = ({
   visitorCart,
   setVisitorCart,
   product,
+  openOrder,
 }) => {
-  const { id, orderProductId, name, price, quantity, imageURL } = product;
+  const { id, productId, orderProductId, name, price, quantity, imageURL } =
+    product;
   const [itemQuantity, setItemQuantity] = useState(quantity);
 
   const handleDecrement = (e) => {
@@ -81,88 +83,36 @@ export const OrderProduct = ({
       toast.success("Item removed from cart.");
     }
   };
-
+  console.log(openOrder);
   return (
     <div className="order-product" key={orderProductId}>
       <img src={imageURL} alt="product thumbnail" />
-      <Link to={`/product/${id}`}>
-        <div>{name}</div>
-      </Link>
-      <div>Item subtotal: {formatCurrency(price * quantity)}</div>{" "}
-      <div>Item price: {formatCurrency(price)}</div>
-      <form>
-        <QuantityButton
-          itemQuantity={itemQuantity}
-          handleDecrement={handleDecrement}
-          handleIncrement={handleIncrement}
-        />
-        <div className="order-product-edit">
-          <button onClick={handleUpdateOrderProduct}>Update</button>
-          <button onClick={handleRemoveFromCart}>Remove</button>
-        </div>
-      </form>
-      {/* <div className={classes.root}>
-
-              <img
-                src={imageURL}
-                alt="product thumbnail"
-                className={classes.image}
-              />
-
-                  <h2>{name}</h2>
-
-                  <Typography variant="body2" color="textSecondary">
-                    Item #{index + 1}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs>
-                  <form>
-                    <label style={{ fontSize: "larger" }}>
-                      <span style={{ paddingRight: "5px" }}>Quantity: </span>
-                      <input
-                        style={{ fontSize: "1.4rem", paddingLeft: "10px" }}
-                        type="number"
-                        value={itemQuantity}
-                        min="1"
-                        max="99"
-                        required
-                        onChange={handleQuantityChange}
-                      />
-                      <div>
-                        <Button
-                          variant="contained"
-                          onClick={handleUpdateOrderProduct}
-                        >
-                          Update CART
-                        </Button>
-                        <Button
-                          variant="contained"
-                          onClick={handleRemoveFromCart}
-                        >
-                          Remove From Cart
-                        </Button>
-                      </div>
-                    </label>
-                  </form>
-                  <h3>
-                    Item Quantity:{" "}
-                    <span style={{ color: "#159397", marginLeft: "2.5rem" }}>
-                      {itemQuantity}
-                    </span>
-                  </h3>
-                  <h3 style={{ borderBottom: "1px solid black" }}>
-                    Product price:{" "}
-                    <span
-                    >
-                      {formatCurrency(price)}
-                    </span>
-                  </h3>
-                  <h3 style={{ paddingTop: "5px" }}>
-                    Item subtotal:{" "}
-                    <span style={{ color: "#159397" }}>
-                      {formatCurrency(price * itemQuantity)}
-      </div> */}
+      <div>
+        <Link to={`/product/${productId || id}`}>
+          <div>{name}</div>
+        </Link>
+        <ul>
+          <li>Item price: {formatCurrency(price)}</li>
+          <li>Item subtotal: {formatCurrency(price * quantity)}</li>
+        </ul>
+        {openOrder && openOrder.status !== "completed" && (
+          <form>
+            <QuantityButton
+              itemQuantity={itemQuantity}
+              handleDecrement={handleDecrement}
+              handleIncrement={handleIncrement}
+            />
+            <div className="order-product-edit">
+              <button className="update" onClick={handleUpdateOrderProduct}>
+                Update
+              </button>
+              <button className="remove" onClick={handleRemoveFromCart}>
+                Remove
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

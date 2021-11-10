@@ -1,7 +1,7 @@
 export let BASE_URL;
 
 if (process.env.NODE_ENV === "production") {
-  BASE_URL = "https://still-tundra-77189.herokuapp.com";
+  BASE_URL = "https://webb-pets.herokuapp.com";
 } else {
   BASE_URL = "http://localhost:5000";
 }
